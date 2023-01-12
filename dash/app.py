@@ -129,7 +129,7 @@ app = Dash(__name__)
 app.layout = html.Div(children=[
     html.H1(children='Fume Hood Dashboard'),
 
-    html.P("A web dashboard for Cornell Fume Hoods"),
+    html.P("A (very basic, preliminary) web dashboard for Cornell Fume Hoods"),
 
     html.Label('Date Range'),
     dcc.Dropdown(["Last day", "Last week", "Last month"],
