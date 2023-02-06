@@ -59,11 +59,6 @@ def outside_temp(start, end):
         },
         "targets": [
             {
-                "payload": {
-                    "additional": [
-                        "noagg",
-                    ]
-                },
                 "target": target,
             }
         ]
