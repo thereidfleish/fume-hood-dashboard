@@ -115,7 +115,7 @@ def query(target_list, server, start, end):
     df = df.dropna()
 
     df["BTUh"] = 1.08 * df["cfm"] * (df["internal temp"] - df["external temp"])
-
+    
     return df
 
 
