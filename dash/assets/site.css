@@ -1,0 +1,20 @@
+.cols_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-left: -1em;
+    margin-right: -1em;
+}
+
+.col {
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 100%;
+}
+
+.col_small {
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 20%;
+}
