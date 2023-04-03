@@ -97,14 +97,14 @@ app.layout = html.Div(className="cols_wrapper", children=[
             expanded=['0'],
             data={
                 'title': 'Biotech',
-                'key': '0',
+                'key': 'Biotech',
                 'children': [{
                     'title': 'Floor 1',
-                    'key': '0-0',
+                    'key': 'Floor 1',
                     'children': [
-                        {'title': 'Lab 1', 'key': '0-0-1'},
-                        {'title': 'Lab 2', 'key': '0-0-2'},
-                        {'title': 'Lab 3', 'key': '0-0-3'},
+                        {'title': 'Lab 1', 'key': 'Lab 1'},
+                        {'title': 'Lab 2', 'key': 'Lab 2'},
+                        {'title': 'Lab 3', 'key': 'Lab 3'},
                     ],
                 }]}
         )
