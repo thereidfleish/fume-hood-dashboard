@@ -137,8 +137,19 @@ app.layout = html.Div(className="cols_wrapper", children=[
         html.Div(className="cols_wrapper", children=[
             html.Div(className="col", children=[
                 html.H3("Featured Rankings"),
+                
+                # Rankings box
+                html.Div(className="box", children=[
+                    html.H1("3rd Place"),
+                    html.H4("on Olin Floor 3"),
+                    html.P("Least avg. energy when unoccupied (2000 BTU/hr)")
+                ]),
 
-                # TODO: Rankings box
+                html.Div(className="box", children=[
+                    html.H1("1st Place"),
+                    html.H4("on Olin Floor 3"),
+                    html.P("Least avg. time when unoccupied (0 min/hr)")
+                ]),
             ]),
 
             html.Div(className="col", children=[

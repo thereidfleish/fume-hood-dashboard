@@ -18,3 +18,39 @@
     margin-right: 1em;
     width: 20%;
 }
+
+.box {
+    width: 350px;
+    height: 250px;
+    margin: 100px;
+    padding: 10px;
+    background-color: dimgray;
+    border-radius: 10px;
+}
+
+.box h1 {
+    color: darkseagreen;
+    font-size: 60px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.box h4 {
+    color: darkseagreen;
+    font-size: 25px;
+    font-family: "Arial Narrow", Arial, sans-serif; 
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.box p {
+    color: ghostwhite;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 70%;
+}
