@@ -113,7 +113,7 @@ app.layout = html.Div(className="cols_wrapper", children=[
     html.Div(className="col", children=[
         html.Div(className="cols_wrapper", children=[
             html.Div(className="col", children=[
-                html.H1('Lab 433')
+                html.H1(id='title')
             ]),
 
             html.Div(className="col", children=[
@@ -130,7 +130,7 @@ app.layout = html.Div(className="cols_wrapper", children=[
         ]),
 
 
-        html.P("Biotech / 4th Floor / Lab 433"),
+        html.P(id='breadcrumb'),
 
         html.Div(id='output-selected'),
 
@@ -140,13 +140,13 @@ app.layout = html.Div(className="cols_wrapper", children=[
                 
                 # Rankings box
                 html.Div(className="box", children=[
-                    html.H1("3rd Place"),
+                    html.H2("3rd Place"),
                     html.H4("on Olin Floor 3"),
                     html.P("Least avg. energy when unoccupied (2000 BTU/hr)")
                 ]),
 
                 html.Div(className="box", children=[
-                    html.H1("1st Place"),
+                    html.H2("1st Place"),
                     html.H4("on Olin Floor 3"),
                     html.P("Least avg. time when unoccupied (0 min/hr)")
                 ]),
@@ -170,6 +170,35 @@ app.layout = html.Div(className="cols_wrapper", children=[
 
 ])
 
+@app.callback(Output('title', 'children'),
+              [Input('input', 'selected')])
+def update_title(selected):
+    if selected:
+        selected_item = selected[0]  # Assuming single selection
+        return selected_item
+    else:
+        return 'Biotech' # Default value
+
+
+@app.callback(Output('breadcrumb', 'children'),
+              [Input('input', 'selected')])
+def update_breadcrumb(selected):
+    if selected:
+        selected_item = selected[0]  # Assuming single selection
+        
+        if selected_item == 'Biotech':
+            breadcrumb_text = html.A('Biotech', href='/biotech')
+        elif selected_item == 'Floor 1':
+            breadcrumb_text = html.A('Biotech', href='/biotech'), ' / ', html.A('Floor 1', href='/floor1')
+        else:
+            breadcrumb_text = html.A('Biotech', href='/biotech'), ' / ', html.A('Floor 1', href='/floor1'), ' / ', html.A(selected_item, href='/' + selected_item)
+        
+        return html.P(breadcrumb_text)
+    else:
+        breadcrumb_text = html.A('Biotech', href='/biotech')  # Default value
+        return html.P(breadcrumb_text)
+
+        
 
 @app.callback(Output('output-selected', 'children'),
               [Input('input', 'selected')])
