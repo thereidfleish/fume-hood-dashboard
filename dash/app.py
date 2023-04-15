@@ -87,6 +87,7 @@ def total_time_sash_open_unoccupied(sash_point, occ_point, server, start, end):
 app = Dash(__name__)
 
 app.layout = html.Div(className="cols_wrapper", children=[
+    dcc.Location(id='url', refresh=False),  # URL location component
     html.Div(className="col_small", children=[
         dash_treeview_antd.TreeView(
             id='input',
@@ -198,7 +199,34 @@ def update_breadcrumb(selected):
         breadcrumb_text = html.A('Biotech', href='/biotech')  # Default value
         return html.P(breadcrumb_text)
 
+
+@app.callback(Output("url", "pathname"), [Input("treeview", "selected_item")])
+def update_url_path(selected_item):
+    if selected_item is not None:
+        return "/" + selected_item["value"]
+    return "/"
+
+
+@app.callback(Output("page-info", "children"), [Input("url", "pathname")])
+def update_page_content(pathname):
+    if pathname:
+        # extract floor number and lab number from URL path
+        parts = pathname.split("/")
+        floor = parts[1].replace("floor", "")
+        lab = parts[2].replace("lab", "")
         
+        # logic to fetch and display information based on URL path
+        floor_info = f"Floor Number: {floor}"
+        lab_info = f"Lab Number: {lab}"
+        
+        return html.Div(
+            children=[
+                html.P(floor_info),
+                html.P(lab_info),
+            ],
+        )
+    return ""
+
 
 @app.callback(Output('output-selected', 'children'),
               [Input('input', 'selected')])
