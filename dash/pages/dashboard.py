@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, html, dcc, Input, Output
+from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
 import plotly.express as px
@@ -98,7 +98,7 @@ layout = html.Div(className="cols_wrapper", children=[
 
 ])
 
-@app.callback(Output('title', 'children'),
+@callback(Output('title', 'children'),
               [Input('input', 'selected')])
 def update_title(selected):
     if selected:
@@ -108,7 +108,7 @@ def update_title(selected):
         return 'Biotech' # Default value
 
 
-@app.callback(Output('breadcrumb', 'children'),
+@callback(Output('breadcrumb', 'children'),
               [Input('input', 'selected')])
 def update_breadcrumb(selected):
     if selected:
@@ -161,24 +161,13 @@ def update_breadcrumb(selected):
 # def _display_selected(selected):
 #     return 'You have checked {}'.format(selected)
 
-app.clientside_callback(
-    """
-    function(input) {
-        console.log(input[0]);
-        window.open(`/${input[0]}`, "_self");
-        return input[0];
-    } 
-    """,
-    Output('output-selected', 'children'),
-    Input('input', 'selected'), prevent_initial_call=True
-)
 
-
-@app.callback(
+@callback(
     Output("occ_graph", "figure"),
     Input("date_selector", "value")
 )
 def update_graph(date):
+    print("hi")
     def create_tuple(response):
         response_data = response.json()
         response_datum = response_data[0]
@@ -257,6 +246,17 @@ def update_graph(date):
     occ_fig = px.bar(occ_data)
     return occ_fig
 
+clientside_callback(
+    """
+    function(input) {
+        console.log(input[0]);
+        window.open(`/pages/dashboard/${input[0]}`, "_self");
+        return input[0];
+    }
+    """,
+    Output('output-selected', 'children'),
+    Input('input', 'selected'), prevent_initial_call=True
+)
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)

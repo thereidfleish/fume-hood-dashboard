@@ -20,9 +20,8 @@ app.layout = html.Div([
     html.Div(
         [
             html.Div(
-                dcc.Link(
-                    f"{page['name']} - {page['path']}", href=page["relative_path"]
-                )
+                dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
+                # html.A('Biotech', href='/biotech')
             )
             for page in dash.page_registry.values()
         ]
@@ -33,7 +32,3 @@ app.layout = html.Div([
 
 if __name__ == '__main__':
 	app.run_server(debug=True)
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
