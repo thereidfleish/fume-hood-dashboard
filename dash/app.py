@@ -12,10 +12,12 @@ from datetime import datetime, timezone, timedelta
 import requests
 import json
 
-app = Dash(__name__, use_pages=True)
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    ])
 
 app.layout = html.Div([
-	html.H1('Multi-page app with Dash Pages'),
+	html.H1('Cornell Fume Hood Dashboard'),
 
     html.Div(
         [
