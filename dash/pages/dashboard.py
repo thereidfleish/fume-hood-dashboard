@@ -101,11 +101,21 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             id="is-loading",
                             children=[
                                 dcc.Graph(
-                                    id="occ_graph",
+                                    id="sash_graph",
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        ),
+                        dcc.Loading(
+                            id="is-loading",
+                            children=[
+                                dcc.Graph(
+                                    id="energy_graph",
                                     # figure=fig
                                 )],
                             type="circle"
                         )
+                        
                     ]),
                 ])
 
@@ -190,57 +200,56 @@ clientside_callback(
     Input('input', 'selected'), prevent_initial_call=True
 )
 
+def create_tuple(response):
+    response_data = response.json()
+    response_datum = response_data[0]
+    response_target = response_datum['target']
+    response_datapoints = response_datum['datapoints']
+    tuple_array = [tuple(x) for x in response_datapoints]
+    npa = np.array(tuple_array, dtype=[
+        ('value', np.double), ('ts', 'datetime64[ms]')])
+    return npa
+
+def fume_query(target, server, start, end):
+    url = "https://ypsu0n34jc.execute-api.us-east-1.amazonaws.com/dev/query"
+    data = {
+        "range": {
+            "from": start,
+            "to": end,
+        },
+        "targets": [
+            {
+                "payload": {
+                    "schema": server,
+                },
+                "target": target
+            }
+        ],
+
+    }
+    request = requests.post(url, json=data)
+    print(request)
+    # print(request.json())
+    return create_tuple(request)
+
+def query_to_list(point, server, start, end):
+    master = fume_query(point, server, start, end)
+
+    list = pd.Series(data=[i[0] for i in master],
+                        index=[i[1] for i in master])
+    print("\n", point, "\n", list)
+
+    list = list[~list.index.duplicated()]
+    print("\n", point, " new\n", list)
+
+    return list
 
 @callback(
-    Output("occ_graph", "figure"),
+    Output("sash_graph", "figure"),
     Input("date_selector", "value")
 )
-def update_graph(date):
-    print("hi")
-
-    def create_tuple(response):
-        response_data = response.json()
-        response_datum = response_data[0]
-        response_target = response_datum['target']
-        response_datapoints = response_datum['datapoints']
-        tuple_array = [tuple(x) for x in response_datapoints]
-        npa = np.array(tuple_array, dtype=[
-            ('value', np.double), ('ts', 'datetime64[ms]')])
-        return npa
-
-    def fume_query(target, server, start, end):
-        url = "https://ypsu0n34jc.execute-api.us-east-1.amazonaws.com/dev/query"
-        data = {
-            "range": {
-                "from": start,
-                "to": end,
-            },
-            "targets": [
-                {
-                    "payload": {
-                        "schema": server,
-                    },
-                    "target": target
-                }
-            ],
-
-        }
-        request = requests.post(url, json=data)
-        print(request)
-        # print(request.json())
-        return create_tuple(request)
-
-    def query_to_list(point, server, start, end):
-        master = fume_query(point, server, start, end)
-
-        list = pd.Series(data=[i[0] for i in master],
-                         index=[i[1] for i in master])
-        print("\n", point, "\n", list)
-
-        list = list[~list.index.duplicated()]
-        print("\n", point, " new\n", list)
-
-        return list
+def update_sash_graph(date):
+    print("sash")
 
     # Arguments: Sash Point, Occ Point, Server Name, Start Time, End Time
     # Returns: Total time that hood sash was open when room is unoccupied, aggregated by hour
@@ -266,21 +275,76 @@ def update_graph(date):
 
         return df["time_open_mins"]
 
-    occ_data = total_time_sash_open_unoccupied(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+    sash_data = total_time_sash_open_unoccupied(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
                                                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
                                                server="biotech_main",
-                                               start=str(
-                                                   datetime(2021, 11, 17, 1)),
+                                               start=str(datetime(2021, 11, 17, 1)),
                                                end=str(datetime(2021, 11, 17, 2)))
-    print(occ_data)
-    occ_fig = px.bar(occ_data,
+    print(sash_data)
+    
+    sash_fig = px.bar(sash_data,
                       labels={
-        "value": "Minutes Open",
+        "value": "",
         "index": "Date and Time",
         "variable": ""},
-        title="Time Sash Open When Room Unoccupied")
+        title = "Time Sash Open (min)")
 
-    return occ_fig
+    return sash_fig
+
+@callback(
+    Output("energy_graph", "figure"),
+    Input("date_selector", "value")
+)
+def update_energy_graph(date):
+    print("energy")
+    
+    def coldorhot(cfm, external, internal, time_interval):
+        if external<=internal:
+            #sensible heating equation
+            return 1.08 * cfm * (internal - external) / (60 / time_interval)
+        if external>internal:
+            #enthalpy of air
+            return 0.24 * cfm /13.333 * 60 * (external - internal) / (60 / time_interval)
+
+    def total_energy(cfm_point, sash_point, occ_point, internal_temp_point, external_temp_point, server, start, end):
+    #external_temp_master = outside_temp(start,end)
+        cfm_list = query_to_list(cfm_point, server, start, end)
+        sash_list = query_to_list(sash_point, server, start, end)
+        occ_list = query_to_list(occ_point, server, start, end)
+        internal_temp_list = query_to_list(internal_temp_point, server, start, end)
+        external_temp_list = query_to_list(external_temp_point, server, start, end)
+
+        df = pd.concat([cfm_list, sash_list, occ_list, internal_temp_list, external_temp_list], axis=1)
+        df.columns = ["cfm", "sash", "occ", "internal_temp", "external_temp"]
+        df["external_temp"] = df["external_temp"].interpolate()
+        
+        time_interval = df.index[1].minute - df.index[0].minute
+
+        df['BTU'] = df.apply(lambda df: coldorhot(df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
+
+        df = df.groupby(pd.Grouper(freq='60Min', label='right')).sum()
+
+        return df["BTU"]
+
+    energy_data = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
+                sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
+                external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
+                server = "biotech_main",
+                start=str(datetime(2021, 11, 17, 1)),
+                end=str(datetime(2021, 11, 17, 2)))
+    print(energy_data)
+
+    energy_fig = px.bar(energy_data,
+                      labels={
+        "value": "",
+        "index": "Date and Time",
+        "variable": ""},
+        title = "Total Energy (BTU)")
+
+    return energy_fig
+
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
