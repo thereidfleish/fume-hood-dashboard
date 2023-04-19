@@ -273,7 +273,13 @@ def update_graph(date):
                                                    datetime(2021, 11, 17, 1)),
                                                end=str(datetime(2021, 11, 17, 2)))
     print(occ_data)
-    occ_fig = px.bar(occ_data)
+    occ_fig = px.bar(occ_data,
+                      labels={
+        "value": "Minutes Open",
+        "index": "Date and Time",
+        "variable": ""},
+        title="Time Sash Open When Room Unoccupied")
+
     return occ_fig
 
 # if __name__ == '__main__':
