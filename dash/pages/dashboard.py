@@ -280,14 +280,15 @@ def update_sash_graph(date):
                                                server="biotech_main",
                                                start=str(datetime(2021, 11, 17, 1)),
                                                end=str(datetime(2021, 11, 17, 2)))
+    print("sash_data")
     print(sash_data)
     
     sash_fig = px.bar(sash_data,
                       labels={
-        "value": "",
+        "value": "Time (min)",
         "index": "Date and Time",
         "variable": ""},
-        title = "Time Sash Open (min)")
+        title = "Time Sash Open When Unoccupied")
 
     return sash_fig
 
@@ -338,10 +339,10 @@ def update_energy_graph(date):
 
     energy_fig = px.bar(energy_data,
                       labels={
-        "value": "",
+        "value": "Energy (BTU)",
         "index": "Date and Time",
         "variable": ""},
-        title = "Total Energy (BTU)")
+        title = "Total Fumehood Energy Consumption")
 
     return energy_fig
 
