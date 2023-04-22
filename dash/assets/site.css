@@ -1,6 +1,5 @@
 body {
     padding: 2em;
-    /* background-color: #000000; */
 }
 
 .col h3 {
@@ -18,10 +17,6 @@ body {
 }
 
 /*cards*/
-/* .card-body {
-    background-color: #292929;
-} */
-
 .card-title {
     color: #609F72
 }
@@ -31,7 +26,7 @@ body {
 }
 
 .card-body {
-background-color: #f3f3f3;
+    background-color: #f3f3f3;
 }
 
 .card-body h6 {
@@ -48,34 +43,10 @@ label {
 
 a {
     color: #609F72;
-} */
+}
 
 #title {
     color: #000000;
     margin-left: 100px;
     font-size: 45px;
-    ;
 }
-
-/* #breadcrumb {
-    color: #ffffff;
-    margin-left: 100px;
-
-} */
-
-/* #breadcrumb a {
-    color: #b8ade6;
-} */
-
-/* #output-selected {
-    color: #ffffff;
-    margin-left: 100px;
-} */
-
-/* label {
-    color: #ffffff;
-} */
-
-/* footer {
-    background-color: #000000;
-} */
