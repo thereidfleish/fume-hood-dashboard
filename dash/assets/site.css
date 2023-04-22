@@ -1,19 +1,61 @@
 body {
     padding: 2em;
+    /* background-color: #000000; */
 }
 
-/* .ant-tree-title {
-    color: #ffffff;
+.col h3 {
+    color: #000000;
+}
+
+.col-3 {
+    background-color: #f3f3f3;
+}
+
+/*side bar*/
+.ant-tree-title {
     font-size: 16px;
     margin-left: .5em;
+}
+
+/*cards*/
+/* .card-body {
+    background-color: #292929;
 } */
 
-/* #title {
-    color: #ffffff;
+.card-title {
+    color: #609F72
+}
+
+.card-text {
+    color: #000000;
+}
+
+.card-body {
+background-color: #f3f3f3;
+}
+
+.card-body h6 {
+    color: #609F72;
+}
+
+h1 {
+    color: #000000;
+}
+
+label {
+    color: #000000;
+}
+
+a {
+    color: #609F72;
+} */
+
+#title {
+    color: #000000;
     margin-left: 100px;
     font-size: 45px;
     ;
-} */
+}
 
 /* #breadcrumb {
     color: #ffffff;
@@ -32,11 +74,6 @@ body {
 
 /* label {
     color: #ffffff;
-} */
-
-/* svg {
-    color: #ffffff;
-    margin-left: 2em;
 } */
 
 /* footer {

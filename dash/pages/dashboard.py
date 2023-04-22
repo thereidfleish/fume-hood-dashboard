@@ -107,12 +107,19 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             type="circle"
                         )
                     ]),
+
+                    dbc.Row([
+                        html.H3("Comparative Metrics"),
+
+                    ])
                 ])
 
             ])
+
         ]),
 
-        html.Div(id='output-selected') # Need this to do the page click callback for some reason!
+        # Need this to do the page click callback for some reason!
+        html.Div(id='output-selected')
     ])
 
 # @callback(Output('title', 'children'),
