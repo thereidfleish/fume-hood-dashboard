@@ -2,18 +2,22 @@ body {
     padding: 2em;
 }
 
+/*titles*/
 .col h3 {
     color: #000000;
 }
 
-.col-3 {
-    background-color: #f3f3f3;
+label {
+    color: #000000;
 }
 
 /*side bar*/
 .ant-tree-title {
     font-size: 16px;
     margin-left: .5em;
+}
+.col-3 {
+    background-color: #f3f3f3;
 }
 
 /*cards*/
@@ -35,18 +39,4 @@ body {
 
 h1 {
     color: #000000;
-}
-
-label {
-    color: #000000;
-}
-
-a {
-    color: #609F72;
-}
-
-#title {
-    color: #000000;
-    margin-left: 100px;
-    font-size: 45px;
 }
