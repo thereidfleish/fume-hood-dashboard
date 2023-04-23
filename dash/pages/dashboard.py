@@ -5,7 +5,8 @@ import dash_treeview_antd
 import plotly.express as px
 import pandas as pd
 import numpy as np
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+from dateutil import tz
 import requests
 import json
 
@@ -256,11 +257,7 @@ def query_to_list(point, server, start, end):
     Input("date_selector", "value")
 )
 def update_sash_graph(date):
-    print("sash")
-
-    # Arguments: Sash Point, Occ Point, Server Name, Start Time, End Time
-    # Returns: Total time that hood sash was open when room is unoccupied, aggregated by hour
-    def total_time_sash_open_unoccupied(sash_point, occ_point, server, start, end):
+    def total_time_sash_open(sash_point, occ_point, server, start, end, is_occupied):
         sash_list = query_to_list(sash_point, server, start, end)
         occ_list = query_to_list(occ_point, server, start, end)
 
@@ -273,29 +270,43 @@ def update_sash_graph(date):
         # display(df["sash"].value_counts())
 
         # from running the above on a large time difference, 1.2 inches is the most common smallest value
-        df["time_open_mins"] = np.where(
-            (df["sash"] > 1.2) & (df["occ"] == 0), time_interval, 0)
+        df["time_open_mins"] = np.where((df["sash"] > 1.2), time_interval, 0)
 
         df = df.dropna()
+        df.index = df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+
+        df = df[df['occ']==int(is_occupied)]
 
         df = df.groupby(pd.Grouper(freq='60Min', label='right')).sum()
 
         return df["time_open_mins"]
 
-    sash_data = total_time_sash_open_unoccupied(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
-                                               occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
-                                               server="biotech_main",
-                                               start=str(datetime(2021, 11, 17, 1)),
-                                               end=str(datetime(2021, 11, 17, 2)))
-    print("sash_data")
-    print(sash_data)
+    sash_data_occ = total_time_sash_open(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                server="biotech_main",
+                                start = str(datetime(2021, 11, 17)),
+                                end = str(datetime(2021, 11, 18)),
+                                is_occupied=True)
+
+    sash_data_unocc = total_time_sash_open(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                                    occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                    server="biotech_main",
+                                    start = str(datetime(2021, 11, 17)),
+                                    end = str(datetime(2021, 11, 18)),
+                                    is_occupied=False)
+
+    print(sash_data_occ)
+    print(sash_data_unocc)
+
+    final_df = pd.DataFrame(data={"occ": sash_data_occ, "unocc" : sash_data_unocc})
+    final_df = final_df.fillna(0)
     
-    sash_fig = px.bar(sash_data,
+    sash_fig = px.bar(final_df,
                       labels={
         "value": "Time (min)",
         "index": "Date and Time",
         "variable": ""},
-        title = "Time Sash Open When Unoccupied")
+        title = "Time Sash Open")
 
     return sash_fig
 
@@ -304,8 +315,6 @@ def update_sash_graph(date):
     Input("date_selector", "value")
 )
 def update_energy_graph(date):
-    print("energy")
-    
     def coldorhot(cfm, external, internal, time_interval):
         if external<=internal:
             #sensible heating equation
@@ -314,8 +323,8 @@ def update_energy_graph(date):
             #enthalpy of air
             return 0.24 * cfm /13.333 * 60 * (external - internal) / (60 / time_interval)
 
-    def total_energy(cfm_point, sash_point, occ_point, internal_temp_point, external_temp_point, server, start, end):
-    #external_temp_master = outside_temp(start,end)
+    def total_energy(cfm_point, sash_point, occ_point, internal_temp_point, external_temp_point, server, start, end, is_occupied):
+        #external_temp_master = outside_temp(start,end)
         cfm_list = query_to_list(cfm_point, server, start, end)
         sash_list = query_to_list(sash_point, server, start, end)
         occ_list = query_to_list(occ_point, server, start, end)
@@ -324,27 +333,47 @@ def update_energy_graph(date):
 
         df = pd.concat([cfm_list, sash_list, occ_list, internal_temp_list, external_temp_list], axis=1)
         df.columns = ["cfm", "sash", "occ", "internal_temp", "external_temp"]
+
         df["external_temp"] = df["external_temp"].interpolate()
         
         time_interval = df.index[1].minute - df.index[0].minute
 
         df['BTU'] = df.apply(lambda df: coldorhot(df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
+        df.index = df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+
+        df = df[df['occ']==int(is_occupied)]
+
+        print("\nFinal Data Frame: ")
 
         df = df.groupby(pd.Grouper(freq='60Min', label='right')).sum()
 
         return df["BTU"]
 
-    energy_data = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
+    energy_data_occ = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
                 sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
                 occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
                 internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
                 external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
                 server = "biotech_main",
-                start=str(datetime(2021, 11, 17, 1)),
-                end=str(datetime(2021, 11, 17, 2)))
-    print(energy_data)
+                start=str(datetime(2021, 11, 17)),
+                end=str(datetime(2021, 11, 18)), is_occupied=True)
+    
+    energy_data_unocc = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
+                sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
+                external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
+                server = "biotech_main",
+                start=str(datetime(2021, 11, 17)),
+                end=str(datetime(2021, 11, 18)), is_occupied=False)
+    print(energy_data_occ)
+    print(energy_data_unocc)
 
-    energy_fig = px.bar(energy_data,
+    final_df = pd.DataFrame(data={"occ": energy_data_occ, "unocc" : energy_data_unocc})
+    final_df = final_df.fillna(0)
+
+
+    energy_fig = px.bar(final_df,
                       labels={
         "value": "Energy (BTU)",
         "index": "Date and Time",
