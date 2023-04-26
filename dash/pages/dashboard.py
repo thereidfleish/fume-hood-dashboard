@@ -306,7 +306,9 @@ def update_sash_graph(date):
         "value": "Time (min)",
         "index": "Date and Time",
         "variable": ""},
-        title = "Time Sash Open")
+        title = "Time Sash Open",
+        color_discrete_map = {'occ': 'mediumseagreen', 'unocc': 'pink'
+    })
 
     return sash_fig
 
@@ -372,13 +374,14 @@ def update_energy_graph(date):
     final_df = pd.DataFrame(data={"occ": energy_data_occ, "unocc" : energy_data_unocc})
     final_df = final_df.fillna(0)
 
-
     energy_fig = px.bar(final_df,
                       labels={
         "value": "Energy (BTU)",
         "index": "Date and Time",
         "variable": ""},
-        title = "Total Fumehood Energy Consumption")
+        title = "Total Fumehood Energy Consumption",
+        color_discrete_map = {'occ': 'mediumseagreen', 'unocc': 'pink'
+        })
 
     return energy_fig
 
