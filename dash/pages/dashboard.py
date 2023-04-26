@@ -72,7 +72,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     [
                                         html.H4("3rd Best",
                                                 className="card-title"),
-                                        html.H6("On Olin Floor 3"),
+                                        html.H6("On Biotech Floor 1"),
                                         html.P(
                                             "For least avg. energy when unoccupied (2000 BTU/hr)",
                                             className="card-text",
@@ -87,9 +87,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     [
                                         html.H4("1st Best",
                                                 className="card-title"),
-                                        html.H6("On Olin Floor 3"),
+                                        html.H6("On Biotech Floor 1"),
                                         html.P(
-                                            "For Least avg. time open when unoccupied (0 min/hr)",
+                                            "For Least avg. time open when unoccupied (9 min/hr)",
                                             className="card-text",
                                         )
                                     ]
