@@ -116,13 +116,43 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 )],
                             type="circle"
                         )
-                        
+
                     ]),
 
                     dbc.Row([
                         html.H3("Comparative Metrics"),
+                        dbc.Col([
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="comparative_energyGraph",
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            ),
+                            dbc.Row([
+                                html.P("Olin 301's energy usage is 50 % higher than the most energy efficient lab on campus(Olin 303). ")
+                            ])
+                        ]),
+                        dbc.Col([
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="comparative_sashGraph",
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            ),
+                            dbc.Row([html.P(
+                                "Olin 301's sash position is 60% higher than the least open sash on campus (Olin 302).")
+                            ])
 
-                    ])
+                        ])
+
+                    ]),
+
                 ])
 
             ])
@@ -208,6 +238,7 @@ clientside_callback(
     Input('input', 'selected'), prevent_initial_call=True
 )
 
+
 def create_tuple(response):
     response_data = response.json()
     response_datum = response_data[0]
@@ -217,6 +248,7 @@ def create_tuple(response):
     npa = np.array(tuple_array, dtype=[
         ('value', np.double), ('ts', 'datetime64[ms]')])
     return npa
+
 
 def fume_query(target, server, start, end):
     url = "https://ypsu0n34jc.execute-api.us-east-1.amazonaws.com/dev/query"
@@ -240,11 +272,12 @@ def fume_query(target, server, start, end):
     # print(request.json())
     return create_tuple(request)
 
+
 def query_to_list(point, server, start, end):
     master = fume_query(point, server, start, end)
 
     list = pd.Series(data=[i[0] for i in master],
-                        index=[i[1] for i in master])
+                     index=[i[1] for i in master])
     print("\n", point, "\n", list)
 
     list = list[~list.index.duplicated()]
@@ -252,7 +285,8 @@ def query_to_list(point, server, start, end):
 
     return list
 
-@callback(
+
+@ callback(
     Output("sash_graph", "figure"),
     Input("date_selector", "value")
 )
@@ -312,32 +346,36 @@ def update_sash_graph(date):
 
     return sash_fig
 
-@callback(
+
+@ callback(
     Output("energy_graph", "figure"),
     Input("date_selector", "value")
 )
 def update_energy_graph(date):
     def coldorhot(cfm, external, internal, time_interval):
-        if external<=internal:
-            #sensible heating equation
+        if external <= internal:
+            # sensible heating equation
             return 1.08 * cfm * (internal - external) / (60 / time_interval)
-        if external>internal:
-            #enthalpy of air
-            return 0.24 * cfm /13.333 * 60 * (external - internal) / (60 / time_interval)
+        if external > internal:
+            # enthalpy of air
+            return 0.24 * cfm / 13.333 * 60 * (external - internal) / (60 / time_interval)
 
     def total_energy(cfm_point, sash_point, occ_point, internal_temp_point, external_temp_point, server, start, end, is_occupied):
         #external_temp_master = outside_temp(start,end)
         cfm_list = query_to_list(cfm_point, server, start, end)
         sash_list = query_to_list(sash_point, server, start, end)
         occ_list = query_to_list(occ_point, server, start, end)
-        internal_temp_list = query_to_list(internal_temp_point, server, start, end)
-        external_temp_list = query_to_list(external_temp_point, server, start, end)
+        internal_temp_list = query_to_list(
+            internal_temp_point, server, start, end)
+        external_temp_list = query_to_list(
+            external_temp_point, server, start, end)
 
-        df = pd.concat([cfm_list, sash_list, occ_list, internal_temp_list, external_temp_list], axis=1)
+        df = pd.concat([cfm_list, sash_list, occ_list,
+                        internal_temp_list, external_temp_list], axis=1)
         df.columns = ["cfm", "sash", "occ", "internal_temp", "external_temp"]
 
         df["external_temp"] = df["external_temp"].interpolate()
-        
+
         time_interval = df.index[1].minute - df.index[0].minute
 
         df['BTU'] = df.apply(lambda df: coldorhot(df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
@@ -385,6 +423,47 @@ def update_energy_graph(date):
 
     return energy_fig
 
+
+@ callback(
+    Output("comparative_energyGraph", "figure"),
+    Input("date_selector", "value")
+)
+def update_comparative_energyGraph(data):
+    df = pd.DataFrame({
+        "Floors": ["Olin 301", "Best Lab"],
+        "Energy Used": [200, 125],
+    })
+
+    comparative_data = px.bar(df,
+                              labels={"Energy": "Energy Used",
+                                      "Floors": "Floor"},
+                              x="Energy Used",
+                              y="Floors",
+                              orientation='h',
+                              title="Average Energy Used (BTU/Hr)"
+                              )
+    return comparative_data
+
+
+@ callback(
+    Output("comparative_sashGraph", "figure"),
+    Input("date_selector", "value")
+)
+def update_comparative_sashGraph(data):
+    df = pd.DataFrame({
+        "Floors": ["Olin 301", "Best Lab"],
+        "Sash Position": [10, 5],
+    })
+
+    comparative_data = px.bar(df,
+                              labels={"Sash Position": "Sash Position",
+                                      "Floors": "Floor"},
+                              x="Sash Position",
+                              y="Floors",
+                              orientation='h',
+                              title="Average Sash Position (in)"
+                              )
+    return comparative_data
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
