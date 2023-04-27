@@ -47,7 +47,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
             ], width=3),
 
             dbc.Col([
-                dbc.Row([
+                dbc.Row(className="mb-3", children=[
                     dbc.Col([
                         html.H1(', '.join(filter(None, (building, floor, lab))))
                     ]),
@@ -70,7 +70,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             [
                                 dbc.CardBody(
                                     [
-                                        html.H4("3rd Best",
+                                        html.H4("3rd Best 🥉",
                                                 className="card-title"),
                                         html.H6("On Biotech Floor 1"),
                                         html.P(
@@ -85,16 +85,54 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             [
                                 dbc.CardBody(
                                     [
-                                        html.H4("1st Best",
+                                        html.H4("1st Best 🥇",
                                                 className="card-title"),
                                         html.H6("On Biotech Floor 1"),
                                         html.P(
-                                            "For Least avg. time open when unoccupied (9 min/hr)",
+                                            "For least avg. time open when unoccupied (9 min/hr)",
                                             className="card-text",
                                         )
                                     ]
                                 ),
+                            ]),
+
+                        html.H3(className="mt-3",
+                                children="Comparative Metrics"),
+
+                        dbc.Col([
+                                dcc.Loading(
+                                    id="is-loading",
+                                    children=[
+                                        dcc.Graph(
+                                            id="comparative_energyGraph",
+                                            style={'border-radius': '5px',
+                                                   'background-color': '#f3f3f3'}
+                                            # figure=fig
+                                        )],
+                                    type="circle"
+                                ),
+                                dbc.Row([
+                                    html.P(
+                                        "Biotech 202's energy usage is 35% higher than the most energy efficient lab on campus (Olin 303). ")
+                                ])
+                                ]),
+                        dbc.Col([
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="comparative_sashGraph",
+                                        style={'border-radius': '5px',
+                                               'background-color': '#f3f3f3'}
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            ),
+                            dbc.Row([html.P(
+                                "Biotech 202's sash position is 60% higher than the least open sash on campus (Baker B10).")
                             ])
+
+                        ])
                     ]),
                     dbc.Col([
                         html.H3("Graphs"),
@@ -102,16 +140,23 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             id="is-loading",
                             children=[
                                 dcc.Graph(
-                                    id="sash_graph",
+                                    id="energy_graph",
+                                    # eventually change these styles into a classname to put in css file
+                                    style={
+                                        'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
                                     # figure=fig
                                 )],
                             type="circle"
                         ),
+
                         dcc.Loading(
                             id="is-loading",
                             children=[
                                 dcc.Graph(
-                                    id="energy_graph",
+                                    id="sash_graph",
+                                    style={'border-radius': '5px',
+                                           'background-color': '#f3f3f3'}
+
                                     # figure=fig
                                 )],
                             type="circle"
@@ -120,36 +165,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     ]),
 
                     dbc.Row([
-                        html.H3("Comparative Metrics"),
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="comparative_energyGraph",
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
-                            dbc.Row([
-                                html.P("Olin 301's energy usage is 50 % higher than the most energy efficient lab on campus(Olin 303). ")
-                            ])
-                        ]),
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="comparative_sashGraph",
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
-                            dbc.Row([html.P(
-                                "Olin 301's sash position is 60% higher than the least open sash on campus (Olin 302).")
-                            ])
 
-                        ])
+
 
                     ]),
 
@@ -307,42 +324,47 @@ def update_sash_graph(date):
         df["time_open_mins"] = np.where((df["sash"] > 1.2), time_interval, 0)
 
         df = df.dropna()
-        df.index = df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+        df.index = df.index.map(lambda x: x.to_pydatetime().replace(
+            tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-        df = df[df['occ']==int(is_occupied)]
+        df = df[df['occ'] == int(is_occupied)]
 
         df = df.groupby(pd.Grouper(freq='60Min', label='right')).sum()
 
         return df["time_open_mins"]
 
     sash_data_occ = total_time_sash_open(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
-                                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
-                                server="biotech_main",
-                                start = str(datetime(2021, 11, 17)),
-                                end = str(datetime(2021, 11, 18)),
-                                is_occupied=True)
+                                         occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                         server="biotech_main",
+                                         start=str(datetime(2021, 11, 17)),
+                                         end=str(datetime(2021, 11, 18)),
+                                         is_occupied=True)
 
     sash_data_unocc = total_time_sash_open(sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
-                                    occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
-                                    server="biotech_main",
-                                    start = str(datetime(2021, 11, 17)),
-                                    end = str(datetime(2021, 11, 18)),
-                                    is_occupied=False)
+                                           occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                           server="biotech_main",
+                                           start=str(datetime(2021, 11, 17)),
+                                           end=str(datetime(2021, 11, 18)),
+                                           is_occupied=False)
 
     print(sash_data_occ)
     print(sash_data_unocc)
 
-    final_df = pd.DataFrame(data={"occ": sash_data_occ, "unocc" : sash_data_unocc})
+    final_df = pd.DataFrame(
+        data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
-    
+
     sash_fig = px.bar(final_df,
                       labels={
-        "value": "Time (min)",
-        "index": "Date and Time",
-        "variable": ""},
-        title = "Time Sash Open",
-        color_discrete_map = {'occ': 'mediumseagreen', 'unocc': 'pink'
-    })
+                          "value": "Time (min)",
+                          "index": "Date and Time",
+                          "variable": ""},
+                      title="Time Sash Open",
+                      color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
+
+    sash_fig.update_layout(
+        margin=dict(t=55, b=20),
+        paper_bgcolor="rgba(0,0,0,0)")
 
     return sash_fig
 
@@ -378,10 +400,12 @@ def update_energy_graph(date):
 
         time_interval = df.index[1].minute - df.index[0].minute
 
-        df['BTU'] = df.apply(lambda df: coldorhot(df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
-        df.index = df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+        df['BTU'] = df.apply(lambda df: coldorhot(
+            df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
+        df.index = df.index.map(lambda x: x.to_pydatetime().replace(
+            tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-        df = df[df['occ']==int(is_occupied)]
+        df = df[df['occ'] == int(is_occupied)]
 
         print("\nFinal Data Frame: ")
 
@@ -390,36 +414,41 @@ def update_energy_graph(date):
         return df["BTU"]
 
     energy_data_occ = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
-                sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
-                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
-                internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
-                external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
-                server = "biotech_main",
-                start=str(datetime(2021, 11, 17)),
-                end=str(datetime(2021, 11, 18)), is_occupied=True)
-    
+                                   sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                                   occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                   internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
+                                   external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
+                                   server="biotech_main",
+                                   start=str(datetime(2021, 11, 17)),
+                                   end=str(datetime(2021, 11, 18)), is_occupied=True)
+
     energy_data_unocc = total_energy(cfm_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hoodvalve_flow/trend_log",
-                sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
-                occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
-                internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
-                external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
-                server = "biotech_main",
-                start=str(datetime(2021, 11, 17)),
-                end=str(datetime(2021, 11, 18)), is_occupied=False)
+                                     sash_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash",
+                                     occ_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/occ_trend",
+                                     internal_temp_point="#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/zone/zone_temp/trend_log",
+                                     external_temp_point="#biotech/ground_flr_mech/building_hydronic_heating_syatems/reheat_heat_exchanger/oat",
+                                     server="biotech_main",
+                                     start=str(datetime(2021, 11, 17)),
+                                     end=str(datetime(2021, 11, 18)), is_occupied=False)
     print(energy_data_occ)
     print(energy_data_unocc)
 
-    final_df = pd.DataFrame(data={"occ": energy_data_occ, "unocc" : energy_data_unocc})
+    final_df = pd.DataFrame(
+        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
     final_df = final_df.fillna(0)
 
     energy_fig = px.bar(final_df,
-                      labels={
-        "value": "Energy (BTU)",
-        "index": "Date and Time",
-        "variable": ""},
-        title = "Total Fumehood Energy Consumption",
-        color_discrete_map = {'occ': 'mediumseagreen', 'unocc': 'pink'
-        })
+                        labels={
+                            "value": "Energy (BTU)",
+                            "index": "Date and Time",
+                            "variable": ""},
+                        title="Total Fumehood Energy Consumption",
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'
+                                            })
+
+    energy_fig.update_layout(
+        margin=dict(t=55, b=20),
+        paper_bgcolor="rgba(0,0,0,0)")
 
     return energy_fig
 
@@ -430,19 +459,28 @@ def update_energy_graph(date):
 )
 def update_comparative_energyGraph(data):
     df = pd.DataFrame({
-        "Floors": ["Olin 301", "Best Lab"],
+        "Lab": ["Biotech 202", "Best Lab"],
         "Energy Used": [200, 125],
     })
 
-    comparative_data = px.bar(df,
-                              labels={"Energy": "Energy Used",
-                                      "Floors": "Floor"},
-                              x="Energy Used",
-                              y="Floors",
-                              orientation='h',
-                              title="Average Energy Used (BTU/Hr)"
-                              )
-    return comparative_data
+    comparative_data_energy = px.bar(df,
+                                     labels={"Energy": "Energy Used",
+                                             "Lab": "Lab"},
+                                     x="Energy Used",
+                                     y="Lab",
+                                     color="Lab",
+                                     orientation='h',
+                                     title="Average Energy Used (BTU/Hr)",
+                                     color_discrete_sequence=[
+                                         "#d62728", "mediumseagreen"],
+                                     height=275
+                                     )
+
+    comparative_data_energy.update_layout(
+        margin=dict(t=55, b=20),
+        paper_bgcolor="rgba(0,0,0,0)")
+
+    return comparative_data_energy
 
 
 @ callback(
@@ -451,19 +489,28 @@ def update_comparative_energyGraph(data):
 )
 def update_comparative_sashGraph(data):
     df = pd.DataFrame({
-        "Floors": ["Olin 301", "Best Lab"],
+        "Lab": ["Biotech 202", "Best Lab"],
         "Sash Position": [10, 5],
     })
 
-    comparative_data = px.bar(df,
-                              labels={"Sash Position": "Sash Position",
-                                      "Floors": "Floor"},
-                              x="Sash Position",
-                              y="Floors",
-                              orientation='h',
-                              title="Average Sash Position (in)"
-                              )
-    return comparative_data
+    comparative_data_sash = px.bar(df,
+                                   labels={"Sash Position": "Sash Position",
+                                           "Lab": "Lab"},
+                                   x="Sash Position",
+                                   y="Lab",
+                                   color="Lab",
+                                   orientation='h',
+                                   title="Average Sash Position (in)",
+                                   color_discrete_sequence=[
+                                       "#d62728", "mediumseagreen"],
+                                   height=275
+                                   )
+
+    comparative_data_sash.update_layout(
+        margin=dict(t=55, b=20),
+        paper_bgcolor="rgba(0,0,0,0)")
+
+    return comparative_data_sash
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
