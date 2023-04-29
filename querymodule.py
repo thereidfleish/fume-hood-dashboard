@@ -101,21 +101,21 @@ def total_energy(cfm_point, sash_point, occ_point, internal_temp_point, external
 
     df = pd.concat([cfm_list, sash_list, occ_list, internal_temp_list, external_temp_list], axis=1)
     df.columns = ["cfm", "sash", "occ", "internal_temp", "external_temp"]
-    display(df)
+    #display(df)
 
     df["external_temp"] = df["external_temp"].interpolate()
-    display(df)
+    #display(df)
 
     time_interval = df.index[1].minute - df.index[0].minute
 
     df['BTU'] = df.apply(lambda df: coldorhot(df['cfm'], df['external_temp'], df['internal_temp'], time_interval=time_interval), axis=1)
     df.index = df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
-    display(df)
+    #display(df)
 
     df = df[df['occ']==int(is_occupied)]
 
-    print("\nFinal Data Frame: ")
-    display(df)
+    #print("\nFinal Data Frame: ")
+    #display(df)
 
     df = df.groupby(pd.Grouper(freq='60Min', label='right')).sum()
 
