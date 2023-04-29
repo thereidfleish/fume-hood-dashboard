@@ -1,6 +1,7 @@
 import dash
 from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
 import dash_treeview_antd
 import plotly.express as px
 import pandas as pd
@@ -16,11 +17,6 @@ dash.register_page(__name__)
 
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
-    if lab == None:
-        return html.Div([
-            html.H3("Showing when no lab is selected"),
-        ])
-    else:
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
 
@@ -256,13 +252,17 @@ def update_sash_graph(date):
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
 
-    sash_fig = px.bar(final_df,
+    sash_fig = px.bar(final_df, y = ['occ', 'unocc'],
                       labels={
                           "value": "Time (min)",
                           "index": "Date and Time",
                           "variable": ""},
                       title="Time Sash Open",
                       color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
+
+    #sash_fig.update_traces(hoverinfo="none", hovertemplate=None)
+
+    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{y} minutes'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
@@ -297,6 +297,7 @@ def update_energy_graph(date):
     energy_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
+    
 
     return energy_fig
 
