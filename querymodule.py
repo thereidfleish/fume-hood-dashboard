@@ -47,10 +47,10 @@ def query_to_list(point, server, start, end):
     master = fume_query(point, server, start, end)
 
     list = pd.Series(data=[i[0] for i in master], index=[i[1] for i in master])
-    print("\n", point, "\n", list)
+    #print("\n", point, "\n", list)
 
     list = list[~list.index.duplicated()]
-    print("\n", point, " new\n", list)
+    #print("\n", point, " new\n", list)
 
     return list
 
