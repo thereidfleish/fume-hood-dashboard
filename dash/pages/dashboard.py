@@ -242,12 +242,12 @@ def synthetic_query(target, start, end):
 )
 def update_sash_graph(date):
     sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
-                                    start=str(datetime(2021, 11, 16)),
-                                    end=str(datetime(2021, 11, 20)))
+                                    start=str(datetime(2023, 4, 22)),
+                                    end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
-                                      start=str(datetime(2021, 11, 16)),
-                                      end=str(datetime(2021, 11, 20)))
+                                      start=str(datetime(2023, 4, 22)),
+                                    end=str(datetime.now()))
 
     print(sash_data_occ)
     print(sash_data_unocc)
@@ -255,6 +255,7 @@ def update_sash_graph(date):
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
     sash_fig = px.bar(final_df,
                       labels={
