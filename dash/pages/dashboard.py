@@ -242,11 +242,11 @@ def synthetic_query(target, start, end):
 )
 def update_sash_graph(date):
     sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
-                                    start=str(datetime(2023, 4, 22)),
+                                    start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
-                                      start=str(datetime(2023, 4, 22)),
+                                      start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
     print(sash_data_occ)
@@ -277,7 +277,13 @@ def update_sash_graph(date):
     Input("date_selector", "value")
 )
 def update_energy_graph(date):
-    # TODO
+    energy_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.occ",
+                                    start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
+
+    energy_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.unocc",
+                                      start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     print(energy_data_occ)
     print(energy_data_unocc)
@@ -285,6 +291,7 @@ def update_energy_graph(date):
     final_df = pd.DataFrame(
         data={"occ": energy_data_occ, "unocc": energy_data_unocc})
     final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
     energy_fig = px.bar(final_df,
                         labels={
