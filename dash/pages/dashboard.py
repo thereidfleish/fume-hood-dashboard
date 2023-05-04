@@ -6,6 +6,7 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from datetime import timedelta
 from dateutil import tz
 import requests
 import json
@@ -16,175 +17,170 @@ dash.register_page(__name__)
 
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
-    if lab == None:
-        return html.Div([
-            html.H3("Showing when no lab is selected"),
-        ])
-    else:
-        return html.Div([
-            # dcc.Location(id='url', refresh=False),  # URL location component
+    return html.Div([
+        # dcc.Location(id='url', refresh=False),  # URL location component
 
-            dbc.Row([
-                dbc.Col([
-                    dash_treeview_antd.TreeView(
-                        id='input',
-                        multiple=False,
-                        checkable=False,
-                        checked=[],
-                        selected=[],
-                        expanded=["?building=biotech"],
-                        data={
-                            'title': 'Biotech',
-                            'key': '?building=biotech',
-                            'children': [{
-                                'title': 'Floor 1',
-                                'key': '?building=biotech&floor=1',
-                                'children': [
-                                    {'title': 'Lab 1',
-                                     'key': '?building=biotech&floor=1&lab=1'},
-                                    {'title': 'Lab 2',
-                                     'key': '?building=biotech&floor=1&lab=2'},
-                                    {'title': 'Lab 3',
-                                     'key': '?building=biotech&floor=1&lab=3'},
-                                ],
-                            }]}
-                    )
-                ], width=3),
+        dbc.Row([
+            dbc.Col([
+                dash_treeview_antd.TreeView(
+                    id='input',
+                    multiple=False,
+                    checkable=False,
+                    checked=[],
+                    selected=[],
+                    expanded=["?building=biotech"],
+                    data={
+                        'title': 'Biotech',
+                        'key': '?building=biotech',
+                        'children': [{
+                            'title': 'Floor 1',
+                            'key': '?building=biotech&floor=1',
+                            'children': [
+                                {'title': 'Lab 1',
+                                    'key': '?building=biotech&floor=1&lab=1'},
+                                {'title': 'Lab 2',
+                                    'key': '?building=biotech&floor=1&lab=2'},
+                                {'title': 'Lab 3',
+                                    'key': '?building=biotech&floor=1&lab=3'},
+                            ],
+                        }]}
+                )
+            ], width=3),
 
-                dbc.Col([
-                    dbc.Row(className="mb-3", children=[
-                        dbc.Col([
-                            html.H1(
-                                ', '.join(filter(None, (building, floor, lab))))
-                        ]),
-                        dbc.Col([
-                            html.Label('Metric'),
-                            dcc.Dropdown(["BTU"],
-                                         "BTU", id="metric_selector")
-                        ]),
-                        dbc.Col([
-                            html.Label('Date Range'),
-                            dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                         "Last week", id="date_selector")
-                        ])
+            dbc.Col([
+                dbc.Row(className="mb-3", children=[
+                    dbc.Col([
+                        html.H1(
+                            ', '.join(filter(None, (building, floor, lab))))
                     ]),
+                    dbc.Col([
+                        html.Label('Metric'),
+                        dcc.Dropdown(["BTU"],
+                                        "BTU", id="metric_selector")
+                    ]),
+                    dbc.Col([
+                        html.Label('Date Range'),
+                        dcc.Dropdown(["Last day", "Last week", "Last month"],
+                                        "Last week", id="date_selector")
+                    ])
+                ]),
 
-                    dbc.Row([
-                        dbc.Col([
-                            html.H3("Featured Rankings"),
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("3rd Best 🥉",
-                                                    className="card-title"),
-                                            html.H6("On Biotech Floor 1"),
-                                            html.P(
-                                                "For least avg. energy when unoccupied (2000 BTU/hr)",
-                                                className="card-text",
-                                            )
-                                        ]
-                                    ),
-                                ], className="mb-2"),
-
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("1st Best 🥇",
-                                                    className="card-title"),
-                                            html.H6("On Biotech Floor 1"),
-                                            html.P(
-                                                "For least avg. time open when unoccupied (9 min/hr)",
-                                                className="card-text",
-                                            )
-                                        ]
-                                    ),
-                                ]),
-
-                            html.H3(className="mt-3",
-                                    children="Comparative Metrics"),
-
-                            dbc.Col([
-                                    dcc.Loading(
-                                        id="is-loading",
-                                        children=[
-                                            dcc.Graph(
-                                                id="comparative_energyGraph",
-                                                style={'border-radius': '5px',
-                                                       'background-color': '#f3f3f3'}
-                                                # figure=fig
-                                            )],
-                                        type="circle"
-                                    ),
-                                    dbc.Row([
+                dbc.Row([
+                    dbc.Col([
+                        html.H3("Featured Rankings"),
+                        dbc.Card(
+                            [
+                                dbc.CardBody(
+                                    [
+                                        html.H4("3rd Best 🥉",
+                                                className="card-title"),
+                                        html.H6("On Biotech Floor 1"),
                                         html.P(
-                                            "Biotech 202's energy usage is 35% higher than the most energy efficient lab on campus (Olin 303). ")
-                                    ])
-                                    ]),
-                            dbc.Col([
+                                            "For least avg. energy when unoccupied (2000 BTU/hr)",
+                                            className="card-text",
+                                        )
+                                    ]
+                                ),
+                            ], className="mb-2"),
+
+                        dbc.Card(
+                            [
+                                dbc.CardBody(
+                                    [
+                                        html.H4("1st Best 🥇",
+                                                className="card-title"),
+                                        html.H6("On Biotech Floor 1"),
+                                        html.P(
+                                            "For least avg. time open when unoccupied (9 min/hr)",
+                                            className="card-text",
+                                        )
+                                    ]
+                                ),
+                            ]),
+
+                        html.H3(className="mt-3",
+                                children="Comparative Metrics"),
+
+                        dbc.Col([
                                 dcc.Loading(
                                     id="is-loading",
                                     children=[
                                         dcc.Graph(
-                                            id="comparative_sashGraph",
+                                            id="comparative_energyGraph",
                                             style={'border-radius': '5px',
-                                                   'background-color': '#f3f3f3'}
+                                                    'background-color': '#f3f3f3'}
                                             # figure=fig
                                         )],
                                     type="circle"
                                 ),
-                                dbc.Row([html.P(
-                                    "Biotech 202's sash position is 60% higher than the least open sash on campus (Baker B10).")
+                                dbc.Row([
+                                    html.P(
+                                        "Biotech 202's energy usage is 35% higher than the most energy efficient lab on campus (Olin 303). ")
                                 ])
-
-                            ])
-                        ]),
+                                ]),
                         dbc.Col([
-                            html.H3("Graphs"),
                             dcc.Loading(
                                 id="is-loading",
                                 children=[
                                     dcc.Graph(
-                                        id="energy_graph",
-                                        # eventually change these styles into a classname to put in css file
-                                        style={
-                                            'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                        id="comparative_sashGraph",
+                                        style={'border-radius': '5px',
+                                                'background-color': '#f3f3f3'}
                                         # figure=fig
                                     )],
                                 type="circle"
                             ),
+                            dbc.Row([html.P(
+                                "Biotech 202's sash position is 60% higher than the least open sash on campus (Baker B10).")
+                            ])
 
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="sash_graph",
-                                        style={'border-radius': '5px',
-                                               'background-color': '#f3f3f3'}
+                        ])
+                    ]),
+                    dbc.Col([
+                        html.H3("Graphs"),
+                        dcc.Loading(
+                            id="is-loading",
+                            children=[
+                                dcc.Graph(
+                                    id="energy_graph",
+                                    # eventually change these styles into a classname to put in css file
+                                    style={
+                                        'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        ),
 
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            )
+                        dcc.Loading(
+                            id="is-loading",
+                            children=[
+                                dcc.Graph(
+                                    id="sash_graph",
+                                    style={'border-radius': '5px',
+                                            'background-color': '#f3f3f3'}
 
-                        ]),
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        )
 
-                        dbc.Row([
+                    ]),
+
+                    dbc.Row([
 
 
 
-                        ]),
-
-                    ])
+                    ]),
 
                 ])
 
-            ]),
+            ])
 
-            # Need this to do the page click callback for some reason!
-            html.Div(id='output-selected')
-        ])
+        ]),
+
+        # Need this to do the page click callback for some reason!
+        html.Div(id='output-selected')
+    ])
 
 clientside_callback(
     """
@@ -241,13 +237,21 @@ def synthetic_query(target, start, end):
     Input("date_selector", "value")
 )
 def update_sash_graph(date):
+    days = 0
+    if date == "Last day":
+        days = 1
+    elif date == "Last week":
+        days = 7
+    elif date == "Last month":
+        days = 30
+
     sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
-                                    start=str(datetime(2021, 11, 16)),
-                                    end=str(datetime(2021, 11, 20)))
+                                    start=str(datetime.now() - timedelta(days)),
+                                    end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
-                                      start=str(datetime(2021, 11, 16)),
-                                      end=str(datetime(2021, 11, 20)))
+                                      start=str(datetime.now() - timedelta(days)),
+                                      end=str(datetime.now()))
 
     print(sash_data_occ)
     print(sash_data_unocc)
