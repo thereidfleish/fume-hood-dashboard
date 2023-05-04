@@ -16,11 +16,11 @@ dash.register_page(__name__)
 
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
-    if lab == None:
-        return html.Div([
-            html.H3("Showing when no lab is selected"),
-        ])
-    else:
+    # if lab == None:
+    #     return html.Div([
+    #         html.H3("Showing when no lab is selected"),
+    #     ])
+    # else:
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
 
