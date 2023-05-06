@@ -18,7 +18,114 @@ dash.register_page(__name__)
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     if lab == None:
         return html.Div([
-            html.H3("Showing when no lab is selected"),
+            dbc.Row([
+                dbc.Col([
+                    dash_treeview_antd.TreeView(
+                        id='input',
+                        multiple=False,
+                        checkable=False,
+                        checked=[],
+                        selected=[],
+                        expanded=["?building=biotech"],
+                        data={
+                            'title': 'Biotech',
+                            'key': '?building=biotech',
+                            'children': [{
+                                'title': 'Floor 1',
+                                'key': '?building=biotech&floor=1',
+                                'children': [
+                                    {'title': 'Lab 1',
+                                     'key': '?building=biotech&floor=1&lab=1'},
+                                    {'title': 'Lab 2',
+                                     'key': '?building=biotech&floor=1&lab=2'},
+                                    {'title': 'Lab 3',
+                                     'key': '?building=biotech&floor=1&lab=3'},
+                                ],
+                            }]}
+                    )
+                ], width=3),
+                dbc.Col([
+                    html.H3("Featured Rankings"),
+                    dbc.Row([
+                        dbc.Col([
+                            dbc.Card(
+                                [
+                                    dbc.CardBody(
+                                        [
+                                            html.H6("1st Place Overall 🥇",
+                                                    className="global-rank-card"),
+                                            html.H4("Baker 120",
+                                                    className="global-card-title align-middle"),
+                                            html.P(
+                                                "Least avg. energy & least avg. time open when unoccupied",
+                                                className="global-card-text",
+                                            )
+                                        ], className="d-flex flex-column justify-content-center"
+                                    ),
+                                ], className="card h-100 d-flex flex-row"),
+                        ]),
+                        dbc.Col([
+                            dbc.Card(
+                                [
+                                    dbc.CardBody(
+                                        [
+                                            html.H4("Biotech 435",
+                                                    className="global-card-title align-middle"),
+                                            html.P(
+                                                "Least avg. energy when unoccupied",
+                                                className="global-card-text",
+                                            )
+                                        ], className="d-flex flex-column justify-content-center"
+                                    ),
+                                ], className="card h-100 d-flex flex-row"),
+                        ]),
+                        dbc.Col([
+                            dbc.Card(
+                                [
+                                    dbc.CardBody(
+                                        [
+                                            html.H4("Olin 302",
+                                                    className="global-card-title"),
+                                            html.P(
+                                                "Least avg. time open when unoccupied",
+                                                className="global-card-text",
+                                            )
+                                        ],  className="d-flex flex-column justify-content-center text-center"
+                                    ),
+                                ], className="card h-100 d-flex flex-row"),
+                        ]),
+                        dbc.Row([
+                            dbc.Col([
+                                html.H3("Metrics")
+                            ]),
+                            dbc.Col([
+                                dcc.Dropdown(["Energy", "Sash", "Lab", "Overall", "Custom"],
+                                             "Last week", id="metrics_selector")
+                            ]),
+                            dbc.Col([
+                                html.H3("Graphs")
+                            ]),
+
+                        ]),
+                        dbc.Row([
+                                dbc.Col([
+                                    dbc.Table.from_dataframe(
+                                        pd.DataFrame({
+                                            "Rank": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+                                            "Lab": ["Olin 301", "Olin 302", "Olin 303", "Olin 304", "Olin 305", "Olin 306", "Olin 307", "Olin 308", "Olin 309", "Olin 310",],
+                                            "Energy":["50", "50", "50", "50", "50", "50", "50", "50", "50", "50",],
+                                            "Sash": ["5", "5", "5", "5", "5", "5", "5", "5", "5", "5",],
+                                        }), bordered=True, hover=True
+                                    )
+                                ]),
+                                dbc.Col([
+                                    html.P(
+                                        "The graphs will be represented here")
+                                ]),
+                                ]),
+                    ]),
+                ]),
+            ]), html.Div(id='output-selected')
         ])
     else:
         return html.Div([
@@ -172,8 +279,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                         dbc.Row([
 
-
-
                         ]),
 
                     ])
@@ -185,6 +290,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
             # Need this to do the page click callback for some reason!
             html.Div(id='output-selected')
         ])
+
 
 clientside_callback(
     """
@@ -236,7 +342,7 @@ def synthetic_query(target, start, end):
     return list
 
 
-@callback(
+@ callback(
     Output("sash_graph", "figure"),
     Input("date_selector", "value")
 )
@@ -271,7 +377,7 @@ def update_sash_graph(date):
     return sash_fig
 
 
-@callback(
+@ callback(
     Output("energy_graph", "figure"),
     Input("date_selector", "value")
 )
@@ -359,6 +465,6 @@ def update_comparative_sashGraph(data):
         paper_bgcolor="rgba(0,0,0,0)")
 
     return comparative_data_sash
-
+    
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
