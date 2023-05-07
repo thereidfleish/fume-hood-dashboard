@@ -245,30 +245,44 @@ def update_sash_graph(date):
                                       start=str(datetime(2021, 11, 16)),
                                       end=str(datetime(2021, 11, 20)))
 
-    print(sash_data_occ)
-    print(sash_data_unocc)
+    #print(sash_data_occ)
+    #print(sash_data_unocc)
 
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
 
-    sash_fig = px.bar(final_df, y = ['occ', 'unocc'],
+    final_df.index.name = "time"
+
+    print(final_df)
+
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
+
+    print(final_df_long)
+
+    sash_fig_2 = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'}
+    #                    ,hover_data = {"variable": True, "value": False}
+                        )
+
+    sash_fig_2.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{variable}'))
+
+    sash_fig = px.bar(final_df, y = ['occ', 'unocc'], 
                       labels={
                           "value": "Time (min)",
                           "index": "Date and Time",
                           "variable": ""},
                       title="Time Sash Open",
                       color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
-
-    #sash_fig.update_traces(hoverinfo="none", hovertemplate=None)
-
-    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{y} minutes'))
+    
+    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{y} minutes when %{status}'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
 
-    return sash_fig
+    #return sash_fig
+    return sash_fig_2
 
 
 @callback(
