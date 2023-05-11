@@ -1,7 +1,6 @@
 import dash
 from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
-import plotly.graph_objects as go
 import dash_treeview_antd
 import plotly.express as px
 import pandas as pd
@@ -17,6 +16,11 @@ dash.register_page(__name__)
 
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
+    # if lab == None:
+    #     return html.Div([
+    #         html.H3("Showing when no lab is selected"),
+    #     ])
+    # else:
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
 
@@ -238,52 +242,42 @@ def synthetic_query(target, start, end):
 )
 def update_sash_graph(date):
     sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
-                                    start=str(datetime(2021, 11, 16)),
-                                    end=str(datetime(2021, 11, 20)))
+                                    start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
-                                      start=str(datetime(2021, 11, 16)),
-                                      end=str(datetime(2021, 11, 20)))
+                                      start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
-    #print(sash_data_occ)
-    #print(sash_data_unocc)
+    print(sash_data_occ)
+    print(sash_data_unocc)
 
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
-
-    final_df.index.name = "time"
-
-    print(final_df)
-
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
     final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
 
     print(final_df_long)
 
-    sash_fig_2 = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+                        labels={
+                            "value": "Time (min)",
+                            "index": "Date and Time",
+                            "variable": ""},
+                        title="Time Sash Open",
                         color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
                         hover_data = {"variable": True, "value": False},
                         custom_data = ['variable']
                         )
 
-    sash_fig_2.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
-
-    sash_fig = px.bar(final_df, y = ['occ', 'unocc'], 
-                      labels={
-                          "value": "Time (min)",
-                          "index": "Date and Time",
-                          "variable": ""},
-                      title="Time Sash Open",
-                      color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
-    
-    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{y} minutes when %{status}'))
+    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
 
-    #return sash_fig
-    return sash_fig_2
+    return sash_fig
 
 
 @callback(
@@ -291,7 +285,13 @@ def update_sash_graph(date):
     Input("date_selector", "value")
 )
 def update_energy_graph(date):
-    # TODO
+    energy_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.occ",
+                                    start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
+
+    energy_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.unocc",
+                                      start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     print(energy_data_occ)
     print(energy_data_unocc)
@@ -299,20 +299,33 @@ def update_energy_graph(date):
     final_df = pd.DataFrame(
         data={"occ": energy_data_occ, "unocc": energy_data_unocc})
     final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-    energy_fig = px.bar(final_df,
+    final_df = pd.DataFrame(
+        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
+    final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
+
+    print(final_df_long)
+
+    energy_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
                         labels={
                             "value": "Energy (BTU)",
                             "index": "Date and Time",
                             "variable": ""},
                         title="Total Fumehood Energy Consumption",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'
-                                            })
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
+                        )
+    
+    energy_fig.update_traces(hovertemplate=('The fume hood used %{value} BTUs of energy when %{customdata}'))
+
 
     energy_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
-    
 
     return energy_fig
 
