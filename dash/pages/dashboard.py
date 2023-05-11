@@ -261,11 +261,12 @@ def update_sash_graph(date):
     print(final_df_long)
 
     sash_fig_2 = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'}
-    #                    ,hover_data = {"variable": True, "value": False}
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
                         )
 
-    sash_fig_2.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{variable}'))
+    sash_fig_2.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
     sash_fig = px.bar(final_df, y = ['occ', 'unocc'], 
                       labels={
