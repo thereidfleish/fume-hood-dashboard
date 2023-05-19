@@ -8,6 +8,7 @@
     3. `app.py` - home page, file that you run to initialize the dashboard.  Right now just displays a 404 error.
 2. `add_to_database.ipynb` - code to process and add synthetic data to the database
 3. `namingconvention.csv` - csv file with Biotech raw point names and synthetic point names
+4. Other files - irrelevant at this time
 
 ### Running the dashboard
 1. Clone the repository
