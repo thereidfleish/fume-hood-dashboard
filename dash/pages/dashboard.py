@@ -256,14 +256,22 @@ def update_sash_graph(date):
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
     final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
 
-    sash_fig = px.bar(final_df,
-                      labels={
-                          "value": "Time (min)",
-                          "index": "Date and Time",
-                          "variable": ""},
-                      title="Time Sash Open",
-                      color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
+    print(final_df_long)
+
+    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+                        labels={
+                            "value": "Time (min)",
+                            "index": "Date and Time",
+                            "variable": ""},
+                        title="Time Sash Open",
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
+                        )
+
+    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
@@ -293,14 +301,27 @@ def update_energy_graph(date):
     final_df = final_df.fillna(0)
     final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-    energy_fig = px.bar(final_df,
+    final_df = pd.DataFrame(
+        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
+    final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
+
+    print(final_df_long)
+
+    energy_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
                         labels={
                             "value": "Energy (BTU)",
                             "index": "Date and Time",
                             "variable": ""},
                         title="Total Fumehood Energy Consumption",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'
-                                            })
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
+                        )
+    
+    energy_fig.update_traces(hovertemplate=('The fume hood used %{value} BTUs of energy when %{customdata}'))
+
 
     energy_fig.update_layout(
         margin=dict(t=55, b=20),
