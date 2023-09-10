@@ -224,7 +224,7 @@ def synthetic_query(target, start, end):
         ],
 
     }
-    request = requests.post(url, json=data)
+    request = requests.post(url, json=data, verify=False)
     print(request)
     # print(request.json())
     master = create_tuple(request)
