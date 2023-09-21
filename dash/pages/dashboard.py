@@ -14,6 +14,7 @@ app = Dash(__name__)
 
 dash.register_page(__name__)
 
+# Stanley
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     # if lab == None:
