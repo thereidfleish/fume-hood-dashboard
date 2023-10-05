@@ -11,9 +11,9 @@ import numpy as np
 from datetime import datetime, timezone, timedelta
 import requests
 import json
-from dash.pages import dashboard
-from dash.pages import building
-from dash.pages import floor
+# from pages import dashboard
+# from pages import building
+# from pages import floor
 
 app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
@@ -21,28 +21,27 @@ app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTS
 
 app.layout = html.Div([
 	html.H1('Cornell Fume Hood Dashboard'),
-
-    html.Div(
-        [
-            dcc.Link(page['name'], href=page["relative_path"], refresh=True)
-            for page in dash.page_registry.values()
-            # html.Div(
-            #     dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
-            #     # html.A('Biotech', href='/biotech')
-            # )
-            # for page in dash.page_registry.values()
-        ]
-    ),
-
+    html.Div([
+        html.Div(
+            dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
+        ) for page in dash.page_registry.values()
+        # dcc.Link(page['name'], href=page["relative_path"], refresh=True)
+        # for page in dash.page_registry.values()
+        # html.Div(
+        #     dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
+        #     # html.A('Biotech', href='/biotech')
+        # )
+        # for page in dash.page_registry.values()
+    ]),
 	dash.page_container
 ])
 
-app.config.routes = [
-    {"pathname": "/", "page": app.layout},
-    {"pathname": "/lab", "page": dashboard.layout},
-    {"pathname": "/building", "page": building.layout},
-    {"pathname": "/floor", "page": floor.layout},
-]
+# app.config.routes = [
+#     {"pathname": "/", "page": app.layout},
+#     {"pathname": "/lab", "page": dashboard.layout},
+#     {"pathname": "/building", "page": building.layout},
+#     {"pathname": "/floor", "page": floor.layout},
+# ]
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8055)

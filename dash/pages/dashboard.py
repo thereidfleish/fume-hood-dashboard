@@ -10,7 +10,7 @@ from dateutil import tz
 import requests
 import json
 
-app = Dash(__name__)
+#app = Dash(__name__)
 
 dash.register_page(__name__)
 
