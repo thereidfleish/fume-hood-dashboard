@@ -10,11 +10,9 @@ from dateutil import tz
 import requests
 import json
 
-app = Dash(__name__)
+#app = Dash(__name__)
 
 dash.register_page(__name__)
-
-# Stanley
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     # if lab == None:
@@ -172,8 +170,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         ]),
 
                         dbc.Row([
-
-
 
                         ]),
 
