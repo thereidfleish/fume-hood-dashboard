@@ -187,7 +187,7 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/pages/dashboard${input[0]}`, "_self");
+        window.open(`/dashboard${input[0]}`, "_self");
         return input[0];
     }
     """,
