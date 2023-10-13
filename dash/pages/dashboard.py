@@ -14,8 +14,6 @@ app = Dash(__name__)
 
 dash.register_page(__name__)
 
-# Stanley
-
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     # if lab == None:
     #     return html.Div([
@@ -191,7 +189,7 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/pages/dashboard${input[0]}`, "_self");
+        window.open(`/dashboard${input[0]}`, "_self");
         return input[0];
     }
     """,
