@@ -14,120 +14,12 @@ app = Dash(__name__)
 
 dash.register_page(__name__)
 
-
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
-    if lab == None:
-        return html.Div([
-            dbc.Row([
-                dbc.Col([
-                    dash_treeview_antd.TreeView(
-                        id='input',
-                        multiple=False,
-                        checkable=False,
-                        checked=[],
-                        selected=[],
-                        expanded=["?building=biotech"],
-                        data={
-                            'title': 'Biotech',
-                            'key': '?building=biotech',
-                            'children': [{
-                                'title': 'Floor 1',
-                                'key': '?building=biotech&floor=1',
-                                'children': [
-                                    {'title': 'Lab 1',
-                                     'key': '?building=biotech&floor=1&lab=1'},
-                                    {'title': 'Lab 2',
-                                     'key': '?building=biotech&floor=1&lab=2'},
-                                    {'title': 'Lab 3',
-                                     'key': '?building=biotech&floor=1&lab=3'},
-                                ],
-                            }]}
-                    )
-                ], width=3),
-                dbc.Col([
-                    html.H3("Featured Rankings"),
-                    dbc.Row([
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H6("1st Place Overall 🥇",
-                                                    className="global-rank-card"),
-                                            html.H4("Baker 120",
-                                                    className="global-card-title align-middle"),
-                                            html.P(
-                                                "Least avg. energy & least avg. time open when unoccupied",
-                                                className="global-card-text",
-                                            )
-                                        ], className="d-flex flex-column justify-content-center"
-                                    ),
-                                ], className="card h-100 d-flex flex-row"),
-                        ]),
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("Biotech 435",
-                                                    className="global-card-title align-middle"),
-                                            html.P(
-                                                "Least avg. energy when unoccupied",
-                                                className="global-card-text",
-                                            )
-                                        ], className="d-flex flex-column justify-content-center"
-                                    ),
-                                ], className="card h-100 d-flex flex-row"),
-                        ]),
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("Olin 302",
-                                                    className="global-card-title"),
-                                            html.P(
-                                                "Least avg. time open when unoccupied",
-                                                className="global-card-text",
-                                            )
-                                        ],  className="d-flex flex-column justify-content-center text-center"
-                                    ),
-                                ], className="card h-100 d-flex flex-row"),
-                        ]),
-                        dbc.Row([
-                            dbc.Col([
-                                html.H3("Metrics")
-                            ]),
-                            dbc.Col([
-                                dcc.Dropdown(["Energy", "Sash", "Lab", "Overall", "Custom"],
-                                             "Last week", id="metrics_selector")
-                            ]),
-                            dbc.Col([
-                                html.H3("Graphs")
-                            ]),
-
-                        ]),
-                        dbc.Row([
-                                dbc.Col([
-                                    dbc.Table.from_dataframe(
-                                        pd.DataFrame({
-                                            "Rank": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-                                            "Lab": ["Olin 301", "Olin 302", "Olin 303", "Olin 304", "Olin 305", "Olin 306", "Olin 307", "Olin 308", "Olin 309", "Olin 310",],
-                                            "Energy":["50", "50", "50", "50", "50", "50", "50", "50", "50", "50",],
-                                            "Sash": ["5", "5", "5", "5", "5", "5", "5", "5", "5", "5",],
-                                        }), bordered=True, hover=True
-                                    )
-                                ]),
-                                dbc.Col([
-                                    html.P(
-                                        "The graphs will be represented here")
-                                ]),
-                                ]),
-                    ]),
-                ]),
-            ]), html.Div(id='output-selected')
-        ])
-    else:
+    # if lab == None:
+    #     return html.Div([
+    #         html.H3("Showing when no lab is selected"),
+    #     ])
+    # else:
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
 
@@ -296,7 +188,7 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/pages/dashboard${input[0]}`, "_self");
+        window.open(`/dashboard${input[0]}`, "_self");
         return input[0];
     }
     """,
@@ -330,7 +222,7 @@ def synthetic_query(target, start, end):
         ],
 
     }
-    request = requests.post(url, json=data)
+    request = requests.post(url, json=data, verify=False)
     print(request)
     # print(request.json())
     master = create_tuple(request)
@@ -348,12 +240,12 @@ def synthetic_query(target, start, end):
 )
 def update_sash_graph(date):
     sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
-                                    start=str(datetime(2021, 11, 16)),
-                                    end=str(datetime(2021, 11, 20)))
+                                    start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
-                                      start=str(datetime(2021, 11, 16)),
-                                      end=str(datetime(2021, 11, 20)))
+                                      start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     print(sash_data_occ)
     print(sash_data_unocc)
@@ -361,14 +253,23 @@ def update_sash_graph(date):
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
 
-    sash_fig = px.bar(final_df,
-                      labels={
-                          "value": "Time (min)",
-                          "index": "Date and Time",
-                          "variable": ""},
-                      title="Time Sash Open",
-                      color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'})
+    print(final_df_long)
+
+    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+                        labels={
+                            "value": "Time (min)",
+                            "index": "Date and Time",
+                            "variable": ""},
+                        title="Time Sash Open",
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
+                        )
+
+    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
@@ -382,7 +283,13 @@ def update_sash_graph(date):
     Input("date_selector", "value")
 )
 def update_energy_graph(date):
-    # TODO
+    energy_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.occ",
+                                    start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
+
+    energy_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.unocc",
+                                      start=str(datetime(2023, 1, 1)),
+                                    end=str(datetime.now()))
 
     print(energy_data_occ)
     print(energy_data_unocc)
@@ -390,15 +297,29 @@ def update_energy_graph(date):
     final_df = pd.DataFrame(
         data={"occ": energy_data_occ, "unocc": energy_data_unocc})
     final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-    energy_fig = px.bar(final_df,
+    final_df = pd.DataFrame(
+        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
+    final_df = final_df.fillna(0)
+    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
+
+    print(final_df_long)
+
+    energy_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
                         labels={
                             "value": "Energy (BTU)",
                             "index": "Date and Time",
                             "variable": ""},
                         title="Total Fumehood Energy Consumption",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'
-                                            })
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        hover_data = {"variable": True, "value": False},
+                        custom_data = ['variable']
+                        )
+    
+    energy_fig.update_traces(hovertemplate=('The fume hood used %{value} BTUs of energy when %{customdata}'))
+
 
     energy_fig.update_layout(
         margin=dict(t=55, b=20),
