@@ -32,21 +32,37 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         checked=[],
                         selected=[],
                         expanded=["?building=biotech"],
-                        data={
-                            'title': 'Biotech',
-                            'key': '?building=biotech',
-                            'children': [{
-                                'title': 'Floor 1',
-                                'key': '?building=biotech&floor=1',
-                                'children': [
-                                    {'title': 'Lab 1',
-                                     'key': '?building=biotech&floor=1&lab=1'},
-                                    {'title': 'Lab 2',
-                                     'key': '?building=biotech&floor=1&lab=2'},
-                                    {'title': 'Lab 3',
-                                     'key': '?building=biotech&floor=1&lab=3'},
-                                ],
-                            }]}
+                        # data={
+                        #     'title': 'Biotech',
+                        #     'key': '?building=biotech',
+                        #     'children': [{
+                        #         'title': 'Floor 1',
+                        #         'key': '?building=biotech&floor=1',
+                        #         'children': [
+                        #             {'title': 'Lab 1',
+                        #              'key': '?building=biotech&floor=1&lab=1'},
+                        #             {'title': 'Lab 2',
+                        #              'key': '?building=biotech&floor=1&lab=2'},
+                        #             {'title': 'Lab 3',
+                        #              'key': '?building=biotech&floor=1&lab=3'},
+                        #         ],
+                        #     }]}
+
+                        data=json.loads("""{
+                        "title": "Biotech",
+                        "key": "?building=biotech",
+                        "children": [{
+                            "title": "Floor 1",
+                            "key": "?building=biotech&floor=1",
+                            "children": [
+                                {"title": "Lab 1",
+                                    "key": "?building=biotech&floor=1&lab=1"},
+                                {"title": "Lab 2",
+                                    "key": "?building=biotech&floor=1&lab=2"},
+                                {"title": "Lab 3",
+                                    "key": "?building=biotech&floor=1&lab=3"}
+                            ]
+                        }]}""")
                     )
                 ], width=3),
 
