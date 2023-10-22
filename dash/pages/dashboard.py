@@ -175,7 +175,7 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/dashboard${input[0]}`, "_self");
+        window.open(`/pages/dashboard${input[0]}`, "_self");
         return input[0];
     }
     """,
@@ -398,8 +398,6 @@ def lab_dictionary(id_list):
                 building_key = "?building=" + building.lower()
                 building_list[building] = {"building_key": building_key}
 
-    print(building_list)
-
     for building in building_list:
         floor_list = []
         floor_key_list = []
@@ -460,7 +458,6 @@ def treeview(id_list):
         final_string = final_string + building_string + '},'
     final_string = final_string[0:-1] + ']}'
 
-    print(final_string)
     return(final_string)
 
 # if __name__ == '__main__':
