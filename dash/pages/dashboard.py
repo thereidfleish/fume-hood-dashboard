@@ -374,12 +374,9 @@ def update_comparative_sashGraph(data):
 
     return comparative_data_sash
 
-biotech_list = ["Biotech.Floor_3.Lab_317.Hood_1", "Biotech.Floor_4.Lab_433.Hood_1", "Biotech.Floor_4.Lab_441.Hood_1"]
 building_list = ["Biotech.Floor_3.Lab_317.Hood_1", "Biotech.Floor_4.Lab_433.Hood_1", "Biotech.Floor_4.Lab_441.Hood_1",
                  "Olin.Floor_1.Lab_123.Hood_1", "Olin.Floor_1.Lab_127.Hood_1", "Olin.Floor_2.Lab_234.Hood_1",
                  "Baker.Floor_3.Lab_322.Hood_1"]
-
-test = ["Biotech.Floor_1.Lab_1.Hood_1", "Biotech.Floor_1.Lab_2.Hood_1", "Biotech.Floor_1.Lab_3.Hood_1"]
 
 # deconstructs hood IDs into building, floor and lab. 
 # stores all information in a dictionary with building keys and dictionary values.
