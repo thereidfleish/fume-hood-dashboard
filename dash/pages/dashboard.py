@@ -12,17 +12,10 @@ import json
 
 app = Dash(__name__)
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/dashboard')
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
-    # if lab == None:
-    #     return html.Div([
-    #         html.H3("Showing when no lab is selected"),
-    #     ])
-    # else:
         return html.Div([
-            # dcc.Location(id='url', refresh=False),  # URL location component
-
             dbc.Row([
                 dbc.Col([
                     dash_treeview_antd.TreeView(
@@ -175,7 +168,7 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/pages/dashboard${input[0]}`, "_self");
+        window.open(`/dashboard${input[0]}`, "_self");
         return input[0];
     }
     """,
