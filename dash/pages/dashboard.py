@@ -236,6 +236,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                     ])
 
+                ]),
+
+                dbc.Row([
+                    # MAKE TABLE HERE!
                 ])
 
             ]),
