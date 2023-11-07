@@ -17,7 +17,7 @@ app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTS
     ])
 
 app.layout = html.Div([
-	html.H1('Cornell Fume Hood Dashboard'),
+	# html.H1('Cornell Fume Hood Dashboard'),
 
     html.Div(
         [
