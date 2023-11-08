@@ -40,3 +40,17 @@ label {
 h1 {
     color: #000000;
 }
+
+/*home*/
+
+.home-title {
+    color: #000000;
+}
+
+.home-text {
+    color: #000000;
+}
+
+.home-card {
+    background-color: #aa6e6e
+}
