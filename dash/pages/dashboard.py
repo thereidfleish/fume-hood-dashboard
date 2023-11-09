@@ -15,6 +15,7 @@ app = Dash(__name__)
 dash.register_page(__name__)
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
+    
     # if lab == None:
     #     return html.Div([
     #         html.H3("Showing when no lab is selected"),
