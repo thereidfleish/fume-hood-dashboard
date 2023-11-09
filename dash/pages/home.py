@@ -19,7 +19,9 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
     return html.Div([
         # More content
         html.H3(f"Fume Hood Dashboard Overview"),
-        dbc.Card(
+        dbc.Row([
+            dbc.Col([
+                dbc.Card(
                 [
                     dbc.CardBody(
                         [
@@ -38,7 +40,20 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
                         ]
                     ),
                 ], className="mb-2"),
-
+            ]),
+            dbc.Col([
+                dbc.Card(
+                [
+                    dbc.CardBody(
+                        [
+                            html.H4("Diagram",
+                                    className="home-title"),
+                        ]
+                    ),
+                    dbc.CardImg(src="assets/fumehood.png", top = False, style = {'height':'50%','width':'50%'}),
+                ], className="mb-2")
+            ], width = "auto"),
+        ]),
         dbc.Card(
                 [
                     dbc.CardBody(
