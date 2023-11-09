@@ -40,7 +40,7 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
                         ]
                     ),
                 ], className="mb-2"),
-            ]),
+            ], className = "col d-flex w-100"),
             dbc.Col([
                 dbc.Card(
                 [
@@ -50,10 +50,11 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
                                     className="home-title"),
                         ]
                     ),
-                    dbc.CardImg(src="assets/fumehood.png", top = False, style = {'height':'50%','width':'50%'}),
+                    dbc.CardImg(src="assets/fumehood.png", top = False, 
+                                ),
                 ], className="mb-2")
-            ], width = "auto"),
-        ]),
+            ], className = "col-auto d-flex flex-shrink-1 w-50"),
+        ], className = "d-flex flex-row"),
         dbc.Card(
                 [
                     dbc.CardBody(
