@@ -112,6 +112,14 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
         return html.Div([
             dbc.Row([
                 dbc.Col([
+                    html.H2("Labs", className="mb-3"),
+                    # Search bar functionality: need to create a callback that filters the tree view based on the search query entered by the user
+                    dbc.Input(
+                        type="search",
+                        id="tree-search",
+                        placeholder="Search labs...",
+                        className="mb-3"
+                    ),
                     generate_treeview()
                 ], width=3),
 
