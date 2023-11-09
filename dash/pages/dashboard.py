@@ -248,6 +248,29 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                 dbc.Row([
                     # MAKE TABLE HERE!
+                    dbc.Col([
+                        dbc.Table (
+                            children=[
+                                html.Thead(html.Tr([html.Th("Rank"), html.Th("Lab"), html.Th("Percent of Energy Wasted")])),
+                                html.Tbody([
+                                    html.Tr([html.Td("1"), html.Td("301"), html.Td("50")]),
+                                    html.Tr([html.Td("2"), html.Td("301"), html.Td("45")]),
+                                    html.Tr([html.Td("3"), html.Td("301"), html.Td("15")]),
+                                    html.Tr([html.Td("4"), html.Td("301"), html.Td("20")]),
+                                    html.Tr([html.Td("5"), html.Td("301"), html.Td("50")]),
+                                    html.Tr([html.Td("6"), html.Td("301"), html.Td("25")]),
+                                    html.Tr([html.Td("7"), html.Td("301"), html.Td("35")]),
+                                    html.Tr([html.Td("8"), html.Td("301"), html.Td("60")]),
+                                    html.Tr([html.Td("9"), html.Td("301"), html.Td("70")]),
+                                    html.Tr([html.Td("10"), html.Td("301"), html.Td("20")]),
+                                ]),
+                            ],
+                            bordered=True,
+                            size='sm',
+                            responsive=True
+                        )
+                    ])
+
                 ])
 
             ]),
