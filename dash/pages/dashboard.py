@@ -9,6 +9,8 @@ from datetime import datetime
 from dateutil import tz
 import requests
 import json
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 
 app = Dash(__name__)
 
@@ -169,7 +171,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
             ]),
 
             # Need this to do the page click callback for some reason!
-            html.Div(id='output-selected')
+            html.Div(id='output-selected'),
+            dcc.Location(id='url')
         ])
 
 clientside_callback(
@@ -224,14 +227,17 @@ def synthetic_query(target, start, end):
 
 @callback(
     Output("sash_graph", "figure"),
-    Input("date_selector", "value")
+    Input("date_selector", "value"),
+    Input('url', 'search')
 )
-def update_sash_graph(date):
-    sash_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.occ",
+def update_sash_graph(date, url):
+    parsed_url = urlparse(url).query
+    target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
+    sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
                                     start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
-    sash_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.sashOpenTime.unocc",
+    sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
                                       start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
@@ -268,14 +274,17 @@ def update_sash_graph(date):
 
 @callback(
     Output("energy_graph", "figure"),
-    Input("date_selector", "value")
+    Input("date_selector", "value"),
+    Input('url', 'search')
 )
-def update_energy_graph(date):
-    energy_data_occ = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.occ",
+def update_energy_graph(date, url):
+    parsed_url = urlparse(url).query
+    target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
+    energy_data_occ = synthetic_query(target=target + ".energy.occ",
                                     start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
-    energy_data_unocc = synthetic_query(target="Biotech.Floor_4.Lab_433.Hood_1.energy.unocc",
+    energy_data_unocc = synthetic_query(target=target + ".energy.unocc",
                                       start=str(datetime(2023, 1, 1)),
                                     end=str(datetime.now()))
 
