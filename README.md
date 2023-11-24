@@ -6,8 +6,8 @@
     2. `pages` - folder containing python files for each of the dashboard pages
         1. `dashboard.py` - file representing the main fume hood dashboard page
     3. `app.py` - home page, file that you run to initialize the dashboard.  Right now just displays a 404 error.
-2. `add_to_database.ipynb` - code to process and add synthetic data to the database
-3. `namingconvention.csv` - csv file with Biotech raw point names and synthetic point names
+2. `add_fumehood_data.ipynb` - code to process and add synthetic data to the database
+3. `hoodnaming.ipynb` - csv file with Biotech raw point names and synthetic point names
 4. Other files - irrelevant at this time
 
 ### Running the dashboard
