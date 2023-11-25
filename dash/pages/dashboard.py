@@ -239,11 +239,11 @@ def update_sash_graph(date, url):
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
-                                    start=str(datetime(2023, 11, 20)),
+                                    start=str(datetime(2023, 11, 15)),
                                     end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
-                                      start=str(datetime(2023, 11, 20)),
+                                      start=str(datetime(2023, 11, 15)),
                                     end=str(datetime.now()))
 
     print(sash_data_occ)
@@ -251,9 +251,8 @@ def update_sash_graph(date, url):
 
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
-    final_df = final_df.fillna(0)
-    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
-    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False).sort_index()
+
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False).sort_index().dropna()
 
     print(final_df_long)
 
@@ -270,12 +269,12 @@ def update_sash_graph(date, url):
 
     # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
-    sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value",
+    sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value", color="variable",
                         labels={
-                            "value": "Sash (in)",
+                            "value": "Sash Height (in)",
                             "index": "Date and Time",
                             },
-                        title="Sash Position",
+                        title="Sash Height",
                         # color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
                         # hover_data = {"variable": True, "value": False},
                         # custom_data = ['variable']
@@ -299,11 +298,11 @@ def update_energy_graph(date, url):
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     energy_data_occ = synthetic_query(target=target + ".energy.occ",
-                                    start=str(datetime(2023, 11, 20)),
+                                    start=str(datetime(2023, 11, 24)),
                                     end=str(datetime.now()))
 
     energy_data_unocc = synthetic_query(target=target + ".energy.unocc",
-                                      start=str(datetime(2023, 11, 20)),
+                                      start=str(datetime(2023, 11, 24)),
                                     end=str(datetime.now()))
 
     print(energy_data_occ)
