@@ -207,10 +207,15 @@ def synthetic_query(target, start, end):
             "to": end,
         },
         "targets": [
-            {
-                "target": target
-            }
-        ],
+        {
+            "payload": {
+                "additional": [
+                    "noagg",
+                ]
+            },
+            "target": target,
+        }
+    ],
 
     }
     request = requests.post(url, json=data, verify=False)
@@ -234,11 +239,11 @@ def update_sash_graph(date, url):
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
-                                    start=str(datetime(2023, 1, 1)),
+                                    start=str(datetime(2023, 11, 20)),
                                     end=str(datetime.now()))
 
     sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
-                                      start=str(datetime(2023, 1, 1)),
+                                      start=str(datetime(2023, 11, 20)),
                                     end=str(datetime.now()))
 
     print(sash_data_occ)
@@ -248,22 +253,35 @@ def update_sash_graph(date, url):
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
     final_df = final_df.fillna(0)
     final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
-    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False).sort_index()
 
     print(final_df_long)
 
-    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+    # sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
+    #                     labels={
+    #                         "value": "Time (min)",
+    #                         "index": "Date and Time",
+    #                         "variable": ""},
+    #                     title="Time Sash Open",
+    #                     color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+    #                     hover_data = {"variable": True, "value": False},
+    #                     custom_data = ['variable']
+    #                     )
+
+    # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
+
+    sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value",
                         labels={
-                            "value": "Time (min)",
+                            "value": "Sash (in)",
                             "index": "Date and Time",
-                            "variable": ""},
-                        title="Time Sash Open",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
-                        hover_data = {"variable": True, "value": False},
-                        custom_data = ['variable']
+                            },
+                        title="Sash Position",
+                        # color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        # hover_data = {"variable": True, "value": False},
+                        # custom_data = ['variable']
                         )
 
-    sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
+    # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
@@ -281,11 +299,11 @@ def update_energy_graph(date, url):
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     energy_data_occ = synthetic_query(target=target + ".energy.occ",
-                                    start=str(datetime(2023, 1, 1)),
+                                    start=str(datetime(2023, 11, 20)),
                                     end=str(datetime.now()))
 
     energy_data_unocc = synthetic_query(target=target + ".energy.unocc",
-                                      start=str(datetime(2023, 1, 1)),
+                                      start=str(datetime(2023, 11, 20)),
                                     end=str(datetime.now()))
 
     print(energy_data_occ)
@@ -296,10 +314,6 @@ def update_energy_graph(date, url):
     final_df = final_df.fillna(0)
     final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-    final_df = pd.DataFrame(
-        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
-    final_df = final_df.fillna(0)
-    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
     final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
 
     print(final_df_long)
