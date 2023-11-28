@@ -154,6 +154,19 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         # figure=fig
                                     )],
                                 type="circle"
+                            ),
+                            
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="pie",
+                                        style={'border-radius': '5px',
+                                               'background-color': '#f3f3f3'}
+
+                                        # figure=fig
+                                    )],
+                                type="circle"
                             )
 
                         ]),
@@ -232,6 +245,7 @@ def synthetic_query(target, start, end):
 
 @callback(
     Output("sash_graph", "figure"),
+    Output("pie", "figure"),
     Input("date_selector", "value"),
     Input('url', 'search')
 )
@@ -285,8 +299,35 @@ def update_sash_graph(date, url):
     sash_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
+    
+    pie_df = final_df_long[final_df_long["variable"] == "unocc"]
+    time_interval = pie_df.index[1].minute - pie_df.index[0].minute
+    pie_df["minutes"] = time_interval
+    pie_df["status"] = np.where((pie_df["value"] > 1.6), "Bad - Sash Open when Unoccupied", "Good - Sash Closed when Unoccupied")
+    print(pie_df)
+    
+    pie_fig = px.pie(pie_df, values="minutes", names="status", color="status",
+                        labels={
+                            "value": "Sash Height (in)",
+                            "index": "Date and Time",
+                            },
+                        title="Sash Height when Unoccupied",
+                        color_discrete_map={'Good - Sash Closed when Unoccupied': 'mediumseagreen', 'Bad - Sash Open when Unoccupied': '#d62728'},
+                        # hover_data = {"variable": True, "value": False},
+                        # custom_data = ['variable']
+                        )
 
-    return sash_fig
+    pie_fig.update_layout(
+        margin=dict(t=55, b=20),
+        paper_bgcolor="rgba(0,0,0,0)",
+        legend=dict(
+    yanchor="top",
+    y=1,
+    xanchor="left",
+    x=-0.5
+))
+
+    return sash_fig, pie_fig
 
 
 @callback(
