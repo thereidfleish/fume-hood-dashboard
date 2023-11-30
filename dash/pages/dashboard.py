@@ -14,10 +14,11 @@ app = Dash(__name__)
 
 dash.register_page(__name__, path='/dashboard')
 
-def generate_treeview():
+def generate_treeview(search_string):
     building_list = ["Biotech.Floor_3.Lab_317.Hood_1", "Biotech.Floor_4.Lab_433.Hood_1", "Biotech.Floor_4.Lab_441.Hood_1",
                     "Olin.Floor_1.Lab_123.Hood_1", "Olin.Floor_1.Lab_127.Hood_1", "Olin.Floor_2.Lab_234.Hood_1",
                     "Baker.Floor_3.Lab_322.Hood_1"]
+    building_list = [k for k in building_list if search_string in k]
 
     # deconstructs hood IDs into building, floor and lab. 
     # stores all information in a dictionary with building keys and dictionary values.
@@ -120,7 +121,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         placeholder="Search labs...",
                         className="mb-3"
                     ),
-                    generate_treeview()
+                    # generate_treeview()
+                    html.Div(id='tree-view-container', children=generate_treeview(''))
                 ], width=3),
 
                 dbc.Col([
@@ -290,6 +292,26 @@ clientside_callback(
     Output('output-selected', 'children'),
     Input('input', 'selected'), prevent_initial_call=True
 )
+
+building_list = ["Biotech.Floor_3.Lab_317.Hood_1", "Biotech.Floor_4.Lab_433.Hood_1", "Biotech.Floor_4.Lab_441.Hood_1",
+                "Olin.Floor_1.Lab_123.Hood_1", "Olin.Floor_1.Lab_127.Hood_1", "Olin.Floor_2.Lab_234.Hood_1",
+                "Baker.Floor_3.Lab_322.Hood_1"]
+
+@app.callback(
+    Output('tree-view-container', 'children'),
+    [Input('tree-search', 'value')]
+)
+
+def update_treeview(search_query):
+    if search_query:
+        # filter the building list based on search query
+        filtered_labs = [lab for lab in building_list if search_query.lower() in lab.lower()]
+    else:
+        # if no search query, use the full list
+        filtered_labs = building_list
+
+    # regenerate treeview with filtered list
+    return generate_treeview(filtered_labs)
 
 
 def create_tuple(response):
