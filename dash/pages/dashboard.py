@@ -133,7 +133,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 [
                                     dbc.CardBody(
                                         [
-                                            html.H4("🏠 5 homes' energy",
+                                            html.H4("🏠 5 homes",
                                                     className="card-title mb-0"),
                                         ]
                                     ),
