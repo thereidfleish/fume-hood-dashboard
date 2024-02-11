@@ -328,12 +328,12 @@ def update_sash_graph(date, url):
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
-                                    start=str(datetime(2023, 11, 15)),
-                                    end=str(datetime.now()))
+                                    start=str(datetime(2023, 11, 20)),
+                                    end=str(datetime(2023, 11, 30)))
 
     sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
-                                      start=str(datetime(2023, 11, 15)),
-                                    end=str(datetime.now()))
+                                      start=str(datetime(2023, 11, 20)),
+                                    end=str(datetime(2023, 11, 30)))
 
     print(sash_data_occ)
     print(sash_data_unocc)
@@ -415,11 +415,11 @@ def update_energy_graph(date, url):
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     energy_data_occ = synthetic_query(target=target + ".energy.occ",
                                     start=str(datetime(2023, 11, 24)),
-                                    end=str(datetime.now()))
+                                    end=str(datetime(2023, 11, 30)))
 
     energy_data_unocc = synthetic_query(target=target + ".energy.unocc",
                                       start=str(datetime(2023, 11, 24)),
-                                    end=str(datetime.now()))
+                                    end=str(datetime(2023, 11, 30)))
 
     print(energy_data_occ)
     print(energy_data_unocc)
