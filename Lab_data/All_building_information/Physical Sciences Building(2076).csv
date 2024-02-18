@@ -1,0 +1,101 @@
+,Building,Floor,Room,People,Email
+0,Physical Sciences Building(2076),1,101,Cynthia Kinsland ,clk10@cornell.edu
+1,Physical Sciences Building(2076),1,105,Cynthia Kinsland ,clk10@cornell.edu
+2,Physical Sciences Building(2076),1,111,Cynthia Kinsland ,clk10@cornell.edu
+3,Physical Sciences Building(2076),1,115,Cynthia Kinsland ,clk10@cornell.edu
+4,Physical Sciences Building(2076),1,118,Ralph Feldhake ,rpf8@cornell.edu
+5,Physical Sciences Building(2076),2,202A,Hector Abruna ,hda1@cornell.edu
+6,Physical Sciences Building(2076),2,220A,Hening Lin ,hl379@cornell.edu
+7,Physical Sciences Building(2076),2,221,Hening Lin ,hl379@cornell.edu
+8,Physical Sciences Building(2076),2,229,Hening Lin ,hl379@cornell.edu
+9,Physical Sciences Building(2076),2,230A,Hening Lin ,hl379@cornell.edu
+10,Physical Sciences Building(2076),2,230B,Hening Lin ,hl379@cornell.edu
+11,Physical Sciences Building(2076),2,231,Hening Lin ,hl379@cornell.edu
+12,Physical Sciences Building(2076),2,232A,Hening Lin ,hl379@cornell.edu
+13,Physical Sciences Building(2076),2,232B,Hening Lin ,hl379@cornell.edu
+14,Physical Sciences Building(2076),2,233,Hening Lin ,hl379@cornell.edu
+15,Physical Sciences Building(2076),2,234,Hening Lin ,hl379@cornell.edu
+16,Physical Sciences Building(2076),2,235,Brett Fors ,bpf46@cornell.edu
+17,Physical Sciences Building(2076),2,236A,Hening Lin ,hl379@cornell.edu
+18,Physical Sciences Building(2076),2,240A,Hening Lin ,hl379@cornell.edu
+19,Physical Sciences Building(2076),2,242,Brett Fors ,bpf46@cornell.edu
+20,Physical Sciences Building(2076),2,270,Hector Abruna ,hda1@cornell.edu
+21,Physical Sciences Building(2076),2,271,Hector Abruna ,hda1@cornell.edu
+22,Physical Sciences Building(2076),2,273,Hector Abruna ,hda1@cornell.edu
+23,Physical Sciences Building(2076),2,277,Hector Abruna ,hda1@cornell.edu
+24,Physical Sciences Building(2076),2,279,Keane Leitch ,kjl44@cornell.edu
+25,Physical Sciences Building(2076),2,282,Hector Abruna ,hda1@cornell.edu
+26,Physical Sciences Building(2076),2,284A,Hector Abruna ,hda1@cornell.edu
+27,Physical Sciences Building(2076),2,286A,Hector Abruna ,hda1@cornell.edu
+28,Physical Sciences Building(2076),2,286B,Hector Abruna ,hda1@cornell.edu
+29,Physical Sciences Building(2076),2,292A,Hector Abruna ,hda1@cornell.edu
+30,Physical Sciences Building(2076),2,294,Hector Abruna ,hda1@cornell.edu
+31,Physical Sciences Building(2076),2,296A,Hector Abruna ,hda1@cornell.edu
+32,Physical Sciences Building(2076),2,296B,Hector Abruna ,hda1@cornell.edu
+33,Physical Sciences Building(2076),3,335,Brian Crane ,bc69@cornell.edu
+34,Physical Sciences Building(2076),3,337,Brian Crane ,bc69@cornell.edu
+35,Physical Sciences Building(2076),3,340A,Brian Crane ,bc69@cornell.edu
+36,Physical Sciences Building(2076),3,340B,Brian Crane ,bc69@cornell.edu
+37,Physical Sciences Building(2076),3,350A,Brian Crane ,bc69@cornell.edu
+38,Physical Sciences Building(2076),3,352,Brian Crane ,bc69@cornell.edu
+39,Physical Sciences Building(2076),3,360A,Brian Crane ,bc69@cornell.edu
+40,Physical Sciences Building(2076),3,364A,Brian Crane ,bc69@cornell.edu
+41,Physical Sciences Building(2076),B,B19,John Marohn ,jam99@cornell.edu
+42,Physical Sciences Building(2076),G,G41,Nozomi Ando ,na49@cornell.edu
+43,Physical Sciences Building(2076),G,G48,Nozomi Ando ,na49@cornell.edu
+44,Physical Sciences Building(2076),1,125,Jon Velazquez ,jv16@cornell.edu
+45,Physical Sciences Building(2076),1,127,Warren Zipfel ,wrz2@cornell.edu
+46,Physical Sciences Building(2076),1,131,Jon Velazquez ,jv16@cornell.edu
+47,Physical Sciences Building(2076),1,133,Jon Velazquez ,jv16@cornell.edu
+48,Physical Sciences Building(2076),1,135,Jon Velazquez ,jv16@cornell.edu
+49,Physical Sciences Building(2076),B,B01,David Muller ,dm24@cornell.edu
+50,Physical Sciences Building(2076),B,B05,Mariena Silvestry Ramos ,ms3289@cornell.edu
+51,Physical Sciences Building(2076),B,B13,Gregory Fuchs ,gdf9@cornell.edu
+52,Physical Sciences Building(2076),B,B31,Jie Shan ,js3469@cornell.edu
+53,Physical Sciences Building(2076),B,B34A,Jie Shan ,js3469@cornell.edu
+54,Physical Sciences Building(2076),B,B40,Jie Shan ,js3469@cornell.edu
+55,Physical Sciences Building(2076),B,B50,Jie Shan ,js3469@cornell.edu
+56,Physical Sciences Building(2076),B,B70,Gregory Fuchs ,gdf9@cornell.edu
+57,Physical Sciences Building(2076),B,B71,Mariena Silvestry Ramos ,ms3289@cornell.edu
+58,Physical Sciences Building(2076),B,B74,Gregory Fuchs ,gdf9@cornell.edu
+59,Physical Sciences Building(2076),B,B91,Mariena Silvestry Ramos ,ms3289@cornell.edu
+60,Physical Sciences Building(2076),B,B93,David Muller ,dm24@cornell.edu
+61,Physical Sciences Building(2076),G,G02,David Muller ,dm24@cornell.edu
+62,Physical Sciences Building(2076),G,G35,Valla Fatemi ,vf82@cornell.edu
+63,Physical Sciences Building(2076),G,G37,Lois Pollack ,lp26@cornell.edu
+64,Physical Sciences Building(2076),G,G54,Lois Pollack ,lp26@cornell.edu
+65,Physical Sciences Building(2076),G,G61,Lois Pollack ,lp26@cornell.edu
+66,Physical Sciences Building(2076),G,G65,Lois Pollack ,lp26@cornell.edu
+67,Physical Sciences Building(2076),G,G67,Joel Brock ,jdb20@cornell.edu
+68,Physical Sciences Building(2076),G,G67A,Joel Brock ,jdb20@cornell.edu
+69,Physical Sciences Building(2076),G,G73,Joel Brock ,jdb20@cornell.edu
+70,Physical Sciences Building(2076),B,B87,Kyle Shen ,kms272@cornell.edu
+71,Physical Sciences Building(2076),3,304,Nevjinder Singhota ,nks5@cornell.edu
+72,Physical Sciences Building(2076),B,B30A,Jie Shan ,js3469@cornell.edu
+73,Physical Sciences Building(2076),B,B32A,Jie Shan ,js3469@cornell.edu
+74,Physical Sciences Building(2076),B,B33,Katja Nowack ,kcn34@cornell.edu
+75,Physical Sciences Building(2076),B,B35,Kin Fai Mak ,km627@cornell.edu
+76,Physical Sciences Building(2076),B,B54A,Kin Fai Mak ,km627@cornell.edu
+77,Physical Sciences Building(2076),B,B56,Paul McEuen ,plm23@cornell.edu
+78,Physical Sciences Building(2076),B,B56A,Paul McEuen ,plm23@cornell.edu
+79,Physical Sciences Building(2076),B,B62,Itai Cohen ,ic64@cornell.edu
+80,Physical Sciences Building(2076),B,B63,Katja Nowack ,kcn34@cornell.edu
+81,Physical Sciences Building(2076),B,B66,Paul McEuen ,plm23@cornell.edu
+82,Physical Sciences Building(2076),B,B69,Katja Nowack ,kcn34@cornell.edu
+83,Physical Sciences Building(2076),B,B75,Xiaomeng Liu ,xl956@cornell.edu
+84,Physical Sciences Building(2076),B,B79,Xiaomeng Liu ,xl956@cornell.edu
+85,Physical Sciences Building(2076),B,B82A,Katja Nowack ,kcn34@cornell.edu
+86,Physical Sciences Building(2076),B,B83,J.C. Seamus Davis ,jcd36@cornell.edu
+87,Physical Sciences Building(2076),B,B83A,J.C. Seamus Davis ,jcd36@cornell.edu
+88,Physical Sciences Building(2076),B,B83B,J.C. Seamus Davis ,jcd36@cornell.edu
+89,Physical Sciences Building(2076),B,B87,Kyle Shen ,kms272@cornell.edu
+90,Physical Sciences Building(2076),B,B95,Mariena Silvestry Ramos ,ms3289@cornell.edu
+91,Physical Sciences Building(2076),G,G10,Eric Dufresne ,erd43@cornell.edu
+92,Physical Sciences Building(2076),G,G13,Robert Thorne ,ret6@cornell.edu
+93,Physical Sciences Building(2076),G,G14,Robert Thorne ,ret6@cornell.edu
+94,Physical Sciences Building(2076),3,361,Peter Wittich ,pw94@cornell.edu
+95,Physical Sciences Building(2076),3,373,Lawrence Gibbons ,lkg5@cornell.edu
+96,Physical Sciences Building(2076),3,375,Peter Wittich ,pw94@cornell.edu
+97,Physical Sciences Building(2076),3,379,Michael Niemack ,mdn49@cornell.edu
+98,Physical Sciences Building(2076),3,388,Abigail Crites ,atc72@cornell.edu
+99,Physical Sciences Building(2076),3,392,Michael Niemack ,mdn49@cornell.edu
