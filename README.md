@@ -22,3 +22,6 @@
     1. You should see something like `Dash is running on http://127.0.0.1:8055/` in the terminal.  Copy-paste this URL into a web browser to load the page.
         - If you get an error, you may not have all packages installed correctly.  Please reach out to rf377@cornell.edu for assistance.
     2. You will see a 404 page not found (this is expected).  Click the blue link above that text to enter the dashboard.
+4. Alternately, use docker to run the dashboard server in a container. You will need to have docker installed to make this work.
+    1. `docker build -t fume-hood-dashboard .`
+    2. `docker run -dp 8055:8055 fume-hood-dashboard`
