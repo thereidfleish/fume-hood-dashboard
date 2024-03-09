@@ -325,7 +325,6 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_sash_graph(date, url):
-    ### BEGIN INTERVIEW QUESTION ###
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
     sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
@@ -346,8 +345,6 @@ def update_sash_graph(date, url):
 
     print(final_df_long)
     
-    ### END INTERVIEW QUESTION ###
-
     # sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
     #                     labels={
     #                         "value": "Time (min)",
@@ -378,8 +375,6 @@ def update_sash_graph(date, url):
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)")
     
-    ### BEGIN INTERVIEW QUESTION ###
-    
     pie_df = final_df_long[final_df_long["variable"] == "unocc"]
     time_interval = pie_df.index[1].minute - pie_df.index[0].minute
     pie_df["minutes"] = time_interval
@@ -408,8 +403,6 @@ def update_sash_graph(date, url):
 ))
 
     return sash_fig, pie_fig
-
-    ### END INTERVIEW QUESTION ###
 
 @callback(
     Output("energy_graph", "figure"),
