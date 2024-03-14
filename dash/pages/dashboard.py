@@ -267,7 +267,9 @@ clientside_callback(
     """
     function(input) {
         console.log(input[0]);
-        window.open(`/dashboard${input[0]}`, "_self");
+        if (input[0].includes("lab")) {
+            window.open(`/dashboard${input[0]}`, "_self");
+        }
         return input[0];
     }
     """,
