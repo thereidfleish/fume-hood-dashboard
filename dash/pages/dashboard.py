@@ -359,22 +359,39 @@ def update_sash_graph(date, url):
 
     # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
-    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color="variable",
+    final_df_long_unocc = final_df_long.copy()
+    final_df_long_unocc['time'] = final_df_long_unocc.index
+    final_df_long_unocc['is_occ'] = final_df_long['variable'] == 'occ'
+    final_df_long_unocc['is_occ_cumsum'] = final_df_long_unocc['is_occ'].cumsum()
+    final_df_long_unocc = final_df_long_unocc.loc[~final_df_long_unocc['is_occ']]
+    unocc_period_groups = final_df_long_unocc.groupby('is_occ_cumsum')['time']
+    unocc_periods = pd.DataFrame({"from":unocc_period_groups.max(),
+                                  "to":unocc_period_groups.min()})
+
+    # Line graph version
+    # sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value", 
+    #                     labels={
+    #                         "value": "Sash Height (in)",
+    #                         "index": "Date and Time",
+    #                         },
+    #                     title="When and how much is your fume hood sash open?",
+    #                     )
+    # sash_fig.update_traces(line_color='black')
+    # for i, period in unocc_periods.iterrows():
+    #     sash_fig.add_vrect(x0=period['from'], x1=period['to'], fillcolor="red", opacity=0.2, line_width=0)
+
+    # Bar version
+    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color='variable',
                         labels={
                             "value": "Sash Height (in)",
                             "index": "Date and Time",
                             },
                         title="When and how much is your fume hood sash open?",
                         color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'}, 
-                        # hover_data = {"variable": True, "value": False},
-                        # custom_data = ['variable']
                         )
     sash_fig.update_traces(marker_line_width=0)
-    # sash_fig.add_trace(go.Scatter(x=final_df_long.index, y=final_df_long['value'], mode='lines',
-    #                             name='Line Plot Name'
-    #                             )
-    #                             )
-    print(final_df_long)
+    for i, period in unocc_periods.iterrows():
+        sash_fig.add_vrect(x0=period['from'], x1=period['to'], fillcolor="red", opacity=0.2, line_width=0)
 
     # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
