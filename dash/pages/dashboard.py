@@ -3,6 +3,7 @@ from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -358,16 +359,22 @@ def update_sash_graph(date, url):
 
     # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
-    sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value", color="variable",
+    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color="variable",
                         labels={
                             "value": "Sash Height (in)",
                             "index": "Date and Time",
                             },
                         title="When and how much is your fume hood sash open?",
-                        # color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
+                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'}, 
                         # hover_data = {"variable": True, "value": False},
                         # custom_data = ['variable']
                         )
+    sash_fig.update_traces(marker_line_width=0)
+    # sash_fig.add_trace(go.Scatter(x=final_df_long.index, y=final_df_long['value'], mode='lines',
+    #                             name='Line Plot Name'
+    #                             )
+    #                             )
+    print(final_df_long)
 
     # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
 
