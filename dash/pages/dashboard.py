@@ -278,6 +278,7 @@ clientside_callback(
 
 
 def create_tuple(response):
+    print("Creating Tuple...")
     response_data = response.json()
     response_datum = response_data[0]
     response_target = response_datum['target']
@@ -307,14 +308,19 @@ def synthetic_query(target, start, end):
     ],
 
     }
-    request = requests.post(url, json=data, verify=False)
+    print("Requesting...")
+    request = requests.post(url, json=data, verify=True)
     print(request)
-    # print(request.json())
+    print(request.json())
     master = create_tuple(request)
+    print("Tuple created: ")
+    print(master)
     list = pd.Series(data=[i[0] for i in master],
                      index=[i[1] for i in master])
 
     list = list[~list.index.duplicated()]
+    print("List created: ")
+    print(list)
 
     return list
 
@@ -326,84 +332,92 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_sash_graph(date, url):
+    # Obtain sash height and occupancy data
     parsed_url = urlparse(url).query
     target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
+    print("Target: "+target)
+    print("======Getting data for occ======")
     sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
                                     start=str(datetime(2023, 11, 20)),
                                     end=str(datetime(2023, 11, 30)))
-
+    print("sash_data_occ: ")
+    print(sash_data_occ)
+    print("======Getting data for unocc======")
     sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
                                       start=str(datetime(2023, 11, 20)),
                                     end=str(datetime(2023, 11, 30)))
-
-    print(sash_data_occ)
+    print("sash_data_unocc: ")
     print(sash_data_unocc)
-
     final_df = pd.DataFrame(
         data={"occ": sash_data_occ, "unocc": sash_data_unocc})
+    print("final_df at line 352: ")
+    print(final_df)
 
-    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False).sort_index().dropna()
-
+    # Convert to long version
+    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], 
+                            ignore_index = False).sort_index().dropna()
+    print("final_df_long at line 358: ")
     print(final_df_long)
-    
-    # sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
-    #                     labels={
-    #                         "value": "Time (min)",
-    #                         "index": "Date and Time",
-    #                         "variable": ""},
-    #                     title="Time Sash Open",
-    #                     color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
-    #                     hover_data = {"variable": True, "value": False},
-    #                     custom_data = ['variable']
-    #                     )
+    final_df_long_copy = final_df_long.copy()
+    final_df_long_copy['time'] = final_df_long_copy.index
+    print("final_df_long_copy at line 362: ")
+    print(final_df_long_copy)
 
-    # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
-
-    final_df_long_unocc = final_df_long.copy()
-    final_df_long_unocc['time'] = final_df_long_unocc.index
-    final_df_long_unocc['is_occ'] = final_df_long['variable'] == 'occ'
-    final_df_long_unocc['is_occ_cumsum'] = final_df_long_unocc['is_occ'].cumsum()
-    final_df_long_unocc = final_df_long_unocc.loc[~final_df_long_unocc['is_occ']]
-    unocc_period_groups = final_df_long_unocc.groupby('is_occ_cumsum')['time']
+    # Generate unoccupied periods with sash opened
+    final_df_long_copy['is_occ'] = (final_df_long['variable'] == 'occ')
+    final_df_long_copy['is_occ_cumsum'] = final_df_long_copy['is_occ'].cumsum()
+    unocc_period_groups = final_df_long_copy.\
+            loc[(~final_df_long_copy['is_occ']) & (final_df_long_copy['value']>1.4)].\
+                groupby('is_occ_cumsum')['time']
     unocc_periods = pd.DataFrame({"from":unocc_period_groups.max(),
                                   "to":unocc_period_groups.min()})
 
-    # Line graph version
-    # sash_fig = px.line(final_df_long, x = final_df_long.index, y = "value", 
-    #                     labels={
-    #                         "value": "Sash Height (in)",
-    #                         "index": "Date and Time",
-    #                         },
-    #                     title="When and how much is your fume hood sash open?",
-    #                     )
-    # sash_fig.update_traces(line_color='black')
-    # for i, period in unocc_periods.iterrows():
-    #     sash_fig.add_vrect(x0=period['from'], x1=period['to'], fillcolor="red", opacity=0.2, line_width=0)
 
-    # Bar version
-    sash_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color='variable',
+    # Create the line chart
+    sash_fig = px.line(final_df_long_copy, x=final_df_long_copy.index, y="value", custom_data = ['variable'],
                         labels={
                             "value": "Sash Height (in)",
                             "index": "Date and Time",
-                            },
-                        title="When and how much is your fume hood sash open?",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'}, 
-                        )
-    sash_fig.update_traces(marker_line_width=0)
-    for i, period in unocc_periods.iterrows():
-        sash_fig.add_vrect(x0=period['from'], x1=period['to'], fillcolor="red", opacity=0.2, line_width=0)
+                        },
+                        title="When and how much is your fume hood sash open?")
+    sash_fig.update_traces(line_color='black', 
+                           hovertemplate='Occupany: %{customdata}<br><b>Sash Height: %{y}</b><extra></extra>')
 
-    # sash_fig.update_traces(hovertemplate=('The fume hood was open for %{value} minutes when %{customdata}'))
+    # Loop through each unoccupied period
+    for _, row in unocc_periods.iterrows():
+        # Add rectangle shape for visual highlighting
+        sash_fig.add_shape(type="rect",
+                            x0=row['from'], y0=0, x1=row['to'], y1=1,
+                            xref="x", yref="paper",
+                            fillcolor="red", opacity=0.2,
+                            layer="below", line_width=0)
+
+    # Preprocess to add a column in `final_df_long_copy` indicating whether each point is in an unoccupied period
+
+    # Add an invisible scatter trace for detailed hover text
+    sash_fig.add_trace(go.Scatter(
+        x=final_df_long_copy.index,
+        y=final_df_long_copy["value"]+1.2,
+        mode='markers',
+        marker=dict(color='rgba(0,0,0,0)'),
+        hovertemplate='%{text}<extra></extra>',
+        hoverlabel=dict(font=dict(color='red')),
+        text=[ "Sash open when the room is unoccupied" if condition else "" for condition in ~final_df_long_copy['is_occ'] ],
+        showlegend=False
+    ))
 
     sash_fig.update_layout(
+        hovermode='x',
+        hoverlabel=dict(bgcolor='white'),
         margin=dict(t=55, b=20),
-        paper_bgcolor="rgba(0,0,0,0)")
+        paper_bgcolor="rgba(0,0,0,0)"
+    )
     
     pie_df = final_df_long[final_df_long["variable"] == "unocc"]
     time_interval = pie_df.index[1].minute - pie_df.index[0].minute
     pie_df["minutes"] = time_interval
     pie_df["status"] = np.where((pie_df["value"] > 1.6), "Bad - Sash Open when Unoccupied", "Good - Sash Closed when Unoccupied")
-    print(pie_df)
+    #print(pie_df)
     
     pie_fig = px.pie(pie_df, values="minutes", names="status", color="status",
                         labels={
@@ -412,19 +426,20 @@ def update_sash_graph(date, url):
                             },
                         title="How often is your fume hood open when the room is unoccupied?",
                         color_discrete_map={'Good - Sash Closed when Unoccupied': 'mediumseagreen', 'Bad - Sash Open when Unoccupied': '#d62728'},
-                        # hover_data = {"variable": True, "value": False},
-                        # custom_data = ['variable']
+                        # hover_data = {"occupancy": True, "value": False},
+                        # custom_data = ['occupancy']
                         )
 
     pie_fig.update_layout(
         margin=dict(t=55, b=20),
         paper_bgcolor="rgba(0,0,0,0)",
         legend=dict(
-    yanchor="top",
-    y=1,
-    xanchor="left",
-    x=-0.5
-))
+            yanchor="top",
+            y=1,
+            xanchor="left",
+            x=-0.5
+        )
+    )
 
     return sash_fig, pie_fig
 
@@ -444,8 +459,8 @@ def update_energy_graph(date, url):
                                       start=str(datetime(2023, 11, 24)),
                                     end=str(datetime(2023, 11, 30)))
 
-    print(energy_data_occ)
-    print(energy_data_unocc)
+    #print(energy_data_occ)
+    #print(energy_data_unocc)
 
     final_df = pd.DataFrame(
         data={"occ": energy_data_occ, "unocc": energy_data_unocc})
@@ -454,7 +469,7 @@ def update_energy_graph(date, url):
 
     final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
 
-    print(final_df_long)
+    #print(final_df_long)
 
     energy_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
                         labels={

@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 .env
+dash/.DS_Store
+.DS_Store
