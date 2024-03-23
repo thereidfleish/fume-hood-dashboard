@@ -35,7 +35,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         checkable=False,
                         checked=[],
                         selected=[],
-                        expanded=["?building=biotech"],
+                        expanded=[expanded_name(building, floor, lab)],
                         data=json.loads(treeview(building_list))
                     )
                 ], width=3),
@@ -635,6 +635,16 @@ def treeview(id_list):
     final_string = final_string[0:-1] + ']}'
 
     return(final_string)
+
+def expanded_name(building=None, floor=None, lab=None):
+    result = "?building="
+    if building != None:
+        result += building
+        if floor != None:
+            result += "&floor="+floor
+            if lab != None:
+                result += "&lab="+lab
+    return result
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
