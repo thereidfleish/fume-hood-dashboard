@@ -12,6 +12,7 @@ import requests
 import json
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
+import os
 
 app = Dash(__name__)
 
@@ -312,7 +313,11 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_ranking_graph(date, url):
-    ranking_graph = px.bar(labels={
+    rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened")
+    
+    print("RANKINGS", rankings)
+    
+    ranking_graph = px.bar(rankings, x="name", y="TimeOpened", labels={
                             "value": "Time Open when Unused",
                             "index": "Lab",
                         },
