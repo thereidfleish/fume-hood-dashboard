@@ -312,7 +312,12 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_ranking_graph(date, url):
-    ranking_graph = px.bar()
+    ranking_graph = px.bar(labels={
+                            "value": "Time Open when Unused",
+                            "index": "Lab",
+                        },
+                        title="Time Left Open Overnight"
+    )
     return ranking_graph
 
 @callback(
