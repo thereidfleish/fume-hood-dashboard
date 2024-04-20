@@ -79,13 +79,60 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         
                     ], className="mb-4"),
 
-                    dbc.Row([
-                        html.H3("Energy Stats", className="mb-2"),
-                        html.H6("30% of this hood's energy was wasted by leaving the sash open when the room was unoccupied"),
+                
+                    dbc.Col([
+                        # Leaderboard and filter dropdown
+                        dbc.Row(className="mb-3", children=[
+                            dbc.Col([
+                                html.H2("Energy Stats")
+                            ]),
+                            dbc.Col([
+                                html.Label('Date Range'),
+                                dcc.Dropdown(["Last day", "Last week", "Last month"],
+                                            "Last week", id="date_selector")
+                            ]),
+                        ]),
 
-                        html.H6("This energy is equivalent to:"),
-                        
-                        dbc.Col([
+                        dbc.Row([
+                            dbc.Col([
+                               
+                                    html.H4(
+                                        "Energy Wasted"
+                                    ),
+                                    dbc.Progress(label="25%", value=25),
+                                    html.P("30,000 / 90,000 BTU")
+                                
+                            ]),
+                            dbc.Col([
+                               
+                                    html.H4(
+                                        "Time When Sash Open"
+                                    ),
+                                    dbc.Progress(label="30%", value=30),
+                                    html.P("260 / 3600 minutes")
+                                
+                            ]),
+                             dbc.Col([
+                               
+                                    html.H4(
+                                        "Average Sash Height"
+                                    ),
+                                    dbc.Progress(label="55%", value=55),
+                                    html.P("30 / 52 cm")
+                                
+                            ]),
+                        ]),
+
+                        # Comparative stats card
+                        html.H4(
+                                        "30% of this hood's energy was wasted on April 20th"
+                                    ),
+                        html.P(
+                                        "This is equivalent to:"
+                                    ),
+
+                    dbc.Row([
+                        dbc.Col ([
                             dbc.Card(
                                 [
                                     dbc.CardBody(
@@ -94,22 +141,12 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                                     className="card-title mb-0"),
                                         ]
                                     ),
-                                ]),
+                                ]
+                            ),
                         ]),
+                            
 
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("⚡️ 20,000 BTUh",
-                                                    className="card-title mb-0"),
-                                        ]
-                                    ),
-                                ]),
-                        ]),
-
-                        dbc.Col([
+                        dbc.Col ([
                             dbc.Card(
                                 [
                                     dbc.CardBody(
@@ -118,9 +155,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                                     className="card-title mb-0"),
                                         ]
                                     ),
-                                ]),
+                                ]
+                            ),
                         ]),
-
+                        
                         dbc.Col([
                             dbc.Card(
                                 [
@@ -130,10 +168,42 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                                     className="card-title mb-0"),
                                         ]
                                     ),
-                                ]),
-                        ]),
-                        
-                    ], className="mb-4"),
+                                ]
+                            ),
+                        ])
+                            
+
+                    ]),
+                
+                    ]),
+
+                # Visualization Section 
+                dbc.Col([
+                    dbc.Row(className="mb-3", children=[
+                            dbc.Col([
+                                html.H2("Visualizations")
+                            ]),
+                            dbc.Col([
+                                html.Label('Date Range'),
+                                dcc.Dropdown(["Last day", "Last week", "Last month"],
+                                            "Last week", id="date_selector")
+                            ]),
+                    ]),
+
+                    dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="pie",
+                                        style={'border-radius': '5px',
+                                               'background-color': '#f3f3f3'}
+
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            )
+
+                ]),
 
                     dbc.Row([
                         html.H3("Visualizations", className="mb-2"),
@@ -143,7 +213,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 children=[
                                     dcc.Graph(
                                         id="pie",
-                                        style={'border-radius': '5px',
+                                        style={'border-radius': '10px',
                                                'background-color': '#f3f3f3'}
 
                                         # figure=fig
@@ -158,7 +228,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 children=[
                                     dcc.Graph(
                                         id="sash_graph",
-                                        style={'border-radius': '5px',
+                                        style={'border-radius': '10px',
                                                'background-color': '#f3f3f3'}
 
                                         # figure=fig
@@ -169,71 +239,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         
                     ], className="mb-4"),
 
-                    dbc.Row([
-                        
-                        dbc.Col([
-                            html.H3("Graphs"),
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="energy_graph",
-                                        # eventually change these styles into a classname to put in css file
-                                        style={
-                                            'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
-
-                            
-                            
-                            
-
-                        ]),
-
-                        dbc.Col([
-
-                            html.H3(className="mt-3",
-                                    children="Comparative Metrics"),
-
-                            dbc.Col([
-                                    dcc.Loading(
-                                        id="is-loading",
-                                        children=[
-                                            dcc.Graph(
-                                                id="comparative_energyGraph",
-                                                style={'border-radius': '5px',
-                                                       'background-color': '#f3f3f3'}
-                                                # figure=fig
-                                            )],
-                                        type="circle"
-                                    ),
-                                    dbc.Row([
-                                        html.P(
-                                            "Biotech 202's energy usage is 35% higher than the most energy efficient lab on campus (Olin 303). ")
-                                    ])
-                                    ]),
-                            dbc.Col([
-                                dcc.Loading(
-                                    id="is-loading",
-                                    children=[
-                                        dcc.Graph(
-                                            id="comparative_sashGraph",
-                                            style={'border-radius': '5px',
-                                                   'background-color': '#f3f3f3'}
-                                            # figure=fig
-                                        )],
-                                    type="circle"
-                                ),
-                                dbc.Row([html.P(
-                                    "Biotech 202's sash position is 60% higher than the least open sash on campus (Baker B10).")
-                                ])
-
-                            ])
-                        ]),
-
-                    ])
 
                 ])
 
