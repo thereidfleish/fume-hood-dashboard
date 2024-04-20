@@ -45,16 +45,11 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 # Main Section (Building and Date )
                 dbc.Col([
                     # Lab name
-                    dbc.Col([
                             html.H1(
-                                ', '.join(filter(None, (building, floor, lab))))
-                        ]),
+                                ', '.join(filter(None, (building, floor, lab)))),
                     
-                    dbc.Col([
-                        html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins')
-                    ]),
+                        html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
 
-                    dbc.Col([
                         # Leaderboard and filter dropdown
                         dbc.Row(className="mb-3", children=[
                             dbc.Col([
@@ -63,21 +58,21 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             dbc.Col([
                                 html.Label('Date Range'),
                                 dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                            "Last week", id="date_selector")
+                                            "Last week", id="date_selector"),
+                                dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="ranking_graph",
+                                        # eventually change these styles into a classname to put in css file
+                                        style={
+                                            'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            ),
                             ]),
                         ]),
-                    ]),
-                    
-
-                    # Div containing leaderboard and graph
-                    # REID START HERE 
-                    dbc.Row([
-                       dbc.Col ([
-                        dbc.Card(
-                        ),
-                       ]),
-                        
-                    ], className="mb-4"),
 
                 
                     dbc.Col([
@@ -311,6 +306,14 @@ def synthetic_query(target, start, end):
 
     return list
 
+@callback(
+    Output("ranking_graph", "figure"),
+    Input("date_selector", "value"),
+    Input('url', 'search')
+)
+def update_ranking_graph(date, url):
+    ranking_graph = px.bar()
+    return ranking_graph
 
 @callback(
     Output("sash_graph", "figure"),
