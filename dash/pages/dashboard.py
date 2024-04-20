@@ -27,7 +27,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
 
+            
             dbc.Row([
+                # sidebar
                 dbc.Col([
                     dash_treeview_antd.TreeView(
                         id='input',
@@ -40,62 +42,40 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     )
                 ], width=3),
 
+                # Main Section (Building and Date )
                 dbc.Col([
-                    dbc.Row(className="mb-3", children=[
-                        dbc.Col([
+                    # Lab name
+                    dbc.Col([
                             html.H1(
                                 ', '.join(filter(None, (building, floor, lab))))
                         ]),
-                        dbc.Col([
-                            html.Label('Date Range'),
-                            dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                         "Last week", id="date_selector")
-                        ])
+                    
+                    dbc.Col([
+                        html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins')
                     ]),
 
+                    dbc.Col([
+                        # Leaderboard and filter dropdown
+                        dbc.Row(className="mb-3", children=[
+                            dbc.Col([
+                                html.H2("Leaderboard")
+                            ]),
+                            dbc.Col([
+                                html.Label('Date Range'),
+                                dcc.Dropdown(["Last day", "Last week", "Last month"],
+                                            "Last week", id="date_selector")
+                            ]),
+                        ]),
+                    ]),
+                    
+
+                    # Div containing leaderboard and graph
+                    # REID START HERE 
                     dbc.Row([
-                        html.H3("Featured Rankings", className="mb-1"),
-                        html.H6("How does your fume hood compare to others in terms of the least amount of time that it's open when the room is unoccupied?"),
-                        
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("3rd Best 🥉",
-                                                    className="card-title"),
-                                            html.H6("On Biotech Floor 4"),
-                                        ]
-                                    ),
-                                ]),
-
-                        ]),
-
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("7th Best",
-                                                    className="card-title"),
-                                            html.H6("In Biotech"),
-                                        ]
-                                    ),
-                                ]),
-                        ]),
-
-                        dbc.Col([
-                            dbc.Card(
-                                [
-                                    dbc.CardBody(
-                                        [
-                                            html.H4("52nd Best",
-                                                    className="card-title"),
-                                            html.H6("Cornell-wide"),
-                                        ]
-                                    ),
-                                ]),
-                        ]),
+                       dbc.Col ([
+                        dbc.Card(
+                        ),
+                       ]),
                         
                     ], className="mb-4"),
 
