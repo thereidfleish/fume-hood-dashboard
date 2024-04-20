@@ -56,10 +56,18 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 html.H2("Leaderboard")
                             ]),
                             dbc.Col([
-                                html.Label('Date Range'),
-                                dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                            "Last week", id="date_selector"),
-                                dcc.Loading(
+                                html.Label('Time Range Filter'),
+                                dcc.Dropdown(["Day","Week", "Month", "Year"],
+                                            "Week", id="date_selector")
+                            ]),
+                            dbc.Col([
+                                html.Label('Location Filter'),
+                                dcc.Dropdown(["Lab", "Floor", "Building", "Campus"],
+                                            "Floor", id="location_selector"),
+                            ]),
+                        ]),
+
+                        dcc.Loading(
                                 id="is-loading",
                                 children=[
                                     dcc.Graph(
@@ -71,8 +79,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     )],
                                 type="circle"
                             ),
-                            ]),
-                        ]),
 
                 
                     dbc.Col([
@@ -82,9 +88,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 html.H2("Energy Stats")
                             ]),
                             dbc.Col([
-                                html.Label('Date Range'),
-                                dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                            "Last week", id="date_selector")
+                                html.Label('Time Range Filter'),
+                                dcc.Dropdown(["Day","Week", "Month", "Year"],
+                                            "Week", id="date_selector")
                             ]),
                         ]),
 
@@ -179,9 +185,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 html.H2("Visualizations")
                             ]),
                             dbc.Col([
-                                html.Label('Date Range'),
-                                dcc.Dropdown(["Last day", "Last week", "Last month"],
-                                            "Last week", id="date_selector")
+                                html.Label('Time Range Filter'),
+                                dcc.Dropdown(["Day","Week", "Month", "Year"],
+                                            "Week", id="date_selector")
                             ]),
                     ]),
 
