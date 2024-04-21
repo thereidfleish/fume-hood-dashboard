@@ -53,18 +53,18 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                         # Leaderboard and filter dropdown
                         dbc.Row(className="mb-3", children=[
-                            dbc.Col([
+                            dbc.Col(className="col-8", children=[
                                 html.H2("Leaderboard")
                             ]),
-                            dbc.Col([
+                            dbc.Col(className="col-md-2", children=[
                                 html.Label('Time Range Filter'),
                                 dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                            "Week", id="date_selector")
+                                            "Week", clearable=False, id="date_selector")
                             ]),
-                            dbc.Col([
+                            dbc.Col(className="col-md-2", children=[
                                 html.Label('Location Filter'),
                                 dcc.Dropdown(["Lab", "Floor", "Building", "Campus"],
-                                            "Floor", id="location_selector"),
+                                            "Floor", clearable=False, id="location_selector"),
                             ]),
                         ]),
 
@@ -88,10 +88,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             dbc.Col([
                                 html.H2("Energy Stats")
                             ]),
-                            dbc.Col([
+                            dbc.Col(className="col-md-2", children=[
                                 html.Label('Time Range Filter'),
                                 dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                            "Week", id="date_selector")
+                                            "Week", clearable=False, id="date_selector")
                             ]),
                         ]),
 
@@ -188,7 +188,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             dbc.Col([
                                 html.Label('Time Range Filter'),
                                 dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                            "Week", id="date_selector")
+                                            "Week", clearable=False, id="date_selector")
                             ]),
                     ]),
 
