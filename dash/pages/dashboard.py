@@ -46,8 +46,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 # Main Section (Building and Date )
                 dbc.Col([
                     # Lab name
+                            html.H1(building),
                             html.H1(
-                                ', '.join(filter(None, (building, floor, lab)))),
+                                ' '.join(filter(None, (str(building).capitalize(), "Floor", floor, "Lab", lab)))),
                     
                         html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
 
