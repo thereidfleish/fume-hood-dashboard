@@ -3,9 +3,9 @@ import numpy as np
 import os
 
 point_names_arr = np.array(pd.read_csv(
-    "Lab_pointnames/olin_hall.csv"))[:, 2:5][2:]
+    "Lab_pointnames/Labs/bards_hall.csv"))[:, 2:5][2:]
 
-rooms_df = pd.read_csv("Lab_pointnames/olin_rooms.csv")
+rooms_df = pd.read_csv("Lab_pointnames/Rooms/bard_room.csv")
 rooms_df = rooms_df.drop_duplicates(subset=[rooms_df.columns[4]])
 room_nums = np.array(rooms_df.iloc[:, 4].astype(
     str).replace(['Room', 'room'], '', regex=True))
@@ -28,7 +28,7 @@ def process_rooms(room_nums, output_file):
             # hood_num += 1
             # building, hood, lab, floor, server, flow sensor, sash, hood occupancy, occupancy, internal temp
             room_info = [
-                "olin",
+                "bard",
                 hood_num,
                 room,
                 str(room)[0],
@@ -99,6 +99,8 @@ def process_rooms(room_nums, output_file):
             flow_boolean = True
             for i, val in enumerate(flow_hood_room_point_names):
                 if "Hood flow" in val[0]:
+                    print(i, f"{val[0]} | {val[2]}: ")
+
                     room_info[5] = val[2]
                     flow_boolean = False
                     break
@@ -106,7 +108,9 @@ def process_rooms(room_nums, output_file):
             if flow_boolean:
                 print(f"FLOW FOR {room} HOOD {hood_num}")
                 for i, val in enumerate(flow_hood_room_point_names):
-                    if "Alarm" in val[0] or "alarm" in val[2] or "Minimum" in val[0] or "Supply" in val[0] or "Max" in val[0] or "Offset" in val[0] or "Exhaust" in val[0] or "SAV" in val[0] or "occ" in val[2]:
+                    if "GEX" in val[0] or "Alarm" in val[0] or "alarm" in val[2] or "Minimum" in val[0] or "Supply" in val[0] or "Max" in val[0] or "Offset" in val[0] or "Exhaust" in val[0] or "SAV" in val[0] or "occ" in val[2]:
+                        print(i, f"{val[0]} | {val[2]}: ")
+
                         continue
                     print(i, f"{val[0]} | {val[2]}: ")
                 print()
@@ -238,7 +242,7 @@ def process_rooms(room_nums, output_file):
 
 if __name__ == "__main__":
     output_directory = "Lab_pointnames/Finished_pointnames"
-    output_file = os.path.join(output_directory, "olin_point_names_basement.csv")
+    output_file = os.path.join(output_directory, "bard_point_names_test.csv")
     process_rooms(room_nums, output_file)
 
 
