@@ -1,5 +1,6 @@
 import dash
-from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
+from dash import Dash, html, dcc, Input, Output, callback, clientside_callback, dash_table, Patch
+import dash_ag_grid as dag
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
 import plotly.express as px
@@ -18,6 +19,23 @@ app = Dash(__name__)
 
 dash.register_page(__name__)
 
+rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened").reset_index(drop=True)
+rankings_reduced = rankings.drop(['Unnamed: 0', 'building', 'Floor', 'Lab', 'hood'], axis=1)
+rankings_reduced['Ranking'] = rankings_reduced.index + 1
+rankings_reduced['Ranking_Emoji'] = rankings_reduced['Ranking'].copy()
+rankings_reduced.loc[rankings_reduced['Ranking']==1, 'Ranking_Emoji'] = "🥇"
+rankings_reduced.loc[rankings_reduced['Ranking']==2, 'Ranking_Emoji'] = "🥈"
+rankings_reduced.loc[rankings_reduced['Ranking']==3, 'Ranking_Emoji'] = "🥉"
+
+def format_building(building):
+    return "" if building is None else building.capitalize()
+
+def format_floor(floor):
+    return "" if floor is None else "Floor " + floor
+
+def format_lab(lab):
+    return "" if lab is None else "Lab " + lab
+
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     
     # if lab == None:
@@ -27,7 +45,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
     # else:
         return html.Div([
             # dcc.Location(id='url', refresh=False),  # URL location component
-
             
             dbc.Row([
                 # sidebar
@@ -46,41 +63,54 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 # Main Section (Building and Date )
                 dbc.Col([
                     # Lab name
-                            html.H1(building),
-                            html.H1(
-                                ' '.join(filter(None, (str(building).capitalize(), "Floor", floor, "Lab", lab)))),
-                    
-                        html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
+                    html.H1(' '.join(filter(None, (format_building(building), format_floor(floor), format_lab(lab))))),
+                    html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
 
-                        # Leaderboard and filter dropdown
-                        dbc.Row(className="mb-3", children=[
-                            dbc.Col(className="col-8", children=[
-                                html.H2("Leaderboard")
-                            ]),
-                            dbc.Col(className="col-md-2", children=[
-                                html.Label('Time Range Filter'),
-                                dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                            "Week", clearable=False, id="date_selector")
-                            ]),
-                            dbc.Col(className="col-md-2", children=[
-                                html.Label('Location Filter'),
-                                dcc.Dropdown(["Lab", "Floor", "Building", "Campus"],
-                                            "Floor", clearable=False, id="location_selector"),
-                            ]),
+                    # Leaderboard and filter dropdown
+                    dbc.Row(className="mb-3", children=[
+                        dbc.Col(className="col-8", children=[
+                            html.H2("Leaderboard")
                         ]),
+                        dbc.Col(className="col-md-2", children=[
+                            html.Label('Time Range Filter'),
+                            dcc.Dropdown(["Day","Week", "Month", "Year"],
+                                        "Week", clearable=False, id="date_selector")
+                        ]),
+                        dbc.Col(className="col-md-2", children=[
+                            html.Label('Compare To'),
+                            dcc.Dropdown([str(not bool(building) or building.capitalize()+" Floor "+floor), str(not bool(building) or building.capitalize()), "Campus"],
+                                        floor, clearable=False, id="location_selector"),
+                        ]),
+                    ]),
 
-                        dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="ranking_graph",
-                                        # eventually change these styles into a classname to put in css file
-                                        style={
-                                            'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
+                    dbc.Row(children=[
+                        dbc.Col(dcc.Loading(id="is-loading",children=[
+                            dag.AgGrid(
+                                id="row-pinning-top",
+                                rowData=rankings_reduced.to_dict('records'),
+                                columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
+                                            {"headerName": "Lab", "field": "lab_name"}, 
+                                            #{"headerName": "Fumehood", "field": "hood_name"}, 
+                                            {"headerName": "Time Opened (min)", "field": "TimeOpened"}],
+                                defaultColDef={"editable": False, 
+                                               'cellRendererSelector': {"function": "rowPinningBottom(params)"},
+                                               "cellStyle": {"fontSize": "15px", "height": "50px"}},
+                                columnSize="sizeToFit",
+                                dashGridOptions={"animateRows": False, 
+                                                 'pinnedBottomRowData': (rankings_reduced.loc[rankings_reduced['lab_name'] == 'Lab 441'].head(1)).to_dict('records')},
+                            )]
+                        )),
+
+                        dbc.Col(dcc.Loading(id="is-loading",children=[
+                            dcc.Graph(id="ranking_graph",
+                                    # eventually change these styles into a classname to put in css file
+                                    style={
+                                        'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        ))
+                    ]),
 
                 
                     dbc.Col([
@@ -315,6 +345,17 @@ def synthetic_query(target, start, end):
     return list
 
 @callback(
+    Output("ranking_table", "figure"),
+    Input("date_selector", "value"),
+    Input('url', 'search')
+)
+def update_ranking_table(date, url):
+    rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened")
+    
+    ranking_table = px.table(rankings, title="Ranking: Time Left Open Overnight")
+    return ranking_table
+
+@callback(
     Output("ranking_graph", "figure"),
     Input("date_selector", "value"),
     Input('url', 'search')
@@ -324,9 +365,9 @@ def update_ranking_graph(date, url):
     
     print("RANKINGS", rankings)
     
-    ranking_graph = px.bar(rankings, x="name", y="TimeOpened", labels={
-                            "value": "Time Open when Unused",
-                            "index": "Lab",
+    ranking_graph = px.bar(rankings, x="lab_name", y="TimeOpened", labels={
+                            "TimeOpened": "Time Open when Unused",
+                            "lab_name": "Lab",
                         },
                         title="Time Left Open Overnight"
     )
