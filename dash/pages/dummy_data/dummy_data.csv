@@ -1,67 +1,67 @@
-,building,Floor,Lab,hood,TimeOpened,name
-0,biotech,G,G54,1,30,Biotech Floor G Lab G54 Hood 1
-1,biotech,1,141,1,2,Biotech Floor 1 Lab 141 Hood 1
-2,biotech,1,143,1,71,Biotech Floor 1 Lab 143 Hood 1
-3,biotech,1,147B,1,18,Biotech Floor 1 Lab 147B Hood 1
-4,biotech,1,153,1,127,Biotech Floor 1 Lab 153 Hood 1
-5,biotech,1,153B,1,199,Biotech Floor 1 Lab 153B Hood 1
-6,biotech,1,155,1,174,Biotech Floor 1 Lab 155 Hood 1
-7,biotech,1,160,1,199,Biotech Floor 1 Lab 160 Hood 1
-8,biotech,2,217B,1,30,Biotech Floor 2 Lab 217B Hood 1
-9,biotech,2,221,1,168,Biotech Floor 2 Lab 221 Hood 1
-10,biotech,2,221B,1,70,Biotech Floor 2 Lab 221B Hood 1
-11,biotech,2,227,1,12,Biotech Floor 2 Lab 227 Hood 1
-12,biotech,2,227B,1,45,Biotech Floor 2 Lab 227B Hood 1
-13,biotech,2,233,1,7,Biotech Floor 2 Lab 233 Hood 1
-14,biotech,2,233B,1,62,Biotech Floor 2 Lab 233B Hood 1
-15,biotech,2,241,1,121,Biotech Floor 2 Lab 241 Hood 1
-16,biotech,2,241B,1,34,Biotech Floor 2 Lab 241B Hood 1
-17,biotech,2,253,1,109,Biotech Floor 2 Lab 253 Hood 1
-18,biotech,2,253B,1,152,Biotech Floor 2 Lab 253B Hood 1
-19,biotech,2,257,1,197,Biotech Floor 2 Lab 257 Hood 1
-20,biotech,2,257B,1,127,Biotech Floor 2 Lab 257B Hood 1
-21,biotech,2,260,1,64,Biotech Floor 2 Lab 260 Hood 1
-22,biotech,2,260B,1,179,Biotech Floor 2 Lab 260B Hood 1
-23,biotech,2,267,1,133,Biotech Floor 2 Lab 267 Hood 1
-24,biotech,2,267B,1,21,Biotech Floor 2 Lab 267B Hood 1
-25,biotech,3,303,1,67,Biotech Floor 3 Lab 303 Hood 1
-26,biotech,3,303B,1,173,Biotech Floor 3 Lab 303B Hood 1
-27,biotech,3,309,1,23,Biotech Floor 3 Lab 309 Hood 1
-28,biotech,3,309B,1,91,Biotech Floor 3 Lab 309B Hood 1
-29,biotech,3,317,1,95,Biotech Floor 3 Lab 317 Hood 1
-30,biotech,3,317B,1,165,Biotech Floor 3 Lab 317B Hood 1
-31,biotech,3,318,1,142,Biotech Floor 3 Lab 318 Hood 1
-32,biotech,3,321,1,172,Biotech Floor 3 Lab 321 Hood 1
-33,biotech,3,321B,1,102,Biotech Floor 3 Lab 321B Hood 1
-34,biotech,3,327,1,76,Biotech Floor 3 Lab 327 Hood 1
-35,biotech,3,327B,1,183,Biotech Floor 3 Lab 327B Hood 1
-36,biotech,3,333,1,18,Biotech Floor 3 Lab 333 Hood 1
-37,biotech,3,333B,1,161,Biotech Floor 3 Lab 333B Hood 1
-38,biotech,3,341,1,90,Biotech Floor 3 Lab 341 Hood 1
-39,biotech,3,341B,1,180,Biotech Floor 3 Lab 341B Hood 1
-40,biotech,3,345,1,95,Biotech Floor 3 Lab 345 Hood 1
-41,biotech,3,345B,1,38,Biotech Floor 3 Lab 345B Hood 1
-42,biotech,3,360,1,190,Biotech Floor 3 Lab 360 Hood 1
-43,biotech,3,360B,1,43,Biotech Floor 3 Lab 360B Hood 1
-44,biotech,3,367,1,94,Biotech Floor 3 Lab 367 Hood 1
-45,biotech,3,367B,1,62,Biotech Floor 3 Lab 367B Hood 1
-46,biotech,4,403,1,5,Biotech Floor 4 Lab 403 Hood 1
-47,biotech,4,403B,1,156,Biotech Floor 4 Lab 403B Hood 1
-48,biotech,4,409,1,44,Biotech Floor 4 Lab 409 Hood 1
-49,biotech,4,409B,1,103,Biotech Floor 4 Lab 409B Hood 1
-50,biotech,4,417,1,11,Biotech Floor 4 Lab 417 Hood 1
-51,biotech,4,417B,1,139,Biotech Floor 4 Lab 417B Hood 1
-52,biotech,4,418,1,194,Biotech Floor 4 Lab 418 Hood 1
-53,biotech,4,421,1,52,Biotech Floor 4 Lab 421 Hood 1
-54,biotech,4,421B,1,99,Biotech Floor 4 Lab 421B Hood 1
-55,biotech,4,427B,1,170,Biotech Floor 4 Lab 427B Hood 1
-56,biotech,4,433,1,102,Biotech Floor 4 Lab 433 Hood 1
-57,biotech,4,433B,1,137,Biotech Floor 4 Lab 433B Hood 1
-58,biotech,4,441,1,155,Biotech Floor 4 Lab 441 Hood 1
-59,biotech,4,441B,1,172,Biotech Floor 4 Lab 441B Hood 1
-60,biotech,4,445,1,76,Biotech Floor 4 Lab 445 Hood 1
-61,biotech,4,445B,1,74,Biotech Floor 4 Lab 445B Hood 1
-62,biotech,4,453,1,196,Biotech Floor 4 Lab 453 Hood 1
-63,biotech,4,453B,1,1,Biotech Floor 4 Lab 453B Hood 1
-64,biotech,4,457,1,179,Biotech Floor 4 Lab 457 Hood 1
-65,biotech,4,457B,1,17,Biotech Floor 4 Lab 457B Hood 1
+,building,Floor,Lab,hood,TimeOpened,name,lab_name,hood_name,lab_hood_name
+0,biotech,G,G54,1,154,Biotech Floor G Lab G54 Hood 1,Lab G54,Hood 1,Lab G54 Hood 1
+1,biotech,1,141,1,127,Biotech Floor 1 Lab 141 Hood 1,Lab 141,Hood 1,Lab 141 Hood 1
+2,biotech,1,143,1,101,Biotech Floor 1 Lab 143 Hood 1,Lab 143,Hood 1,Lab 143 Hood 1
+3,biotech,1,147B,1,79,Biotech Floor 1 Lab 147B Hood 1,Lab 147B,Hood 1,Lab 147B Hood 1
+4,biotech,1,153,1,138,Biotech Floor 1 Lab 153 Hood 1,Lab 153,Hood 1,Lab 153 Hood 1
+5,biotech,1,153B,1,78,Biotech Floor 1 Lab 153B Hood 1,Lab 153B,Hood 1,Lab 153B Hood 1
+6,biotech,1,155,1,103,Biotech Floor 1 Lab 155 Hood 1,Lab 155,Hood 1,Lab 155 Hood 1
+7,biotech,1,160,1,101,Biotech Floor 1 Lab 160 Hood 1,Lab 160,Hood 1,Lab 160 Hood 1
+8,biotech,2,217B,1,159,Biotech Floor 2 Lab 217B Hood 1,Lab 217B,Hood 1,Lab 217B Hood 1
+9,biotech,2,221,1,18,Biotech Floor 2 Lab 221 Hood 1,Lab 221,Hood 1,Lab 221 Hood 1
+10,biotech,2,221B,1,168,Biotech Floor 2 Lab 221B Hood 1,Lab 221B,Hood 1,Lab 221B Hood 1
+11,biotech,2,227,1,116,Biotech Floor 2 Lab 227 Hood 1,Lab 227,Hood 1,Lab 227 Hood 1
+12,biotech,2,227B,1,18,Biotech Floor 2 Lab 227B Hood 1,Lab 227B,Hood 1,Lab 227B Hood 1
+13,biotech,2,233,1,8,Biotech Floor 2 Lab 233 Hood 1,Lab 233,Hood 1,Lab 233 Hood 1
+14,biotech,2,233B,1,65,Biotech Floor 2 Lab 233B Hood 1,Lab 233B,Hood 1,Lab 233B Hood 1
+15,biotech,2,241,1,7,Biotech Floor 2 Lab 241 Hood 1,Lab 241,Hood 1,Lab 241 Hood 1
+16,biotech,2,241B,1,1,Biotech Floor 2 Lab 241B Hood 1,Lab 241B,Hood 1,Lab 241B Hood 1
+17,biotech,2,253,1,2,Biotech Floor 2 Lab 253 Hood 1,Lab 253,Hood 1,Lab 253 Hood 1
+18,biotech,2,253B,1,193,Biotech Floor 2 Lab 253B Hood 1,Lab 253B,Hood 1,Lab 253B Hood 1
+19,biotech,2,257,1,19,Biotech Floor 2 Lab 257 Hood 1,Lab 257,Hood 1,Lab 257 Hood 1
+20,biotech,2,257B,1,181,Biotech Floor 2 Lab 257B Hood 1,Lab 257B,Hood 1,Lab 257B Hood 1
+21,biotech,2,260,1,49,Biotech Floor 2 Lab 260 Hood 1,Lab 260,Hood 1,Lab 260 Hood 1
+22,biotech,2,260B,1,76,Biotech Floor 2 Lab 260B Hood 1,Lab 260B,Hood 1,Lab 260B Hood 1
+23,biotech,2,267,1,181,Biotech Floor 2 Lab 267 Hood 1,Lab 267,Hood 1,Lab 267 Hood 1
+24,biotech,2,267B,1,28,Biotech Floor 2 Lab 267B Hood 1,Lab 267B,Hood 1,Lab 267B Hood 1
+25,biotech,3,303,1,122,Biotech Floor 3 Lab 303 Hood 1,Lab 303,Hood 1,Lab 303 Hood 1
+26,biotech,3,303B,1,85,Biotech Floor 3 Lab 303B Hood 1,Lab 303B,Hood 1,Lab 303B Hood 1
+27,biotech,3,309,1,12,Biotech Floor 3 Lab 309 Hood 1,Lab 309,Hood 1,Lab 309 Hood 1
+28,biotech,3,309B,1,66,Biotech Floor 3 Lab 309B Hood 1,Lab 309B,Hood 1,Lab 309B Hood 1
+29,biotech,3,317,1,166,Biotech Floor 3 Lab 317 Hood 1,Lab 317,Hood 1,Lab 317 Hood 1
+30,biotech,3,317B,1,151,Biotech Floor 3 Lab 317B Hood 1,Lab 317B,Hood 1,Lab 317B Hood 1
+31,biotech,3,318,1,79,Biotech Floor 3 Lab 318 Hood 1,Lab 318,Hood 1,Lab 318 Hood 1
+32,biotech,3,321,1,16,Biotech Floor 3 Lab 321 Hood 1,Lab 321,Hood 1,Lab 321 Hood 1
+33,biotech,3,321B,1,86,Biotech Floor 3 Lab 321B Hood 1,Lab 321B,Hood 1,Lab 321B Hood 1
+34,biotech,3,327,1,52,Biotech Floor 3 Lab 327 Hood 1,Lab 327,Hood 1,Lab 327 Hood 1
+35,biotech,3,327B,1,35,Biotech Floor 3 Lab 327B Hood 1,Lab 327B,Hood 1,Lab 327B Hood 1
+36,biotech,3,333,1,122,Biotech Floor 3 Lab 333 Hood 1,Lab 333,Hood 1,Lab 333 Hood 1
+37,biotech,3,333B,1,89,Biotech Floor 3 Lab 333B Hood 1,Lab 333B,Hood 1,Lab 333B Hood 1
+38,biotech,3,341,1,146,Biotech Floor 3 Lab 341 Hood 1,Lab 341,Hood 1,Lab 341 Hood 1
+39,biotech,3,341B,1,74,Biotech Floor 3 Lab 341B Hood 1,Lab 341B,Hood 1,Lab 341B Hood 1
+40,biotech,3,345,1,177,Biotech Floor 3 Lab 345 Hood 1,Lab 345,Hood 1,Lab 345 Hood 1
+41,biotech,3,345B,1,8,Biotech Floor 3 Lab 345B Hood 1,Lab 345B,Hood 1,Lab 345B Hood 1
+42,biotech,3,360,1,186,Biotech Floor 3 Lab 360 Hood 1,Lab 360,Hood 1,Lab 360 Hood 1
+43,biotech,3,360B,1,146,Biotech Floor 3 Lab 360B Hood 1,Lab 360B,Hood 1,Lab 360B Hood 1
+44,biotech,3,367,1,47,Biotech Floor 3 Lab 367 Hood 1,Lab 367,Hood 1,Lab 367 Hood 1
+45,biotech,3,367B,1,152,Biotech Floor 3 Lab 367B Hood 1,Lab 367B,Hood 1,Lab 367B Hood 1
+46,biotech,4,403,1,37,Biotech Floor 4 Lab 403 Hood 1,Lab 403,Hood 1,Lab 403 Hood 1
+47,biotech,4,403B,1,18,Biotech Floor 4 Lab 403B Hood 1,Lab 403B,Hood 1,Lab 403B Hood 1
+48,biotech,4,409,1,187,Biotech Floor 4 Lab 409 Hood 1,Lab 409,Hood 1,Lab 409 Hood 1
+49,biotech,4,409B,1,6,Biotech Floor 4 Lab 409B Hood 1,Lab 409B,Hood 1,Lab 409B Hood 1
+50,biotech,4,417,1,139,Biotech Floor 4 Lab 417 Hood 1,Lab 417,Hood 1,Lab 417 Hood 1
+51,biotech,4,417B,1,143,Biotech Floor 4 Lab 417B Hood 1,Lab 417B,Hood 1,Lab 417B Hood 1
+52,biotech,4,418,1,178,Biotech Floor 4 Lab 418 Hood 1,Lab 418,Hood 1,Lab 418 Hood 1
+53,biotech,4,421,1,50,Biotech Floor 4 Lab 421 Hood 1,Lab 421,Hood 1,Lab 421 Hood 1
+54,biotech,4,421B,1,36,Biotech Floor 4 Lab 421B Hood 1,Lab 421B,Hood 1,Lab 421B Hood 1
+55,biotech,4,427B,1,163,Biotech Floor 4 Lab 427B Hood 1,Lab 427B,Hood 1,Lab 427B Hood 1
+56,biotech,4,433,1,59,Biotech Floor 4 Lab 433 Hood 1,Lab 433,Hood 1,Lab 433 Hood 1
+57,biotech,4,433B,1,113,Biotech Floor 4 Lab 433B Hood 1,Lab 433B,Hood 1,Lab 433B Hood 1
+58,biotech,4,441,1,163,Biotech Floor 4 Lab 441 Hood 1,Lab 441,Hood 1,Lab 441 Hood 1
+59,biotech,4,441B,1,186,Biotech Floor 4 Lab 441B Hood 1,Lab 441B,Hood 1,Lab 441B Hood 1
+60,biotech,4,445,1,120,Biotech Floor 4 Lab 445 Hood 1,Lab 445,Hood 1,Lab 445 Hood 1
+61,biotech,4,445B,1,39,Biotech Floor 4 Lab 445B Hood 1,Lab 445B,Hood 1,Lab 445B Hood 1
+62,biotech,4,453,1,1,Biotech Floor 4 Lab 453 Hood 1,Lab 453,Hood 1,Lab 453 Hood 1
+63,biotech,4,453B,1,16,Biotech Floor 4 Lab 453B Hood 1,Lab 453B,Hood 1,Lab 453B Hood 1
+64,biotech,4,457,1,65,Biotech Floor 4 Lab 457 Hood 1,Lab 457,Hood 1,Lab 457 Hood 1
+65,biotech,4,457B,1,13,Biotech Floor 4 Lab 457B Hood 1,Lab 457B,Hood 1,Lab 457B Hood 1
