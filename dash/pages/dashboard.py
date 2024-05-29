@@ -14,10 +14,41 @@ import json
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 import os
+import boto3
+from dotenv import load_dotenv
 
 app = Dash(__name__)
 
 dash.register_page(__name__)
+
+# Load the environment variables from the .env file
+load_dotenv()
+dynamodb_client = boto3.client('dynamodb', region_name="us-east-1")
+
+labs_response = dynamodb_client.get_item(
+    TableName="fumehoods", Key={"id": {"S": "labs"}}
+)
+
+labs_dict = labs_response['Item']["map"]["M"]
+
+# if building and floor and lab:
+#     # Gonna need to make this work for when you select on this floor, in this building, or at Cornell
+#     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+
+# if building and floor:
+#     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+
+# labs_dynamo_building = {k:v for (k,v) in labs_dict.items() if "Biotech" in k}
+
+labs_df = pd.DataFrame.from_dict({(i, j): labs_dict[i][j] 
+                              for i in labs_dict.keys() 
+                              for j in labs_dict[i].keys()},
+                             orient='index')
+
+labs_df.index = labs_df.index.droplevel(1)
+
+labs_df = labs_df.applymap(lambda x: list(x.values())[0])
+
 
 rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened").reset_index(drop=True)
 rankings_reduced = rankings.drop(['Unnamed: 0', 'building', 'Floor', 'Lab', 'hood'], axis=1)
@@ -54,9 +85,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         multiple=False,
                         checkable=False,
                         checked=[],
-                        selected=[],
+                        selected=[expanded_name(building, floor, lab)],
                         expanded=[expanded_name(building, floor, lab)],
-                        data=json.loads(treeview(building_list))
+                        data=json.loads(treeview(list(labs_dict.keys())))
                     )
                 ], width=3),
 
@@ -350,9 +381,8 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_ranking_table(date, url):
-    rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened")
     
-    ranking_table = px.table(rankings, title="Ranking: Time Left Open Overnight")
+    ranking_table = px.table(labs_df, title="Rankings: Time Left Open Overnight")
     return ranking_table
 
 @callback(
@@ -361,11 +391,8 @@ def update_ranking_table(date, url):
     Input('url', 'search')
 )
 def update_ranking_graph(date, url):
-    rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened")
     
-    print("RANKINGS", rankings)
-    
-    ranking_graph = px.bar(rankings, x="lab_name", y="TimeOpened", labels={
+    ranking_graph = px.bar(labs_df, x=labs_df.index, y="day_sash_time", labels={
                             "TimeOpened": "Time Open when Unused",
                             "lab_name": "Lab",
                         },
