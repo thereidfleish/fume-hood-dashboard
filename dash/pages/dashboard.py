@@ -31,15 +31,6 @@ labs_response = dynamodb_client.get_item(
 
 labs_dict = labs_response['Item']["map"]["M"]
 
-# if building and floor and lab:
-#     # Gonna need to make this work for when you select on this floor, in this building, or at Cornell
-#     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
-
-# if building and floor:
-#     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
-
-# labs_dynamo_building = {k:v for (k,v) in labs_dict.items() if "Biotech" in k}
-
 labs_df = pd.DataFrame.from_dict({(i, j): labs_dict[i][j] 
                               for i in labs_dict.keys() 
                               for j in labs_dict[i].keys()},
@@ -48,15 +39,6 @@ labs_df = pd.DataFrame.from_dict({(i, j): labs_dict[i][j]
 labs_df.index = labs_df.index.droplevel(1)
 
 labs_df = labs_df.applymap(lambda x: list(x.values())[0])
-
-
-rankings = pd.read_csv("pages/dummy_data/dummy_data.csv").sort_values(by="TimeOpened").reset_index(drop=True)
-rankings_reduced = rankings.drop(['Unnamed: 0', 'building', 'Floor', 'Lab', 'hood'], axis=1)
-rankings_reduced['Ranking'] = rankings_reduced.index + 1
-rankings_reduced['Ranking_Emoji'] = rankings_reduced['Ranking'].copy()
-rankings_reduced.loc[rankings_reduced['Ranking']==1, 'Ranking_Emoji'] = "🥇"
-rankings_reduced.loc[rankings_reduced['Ranking']==2, 'Ranking_Emoji'] = "🥈"
-rankings_reduced.loc[rankings_reduced['Ranking']==3, 'Ranking_Emoji'] = "🥉"
 
 def format_building(building):
     return "" if building is None else building.capitalize()
@@ -117,18 +99,17 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     dbc.Row(children=[
                         dbc.Col(dcc.Loading(id="is-loading",children=[
                             dag.AgGrid(
-                                id="row-pinning-top",
-                                rowData=rankings_reduced.to_dict('records'),
+                                id="ranking_table",
                                 columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
-                                            {"headerName": "Lab", "field": "lab_name"}, 
+                                            {"headerName": "Lab", "field": "lab"}, 
                                             #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                            {"headerName": "Time Opened (min)", "field": "TimeOpened"}],
+                                            {"headerName": "Time Opened (min)", "field": "day_sash_time"}],
                                 defaultColDef={"editable": False, 
                                                'cellRendererSelector': {"function": "rowPinningBottom(params)"},
                                                "cellStyle": {"fontSize": "15px", "height": "50px"}},
                                 columnSize="sizeToFit",
                                 dashGridOptions={"animateRows": False, 
-                                                 'pinnedBottomRowData': (rankings_reduced.loc[rankings_reduced['lab_name'] == 'Lab 441'].head(1)).to_dict('records')},
+                                                 'pinnedBottomRowData': (labs_df.loc[labs_df['lab'] == lab].head(1)).to_dict('records')},
                             )]
                         )),
 
@@ -376,14 +357,29 @@ def synthetic_query(target, start, end):
     return list
 
 @callback(
-    Output("ranking_table", "figure"),
+    Output("ranking_table", "rowData"),
     Input("date_selector", "value"),
     Input('url', 'search')
 )
 def update_ranking_table(date, url):
-    
-    ranking_table = px.table(labs_df, title="Rankings: Time Left Open Overnight")
-    return ranking_table
+    # if building and floor and lab:
+    # # Gonna need to make this work for when you select on this floor, in this building, or at Cornell
+    # labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+
+    # if building and floor:
+    #     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+
+    # labs_dynamo_building = {k:v for (k,v) in labs_dict.items() if "Biotech" in k}
+
+    labs_df.sort_values(by="day_sash_time", inplace=True)
+
+    labs_df["Ranking"] = np.arange(1, len(labs_df) + 1)
+    labs_df['Ranking_Emoji'] = labs_df['Ranking'].copy()
+    labs_df.loc[labs_df['Ranking']==1, 'Ranking_Emoji'] = "🥇"
+    labs_df.loc[labs_df['Ranking']==2, 'Ranking_Emoji'] = "🥈"
+    labs_df.loc[labs_df['Ranking']==3, 'Ranking_Emoji'] = "🥉"
+
+    return labs_df.to_dict("records")
 
 @callback(
     Output("ranking_graph", "figure"),
@@ -625,10 +621,6 @@ def update_comparative_sashGraph(data):
         paper_bgcolor="rgba(0,0,0,0)")
 
     return comparative_data_sash
-
-building_list = ["Biotech.Floor_3.Lab_317.Hood_1", "Biotech.Floor_4.Lab_433.Hood_1", "Biotech.Floor_4.Lab_441.Hood_1",
-                 "Olin.Floor_1.Lab_123.Hood_1", "Olin.Floor_1.Lab_127.Hood_1", "Olin.Floor_2.Lab_234.Hood_1",
-                 "Baker.Floor_3.Lab_322.Hood_1"]
 
 # deconstructs hood IDs into building, floor and lab. 
 # stores all information in a dictionary with building keys and dictionary values.
