@@ -103,7 +103,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
                                             {"headerName": "Lab", "field": "lab"}, 
                                             #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                            {"headerName": "Time Opened (min)", "field": "day_sash_time"}],
+                                            {"headerName": "Time Opened (min)", "field": "value"}],
                                 defaultColDef={"editable": False, 
                                                'cellRendererSelector': {"function": "rowPinningBottom(params)"},
                                                "cellStyle": {"fontSize": "15px", "height": "50px"}},
@@ -308,53 +308,42 @@ clientside_callback(
     Input('input', 'selected'), prevent_initial_call=True
 )
 
+def synthetic_query(targets, server, start, end, aggType):
+    targets_req = []
 
-def create_tuple(response):
-    print("Creating Tuple...")
-    response_data = response.json()
-    response_datum = response_data[0]
-    response_target = response_datum['target']
-    response_datapoints = response_datum['datapoints']
-    tuple_array = [tuple(x) for x in response_datapoints]
-    npa = np.array(tuple_array, dtype=[
-        ('value', np.double), ('ts', 'datetime64[ms]')])
-    return npa
+    for target in targets:
+        data = {}
+        data["payload"] = {}
+        data["payload"]["schema"] = server
+        data["payload"]["additional"] = [aggType, "sum"]
+        data["target"] = target
+        targets_req.append(data)
 
-
-def synthetic_query(target, start, end):
     url = "https://portal.emcs.cornell.edu/api/datasources/proxy/5/query"
     data = {
         "range": {
             "from": start,
             "to": end,
         },
-        "targets": [
-        {
-            "payload": {
-                "additional": [
-                    "noagg",
-                ]
-            },
-            "target": target,
-        }
-    ],
+        "targets": targets_req
 
     }
-    print("Requesting...")
-    request = requests.post(url, json=data, verify=True)
-    print(request)
-    print(request.json())
-    master = create_tuple(request)
-    print("Tuple created: ")
-    print(master)
-    list = pd.Series(data=[i[0] for i in master],
-                     index=[i[1] for i in master])
+    response = requests.post(url, json=data)
+    print(response)
+    print(response.json())
+    print(len(response.json()))
 
-    list = list[~list.index.duplicated()]
-    print("List created: ")
-    print(list)
+    master = pd.json_normalize(response.json(), record_path="datapoints", meta=["target", "metric"]).rename(columns={0: "value", 1: "timestamp"}).set_index("target").rename_axis(None)
+    # Remove the rows where the metric is None (i.e., do not show the averaged rows because this is not useful)
+    master = master[~master["metric"].isna()]
+    master["timestamp"] = master["timestamp"].astype("datetime64[ms]").map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
 
-    return list
+    master[["building", "floor", "lab", "hood"]] = [i[0:4] for i in master.index.str.split(".")]
+    master[["floor", "lab", "hood"]] = master[["floor", "lab", "hood"]].replace(r'^.*?_', '', regex=True)
+    
+    # display(master)
+
+    return master
 
 @callback(
     Output("ranking_table", "rowData"),
@@ -362,24 +351,26 @@ def synthetic_query(target, start, end):
     Input('url', 'search')
 )
 def update_ranking_table(date, url):
-    # if building and floor and lab:
-    # # Gonna need to make this work for when you select on this floor, in this building, or at Cornell
-    # labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+    print("====Getting q====")
 
-    # if building and floor:
-    #     labs_dict = {k:v for (k,v) in labs_dict.items() if building.capitalize() + "Floor_" + floor in k}
+    query = synthetic_query(targets=["Biotech.Floor_4.Lab_403.Hood_1.sashOpenTime.unocc", "Biotech.Floor_4.Lab_403b.Hood_1.sashOpenTime.unocc"], server="biotech_main",
+                                    start=str(datetime(2024, 5, 15)),
+                                    end=str(datetime.now()),
+                                    aggType="aggD")
+    
+    print("EDEN", query)
 
-    # labs_dynamo_building = {k:v for (k,v) in labs_dict.items() if "Biotech" in k}
+    rankings = query.groupby([query.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True).sort_values(by="value")
 
-    labs_df.sort_values(by="day_sash_time", inplace=True)
+    rankings["Ranking"] = np.arange(1, len(rankings) + 1)
+    rankings['Ranking_Emoji'] = rankings['Ranking'].copy()
+    rankings.loc[rankings['Ranking']==1, 'Ranking_Emoji'] = "🥇"
+    rankings.loc[rankings['Ranking']==2, 'Ranking_Emoji'] = "🥈"
+    rankings.loc[rankings['Ranking']==3, 'Ranking_Emoji'] = "🥉"
 
-    labs_df["Ranking"] = np.arange(1, len(labs_df) + 1)
-    labs_df['Ranking_Emoji'] = labs_df['Ranking'].copy()
-    labs_df.loc[labs_df['Ranking']==1, 'Ranking_Emoji'] = "🥇"
-    labs_df.loc[labs_df['Ranking']==2, 'Ranking_Emoji'] = "🥈"
-    labs_df.loc[labs_df['Ranking']==3, 'Ranking_Emoji'] = "🥉"
+    print(rankings)
 
-    return labs_df.to_dict("records")
+    return rankings.to_dict("records")
 
 @callback(
     Output("ranking_graph", "figure"),
