@@ -310,6 +310,7 @@ clientside_callback(
 
 def synthetic_query(targets, server, start, end, aggType):
     targets_req = []
+    print(targets)
 
     for target in targets:
         data = {}
@@ -346,14 +347,14 @@ def synthetic_query(targets, server, start, end, aggType):
     return master
 
 @callback(
-    Output("ranking_table", "rowData"),
-    Input("date_selector", "value"),
-    Input('url', 'search')
+    Output(component_id="ranking_table", component_property="rowData"),
+    Input(component_id="date_selector", component_property="value")
 )
-def update_ranking_table(date, url):
+def update_ranking_table(date):
     print("====Getting q====")
+    print(labs_df.index)
 
-    query = synthetic_query(targets=["Biotech.Floor_4.Lab_403.Hood_1.sashOpenTime.unocc", "Biotech.Floor_4.Lab_403b.Hood_1.sashOpenTime.unocc"], server="biotech_main",
+    query = synthetic_query(targets=labs_df.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
                                     start=str(datetime(2024, 5, 15)),
                                     end=str(datetime.now()),
                                     aggType="aggD")
@@ -373,9 +374,8 @@ def update_ranking_table(date, url):
     return rankings.to_dict("records")
 
 @callback(
-    Output("ranking_graph", "figure"),
-    Input("date_selector", "value"),
-    Input('url', 'search')
+    Output(component_id="ranking_graph", component_property="figure"),
+    Input(component_id="date_selector", component_property="value")
 )
 def update_ranking_graph(date, url):
     
