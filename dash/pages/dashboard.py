@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta, date
 from dateutil import tz
 import requests
 import json
@@ -77,26 +77,36 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                 # Main Section (Building and Date )
                 dbc.Col([
-                    # Lab name
-                    html.H1(' '.join(filter(None, (format_building(building), format_floor(floor), format_lab(lab))))),
-                    html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
-
-                    # Leaderboard and filter dropdown
-                    dbc.Row(className="mb-3", children=[
-                        dbc.Col(className="col-8", children=[
-                            html.H2("Leaderboard")
-                        ]),
-                        dbc.Col(className="col-md-2", children=[
+                    dbc.Row([
+                         dbc.Col([
+                              html.H1(' '.join(filter(None, (format_building(building), format_floor(floor), format_lab(lab))))),
+                                html.H6('This week, the amount of time the fumehood was left open overnight is 1 hr and 3 mins'),
+                         ]),
+                         dbc.Col([
                             html.Label('Time Range Filter'),
-                            dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                        "Week", clearable=False, id="date_selector")
-                        ]),
-                        dbc.Col(className="col-md-2", children=[
-                            html.Label('Compare To'),
-                            dcc.Dropdown([str(not bool(building) or building.capitalize()+" Floor "+floor), str(not bool(building) or building.capitalize()), "Campus"],
-                                        floor, clearable=False, id="location_selector"),
-                        ]),
+                            dcc.DatePickerRange(
+                                id='date-picker-range',
+                                min_date_allowed=datetime(2024, 1, 1),
+                                max_date_allowed=datetime.now(),
+                                initial_visible_month=datetime.now(),
+                                start_date=datetime.now() - timedelta(days=7),
+                                end_date=datetime.now(),
+                                clearable=True,
+                            ),
+                            dcc.Dropdown(["Day", "Week", "Month", "Year"], "Week", clearable=False, id="date_selector")
+
+                         ])
                     ]),
+
+                    html.Div(className="d-flex", children=[
+                         html.H4("How does your lab compare to other labs", className="me-2"),                    
+                    dcc.Dropdown(options=[
+                                    {'label': "on this floor", 'value': 'floor'},
+                                    {'label': "in " + building.capitalize(), 'value': 'building'},
+                                    {'label': 'across campus', 'value': 'cornell'},
+                                ], value="building", clearable=False, id="location_selector", style={'minWidth': "200px"}),
+                    ]),
+                    
 
                     dbc.Row(children=[
                         dbc.Col(dcc.Loading(id="is-loading",children=[
@@ -312,19 +322,34 @@ clientside_callback(
     Output(component_id="ranking_table", component_property="rowData"),
     Output(component_id="ranking_table", component_property="dashGridOptions"),
     Output(component_id="ranking_graph", component_property="figure"),
-    Input(component_id="date_selector", component_property="value"),
-    Input('url', 'search')
+    Input(component_id="date-picker-range", component_property="start_date"),
+    Input(component_id="date-picker-range", component_property="end_date"),
+    Input(component_id="location_selector", component_property="value"),
+    Input(component_id='url', component_property='search')
 )
-def rankings(date, url):
-    print("====Getting q====")
-    print(labs_df.index)
+def rankings(start_date, end_date, location, url):
+    print("====Getting Rankings====")
 
-    query = synthetic_query(targets=labs_df.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-                                    start=str(datetime(2024, 5, 15)),
-                                    end=str(datetime.now()),
+    url_query_params = parse_qs(urlparse(url).query)
+    building = url_query_params["building"][0]
+    floor = url_query_params["floor"][0]
+    lab = url_query_params["lab"][0]
+
+    if location == "floor":
+        labs_df_filtered = labs_df.filter(like=building.capitalize() + "." + "Floor_" + floor, axis=0)
+    elif location == "building":
+        labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
+    else:
+        labs_df_filtered = labs_df
+
+    print(labs_df_filtered.index)
+
+    query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
+                                    start=str(start_date),
+                                    end=str(end_date),
                                     aggType="aggD")
     
-    print("EDEN", query)
+    # print("Query:", query)
 
     rankings = query.groupby([query.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True).sort_values(by="value")
 
@@ -337,9 +362,7 @@ def rankings(date, url):
     print(rankings)
 
     # Get the lab number from the query parameters
-    print(rankings.loc[rankings['lab'] == parse_qs(urlparse(url).query)["lab"][0]].to_dict('records'))
-    
-    dashGridOptions={"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == parse_qs(urlparse(url).query)["lab"][0]].to_dict('records')}
+    dashGridOptions={"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
 
     ranking_graph = px.bar(rankings, x="lab", y="value", labels={
                             "value": "Time Open when Unused",
@@ -353,53 +376,25 @@ def rankings(date, url):
 @callback(
     Output("sash_graph", "figure"),
     Output("pie", "figure"),
-    Input("date_selector", "value"),
-    Input('url', 'search')
+    Input(component_id="date-picker-range", component_property="start_date"),
+    Input(component_id="date-picker-range", component_property="end_date"),
+    Input(component_id='url', component_property='search')
 )
-def update_sash_graph(date, url):
-    # Obtain sash height and occupancy data
-    parsed_url = urlparse(url).query
-    target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
+def individual(start_date, end_date, url):
+    print("====Getting Individual====")
+    url_query_params = urlparse(url).query
+    target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
     print("Target: "+target)
-    print("======Getting data for occ======")
-    sash_data_occ = synthetic_query(target=target + ".sashOpenTime.occ",
-                                    start=str(datetime(2023, 11, 20)),
-                                    end=str(datetime(2023, 11, 30)))
-    print("sash_data_occ: ")
-    print(sash_data_occ)
-    print("======Getting data for unocc======")
-    sash_data_unocc = synthetic_query(target=target + ".sashOpenTime.unocc",
-                                      start=str(datetime(2023, 11, 20)),
-                                    end=str(datetime(2023, 11, 30)))
-    print("sash_data_unocc: ")
-    print(sash_data_unocc)
-    final_df = pd.DataFrame(
-        data={"occ": sash_data_occ, "unocc": sash_data_unocc})
-    print("final_df at line 352: ")
-    print(final_df)
 
-    # Convert to long version
-    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], 
-                            ignore_index = False).sort_index().dropna()
-    print("final_df_long at line 358: ")
-    print(final_df_long)
-    final_df_long_copy = final_df_long.copy()
-    final_df_long_copy['time'] = final_df_long_copy.index
-    print("final_df_long_copy at line 362: ")
-    print(final_df_long_copy)
-
-    # Generate unoccupied periods with sash opened
-    final_df_long_copy['is_occ'] = (final_df_long['variable'] == 'occ')
-    final_df_long_copy['is_occ_cumsum'] = final_df_long_copy['is_occ'].cumsum()
-    unocc_period_groups = final_df_long_copy.\
-            loc[(~final_df_long_copy['is_occ']) & (final_df_long_copy['value']>1.4)].\
-                groupby('is_occ_cumsum')['time']
-    unocc_periods = pd.DataFrame({"from":unocc_period_groups.max(),
-                                  "to":unocc_period_groups.min()})
-
+    query = synthetic_query(targets=[target], server="biotech_main",
+                                    start=str(start_date),
+                                    end=str(end_date),
+                                    aggType="aggD")
+    
+    print("EDEN", query)
 
     # Create the line chart
-    sash_fig = px.line(final_df_long_copy, x=final_df_long_copy.index, y="value", custom_data = ['variable'],
+    sash_fig = px.line(query, x="timestamp", y="value",
                         labels={
                             "value": "Sash Height (in)",
                             "index": "Date and Time",
@@ -407,44 +402,13 @@ def update_sash_graph(date, url):
                         title="When and how much is your fume hood sash open?")
     sash_fig.update_traces(line_color='black', 
                            hovertemplate='Occupany: %{customdata}<br><b>Sash Height: %{y}</b><extra></extra>')
-
-    # Loop through each unoccupied period
-    for _, row in unocc_periods.iterrows():
-        # Add rectangle shape for visual highlighting
-        sash_fig.add_shape(type="rect",
-                            x0=row['from'], y0=0, x1=row['to'], y1=1,
-                            xref="x", yref="paper",
-                            fillcolor="red", opacity=0.2,
-                            layer="below", line_width=0)
-
-    # Preprocess to add a column in `final_df_long_copy` indicating whether each point is in an unoccupied period
-
-    # Add an invisible scatter trace for detailed hover text
-    sash_fig.add_trace(go.Scatter(
-        x=final_df_long_copy.index,
-        y=final_df_long_copy["value"]+1.2,
-        mode='markers',
-        marker=dict(color='rgba(0,0,0,0)'),
-        hovertemplate='%{text}<extra></extra>',
-        hoverlabel=dict(font=dict(color='red')),
-        text=[ "Sash open when the room is unoccupied" if condition else "" for condition in ~final_df_long_copy['is_occ'] ],
-        showlegend=False
-    ))
-
-    sash_fig.update_layout(
-        hovermode='x',
-        hoverlabel=dict(bgcolor='white'),
-        margin=dict(t=55, b=20),
-        paper_bgcolor="rgba(0,0,0,0)"
-    )
     
-    pie_df = final_df_long[final_df_long["variable"] == "unocc"]
-    time_interval = pie_df.index[1].minute - pie_df.index[0].minute
-    pie_df["minutes"] = time_interval
-    pie_df["status"] = np.where((pie_df["value"] > 1.6), "Bad - Sash Open when Unoccupied", "Good - Sash Closed when Unoccupied")
-    #print(pie_df)
+    print(datetime.fromisoformat(start_date))
+    print(end_date)
+
+    total_mins_in_time_period = (datetime.fromisoformat(end_date)-datetime.fromisoformat(start_date)).total_seconds() / 60
     
-    pie_fig = px.pie(pie_df, values="minutes", names="status", color="status",
+    pie_fig = px.pie(values=[query["value"].sum(), total_mins_in_time_period - query["value"].sum()], # time sash opened v.s. time sash unopened
                         labels={
                             "value": "Sash Height (in)",
                             "index": "Date and Time",
@@ -467,54 +431,6 @@ def update_sash_graph(date, url):
     )
 
     return sash_fig, pie_fig
-
-@callback(
-    Output("energy_graph", "figure"),
-    Input("date_selector", "value"),
-    Input('url', 'search')
-)
-def update_energy_graph(date, url):
-    parsed_url = urlparse(url).query
-    target = f"{parse_qs(parsed_url)['building'][0].capitalize()}.Floor_{parse_qs(parsed_url)['floor'][0]}.Lab_{parse_qs(parsed_url)['lab'][0]}.Hood_1"
-    energy_data_occ = synthetic_query(target=target + ".energy.occ",
-                                    start=str(datetime(2023, 11, 24)),
-                                    end=str(datetime(2023, 11, 30)))
-
-    energy_data_unocc = synthetic_query(target=target + ".energy.unocc",
-                                      start=str(datetime(2023, 11, 24)),
-                                    end=str(datetime(2023, 11, 30)))
-
-    #print(energy_data_occ)
-    #print(energy_data_unocc)
-
-    final_df = pd.DataFrame(
-        data={"occ": energy_data_occ, "unocc": energy_data_unocc})
-    final_df = final_df.fillna(0)
-    final_df.index = final_df.index.map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
-
-    final_df_long = pd.melt(final_df, value_vars = ["occ", "unocc"], ignore_index = False)
-
-    #print(final_df_long)
-
-    energy_fig = px.bar(final_df_long, x = final_df_long.index, y = "value", color = "variable",
-                        labels={
-                            "value": "Energy (BTU)",
-                            "index": "Date and Time",
-                            "variable": ""},
-                        title="Total Fumehood Energy Consumption",
-                        color_discrete_map={'occ': 'mediumseagreen', 'unocc': '#d62728'},
-                        hover_data = {"variable": True, "value": False},
-                        custom_data = ['variable']
-                        )
-    
-    energy_fig.update_traces(hovertemplate=('The fume hood used %{value} BTUs of energy when %{customdata}'))
-
-
-    energy_fig.update_layout(
-        margin=dict(t=55, b=20),
-        paper_bgcolor="rgba(0,0,0,0)")
-
-    return energy_fig
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
