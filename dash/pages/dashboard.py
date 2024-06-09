@@ -109,9 +109,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 defaultColDef={"editable": False, 
                                                'cellRendererSelector': {"function": "rowPinningBottom(params)"},
                                                "cellStyle": {"fontSize": "15px", "height": "50px"}},
-                                columnSize="sizeToFit",
-                                dashGridOptions={"animateRows": False, 
-                                                 'pinnedBottomRowData': (labs_df.loc[labs_df['lab'] == lab].head(1)).to_dict('records')},
+                                columnSize="sizeToFit"
                             )]
                         )),
 
@@ -312,10 +310,12 @@ clientside_callback(
 
 @callback(
     Output(component_id="ranking_table", component_property="rowData"),
+    Output(component_id="ranking_table", component_property="dashGridOptions"),
     Output(component_id="ranking_graph", component_property="figure"),
-    Input(component_id="date_selector", component_property="value")
+    Input(component_id="date_selector", component_property="value"),
+    Input('url', 'search')
 )
-def rankings(date):
+def rankings(date, url):
     print("====Getting q====")
     print(labs_df.index)
 
@@ -336,6 +336,11 @@ def rankings(date):
 
     print(rankings)
 
+    # Get the lab number from the query parameters
+    print(rankings.loc[rankings['lab'] == parse_qs(urlparse(url).query)["lab"][0]].to_dict('records'))
+    
+    dashGridOptions={"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == parse_qs(urlparse(url).query)["lab"][0]].to_dict('records')}
+
     ranking_graph = px.bar(rankings, x="lab", y="value", labels={
                             "value": "Time Open when Unused",
                             "lab": "Lab",
@@ -343,7 +348,7 @@ def rankings(date):
                         title="Time Left Open Overnight"
     )
 
-    return rankings.to_dict("records"), ranking_graph
+    return rankings.to_dict("records"), dashGridOptions, ranking_graph
 
 @callback(
     Output("sash_graph", "figure"),
