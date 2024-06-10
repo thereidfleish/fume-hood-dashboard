@@ -232,53 +232,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 
                     ]),
 
-                # Visualization Section 
-                dbc.Col([
-                    dbc.Row(className="mb-3", children=[
-                            dbc.Col([
-                                html.H2("Visualizations")
-                            ]),
-                            dbc.Col([
-                                html.Label('Time Range Filter'),
-                                dcc.Dropdown(["Day","Week", "Month", "Year"],
-                                            "Week", clearable=False, id="date_selector")
-                            ]),
-                    ]),
-
-                    dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="pie",
-                                        style={'border-radius': '5px',
-                                               'background-color': '#f3f3f3'}
-
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            )
-
-                ]),
-
-                    dbc.Row([
-                        html.H3("Visualizations", className="mb-2"),
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="pie",
-                                        style={'border-radius': '10px',
-                                               'background-color': '#f3f3f3'}
-
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            )
-                        ]),
-
-                        dbc.Col([
-                            dcc.Loading(
+                # Visualization Section
+                html.H2("Visualizations"),
+                dcc.Loading(
                                 id="is-loading",
                                 children=[
                                     dcc.Graph(
@@ -289,14 +245,41 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         # figure=fig
                                     )],
                                 type="circle"
+                ),
+                    
+                    dbc.Row([
+                        dbc.Col([
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="pie",
+                                        style={'border-radius': '10px',
+                                               'background-color': '#f3f3f3'}
+
+                                        # figure=fig
+                                    )],
+                                type="circle"
+                            )
+                        ]),
+
+                        dbc.Col([
+                            dcc.Loading(
+                                id="is-loading",
+                                children=[
+                                    dcc.Graph(
+                                        id="sash_graphs",
+                                        style={'border-radius': '10px',
+                                               'background-color': '#f3f3f3'}
+
+                                        # figure=fig
+                                    )],
+                                type="circle"
                             ),
                         ]),
                         
                     ], className="mb-4"),
-
-
                 ])
-
             ]),
 
             # Need this to do the page click callback for some reason!
@@ -394,27 +377,25 @@ def individual(start_date, end_date, url):
     print("EDEN", query)
 
     # Create the line chart
-    sash_fig = px.line(query, x="timestamp", y="value",
+    sash_fig = px.bar(query, x="timestamp", y="value",
                         labels={
-                            "value": "Sash Height (in)",
-                            "index": "Date and Time",
+                            "value": "Time open overnight (mins)",
+                            "timestamp": "Date",
                         },
                         title="When and how much is your fume hood sash open?")
-    sash_fig.update_traces(line_color='black', 
-                           hovertemplate='Occupany: %{customdata}<br><b>Sash Height: %{y}</b><extra></extra>')
     
     print(datetime.fromisoformat(start_date))
     print(end_date)
 
+    total_mins_unocc = query["value"].sum()
     total_mins_in_time_period = (datetime.fromisoformat(end_date)-datetime.fromisoformat(start_date)).total_seconds() / 60
+
+    pie_df = pd.DataFrame([[total_mins_unocc, "Wasted"], [total_mins_in_time_period - total_mins_unocc, "Used"]], columns=["Mins", "Type"]) # time sash opened v.s. time sash unopened
+    print(pie_df)
     
-    pie_fig = px.pie(values=[query["value"].sum(), total_mins_in_time_period - query["value"].sum()], # time sash opened v.s. time sash unopened
-                        labels={
-                            "value": "Sash Height (in)",
-                            "index": "Date and Time",
-                            },
-                        title="How often is your fume hood open when the room is unoccupied?",
-                        color_discrete_map={'Good - Sash Closed when Unoccupied': 'mediumseagreen', 'Bad - Sash Open when Unoccupied': '#d62728'},
+    pie_fig = px.pie(pie_df, values="Mins", names="Type", color="Type", 
+                        title=str(round(total_mins_unocc/total_mins_in_time_period*100)).rstrip('0') + "% of your fume hood's energy was wasted when unused",
+                        color_discrete_map={'Used': 'mediumseagreen', 'Wasted': '#d62728'},
                         # hover_data = {"occupancy": True, "value": False},
                         # custom_data = ['occupancy']
                         )
