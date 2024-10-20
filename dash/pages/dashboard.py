@@ -109,6 +109,11 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     
 
                     dbc.Row(children=[
+                        # Nuo's Task
+                        dbc.Col(
+                            html.H1("Nuo add here!")
+                        ),
+
                         dbc.Col(dcc.Loading(id="is-loading",children=[
                             dag.AgGrid(
                                 id="ranking_table",
@@ -123,6 +128,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             )]
                         )),
 
+                        # Steven add carousel
                         dbc.Col(dcc.Loading(id="is-loading",children=[
                             dcc.Graph(id="ranking_graph",
                                     # eventually change these styles into a classname to put in css file
@@ -131,7 +137,12 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     # figure=fig
                                 )],
                             type="circle"
-                        ))
+                        )),
+
+                        # Maggie's Task
+                        dbc.Col(
+                            html.H1("Maggie add here!")
+                        )
                     ]),
 
                 
