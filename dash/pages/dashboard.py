@@ -3,6 +3,7 @@ from dash import Dash, html, dcc, Input, Output, callback, clientside_callback, 
 import dash_ag_grid as dag
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
+import dash_svg as svg
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -17,7 +18,7 @@ import os
 import boto3
 from dotenv import load_dotenv
 
-from .components.functions import synthetic_query, treeview, expanded_name
+from .components.functions import synthetic_query, treeview, expanded_name, raw_query
 
 app = Dash(__name__)
 
@@ -110,9 +111,23 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                     dbc.Row(children=[
                         # Nuo's Task
+
                         dbc.Col(
-                            html.H1("Nuo add here!")
+                            svg.Svg(children=[
+                                svg.Rect(
+                                    x="10", y="10", width="200", height="200", 
+                                    style={"fill": "red", "stroke": "black", "stroke-width": 2}
+                                ),
+                                svg.Rect(
+                                    x="10", y="10", width = "200", height="150",
+                                    style={"fill": "lightblue", "stroke": "black", "stroke-width": 2}
+                                )
+                            ],
+                            
+                            width="300", height="300"
+                            )
                         ),
+
 
                         dbc.Col(dcc.Loading(id="is-loading",children=[
                             dag.AgGrid(

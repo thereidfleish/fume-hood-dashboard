@@ -5,6 +5,8 @@ import dash
 from dash import Dash, html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
+import dash_svg
+from dash_svg import Svg, G, Path, Circle
 import plotly.express as px
 import pandas as pd
 import numpy as np
