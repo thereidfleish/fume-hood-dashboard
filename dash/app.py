@@ -23,7 +23,7 @@ app.layout = html.Div([
         dbc.DropdownMenu(
             children=[
                 dbc.DropdownMenuItem("Buildings", header=True),
-                dbc.DropdownMenuItem("Biotech", href="dashboard"),
+                dbc.DropdownMenuItem("Biotech Shortcut", href="dashboard?building=biotech&floor=4&lab=441"),
                 dbc.DropdownMenuItem("Baker", href="dashboard"),
             ],
             nav=True,
@@ -39,18 +39,6 @@ app.layout = html.Div([
     color="#B5E0BC",
     dark=False,
 ),
-
-	html.H1('Cornell Fume Hood Dashboard'),
-
-    html.Div(
-        [
-            html.Div(
-                dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
-                # html.A('Biotech', href='/biotech')
-            )
-            for page in dash.page_registry.values()
-        ]
-    ),
 
 	dash.page_container
 ])
