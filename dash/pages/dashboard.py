@@ -109,30 +109,38 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     
 
                     dbc.Row(children=[
-                        dbc.Col(dcc.Loading(id="is-loading",children=[
-                            dag.AgGrid(
-                                id="ranking_table",
-                                columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
-                                            {"headerName": "Lab", "field": "lab"}, 
-                                            #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                            {"headerName": "Time Opened (min)", "field": "value"}],
-                                defaultColDef={"editable": False, 
-                                               'cellRendererSelector': {"function": "rowPinningBottom(params)"},
-                                               "cellStyle": {"fontSize": "15px", "height": "50px"}},
-                                columnSize="sizeToFit"
-                            )]
-                        )),
-
-                        dbc.Col(dcc.Loading(id="is-loading",children=[
-                            dcc.Graph(id="ranking_graph",
-                                    # eventually change these styles into a classname to put in css file
-                                    style={
-                                        'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
-                                    # figure=fig
-                                )],
-                            type="circle"
-                        ))
-                    ]),
+                        dbc.Tabs([
+                                dbc.Tab(
+                                    dbc.Col(dcc.Loading(id="is-loading",children=[
+                                        dag.AgGrid(
+                                            id="ranking_table",
+                                            columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
+                                                        {"headerName": "Lab", "field": "lab"}, 
+                                                        #{"headerName": "Fumehood", "field": "hood_name"}, 
+                                                        {"headerName": "Time Opened (min)", "field": "value"}],
+                                            defaultColDef={"editable": False, 
+                                                        'cellRendererSelector': {"function": "rowPinningBottom(params)"},
+                                                        "cellStyle": {"fontSize": "15px", "height": "50px"}},
+                                            columnSize="sizeToFit"
+                                    )])), 
+                                    label="Table"
+                                ),
+                                dbc.Tab(
+                                    dbc.Col(dcc.Loading(id="is-loading",children=[
+                                        dcc.Graph(id="ranking_graph",
+                                                # eventually change these styles into a classname to put in css file
+                                                style={
+                                                    'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                                # figure=fig
+                                            )
+                                    ],
+                                    type="circle"
+                                    )), 
+                                    label="Graph"
+                                )
+                            ])
+                        ]
+                    ),
 
                 
                     dbc.Col([
