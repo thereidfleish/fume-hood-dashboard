@@ -42,6 +42,37 @@ def synthetic_query(targets, server, start, end, aggType):
 
     return master
 
+### RAW QUERY ###
+def raw_query(target, server, start, end, aggType):
+    url = "https://ypsu0n34jc.execute-api.us-east-1.amazonaws.com/dev/query"
+    data = {
+        "range": {
+            "from": start,
+            "to": end,
+        },
+        "targets": [
+        {
+          "payload": {
+            "schema": server,
+            "additional": [
+                    aggType,
+                ]
+          },
+          "target": target
+        }
+      ],
+    }
+    response = requests.post(url, json=data)
+    print("Raw Query Response:", response)
+    print("Raw Query JSON:", response.json())
+    # print(len(response.json()))
+
+    master = pd.json_normalize(response.json(), record_path="datapoints", meta=["target"]).rename(columns={0: "value", 1: "timestamp"}).set_index("target").rename_axis(None)
+    # Remove the rows where the metric is None (i.e., do not show the averaged rows because this is not useful)
+    # master = master[~master["metric"].isna()]
+    master["timestamp"] = master["timestamp"].astype("datetime64[ms]").map(lambda x: x.to_pydatetime().replace(tzinfo=tz.tzutc()).astimezone(tz.tzlocal()))
+
+    return master
 
 ### TREEVIEW ###
 
