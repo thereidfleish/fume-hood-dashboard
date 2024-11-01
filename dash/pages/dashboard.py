@@ -102,7 +102,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                          html.H4("How does your lab compare to other labs", className="me-2"),                    
                     dcc.Dropdown(options=[
                                     {'label': "on this floor", 'value': 'floor'},
-                                    {'label': "in " + building.capitalize(), 'value': 'building'},
+                                    {'label': "in " + format_building(building), 'value': 'building'},
                                     {'label': 'across campus', 'value': 'cornell'},
                                 ], value="building", clearable=False, id="location_selector", style={'minWidth': "200px"}),
                     ]),
@@ -304,6 +304,7 @@ clientside_callback(
 @callback(
     Output(component_id="ranking_table", component_property="rowData"),
     Output(component_id="ranking_table", component_property="dashGridOptions"),
+    Output(component_id="ranking_table", component_property="getRowStyle"),
     Output(component_id="ranking_graph", component_property="figure"),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
@@ -318,6 +319,8 @@ def rankings(start_date, end_date, location, url):
     floor = url_query_params["floor"][0]
     lab = url_query_params["lab"][0]
 
+    print("Lab:"+lab)
+
     if location == "floor":
         labs_df_filtered = labs_df.filter(like=building.capitalize() + "." + "Floor_" + floor, axis=0)
     elif location == "building":
@@ -325,14 +328,10 @@ def rankings(start_date, end_date, location, url):
     else:
         labs_df_filtered = labs_df
 
-    print(labs_df_filtered.index)
-
     query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
                                     start=str(start_date),
                                     end=str(end_date),
                                     aggType="aggD")
-    
-    # print("Query:", query)
 
     rankings = query.groupby([query.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True).sort_values(by="value")
 
@@ -342,10 +341,16 @@ def rankings(start_date, end_date, location, url):
     rankings.loc[rankings['Ranking']==2, 'Ranking_Emoji'] = "🥈"
     rankings.loc[rankings['Ranking']==3, 'Ranking_Emoji'] = "🥉"
 
-    print(rankings)
-
     # Get the lab number from the query parameters
-    dashGridOptions={"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
+    dashGridOptions = {"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
+
+    getRowStyle = {"styleConditions": [
+            {
+                "condition": f"params.data.lab == {lab}",
+                "style": {"backgroundColor": "red", "color": "white"},
+            },
+        ]
+    }
 
     ranking_graph = px.bar(rankings, x="lab", y="value", labels={
                             "value": "Time Open when Unused",
@@ -354,7 +359,9 @@ def rankings(start_date, end_date, location, url):
                         title="Time Left Open Overnight"
     )
 
-    return rankings.to_dict("records"), dashGridOptions, ranking_graph
+    ranking_graph["data"][0]["marker"]["color"] = ["red" if c == lab else "blue" for c in ranking_graph["data"][0]["x"]]
+
+    return rankings.to_dict("records"), dashGridOptions, getRowStyle, ranking_graph
 
 @callback(
     Output("sash_graph", "figure"),
