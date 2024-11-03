@@ -128,40 +128,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             )
                         ),
 
-                        # Steven add carousel
-                        dbc.Col(dcc.Loading(id="is-loading",children=[
-                            dbc.Tabs([
-                                dbc.Tab(
-                                    dbc.Col(dcc.Loading(id="is-loading",children=[
-                                        dag.AgGrid(
-                                            id="ranking_table",
-                                            columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
-                                                        {"headerName": "Lab", "field": "lab"}, 
-                                                        #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                                        {"headerName": "Time Opened (min)", "field": "value"}],
-                                            defaultColDef={"editable": False, 
-                                                        'cellRendererSelector': {"function": "rowPinningBottom(params)"},
-                                                        "cellStyle": {"fontSize": "15px", "height": "50px"}},
-                                            columnSize="sizeToFit"
-                                    )])), 
-                                    label="Table"
-                                ),
-                                dbc.Tab(
-                                    dbc.Col(dcc.Loading(id="is-loading",children=[
-                                        dcc.Graph(id="ranking_graph",
-                                                # eventually change these styles into a classname to put in css file
-                                                style={
-                                                    'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
-                                                # figure=fig
-                                            )
-                                    ],
-                                    type="circle"
-                                    )), 
-                                    label="Graph"
-                                )
-                            ])
-                        ])),
-
                         # Maggie's Task
                         dbc.Col(
                             html.H1("Maggie add here!")
@@ -268,7 +234,43 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                 # Visualization Section
                 html.H2("Visualizations"),
-                dcc.Loading(
+                    dbc.Row([
+                        dbc.Col([
+                            dcc.Loading(id="is-loading",children=[
+                            dbc.Tabs([
+                                dbc.Tab(
+                                    dbc.Col(dcc.Loading(id="is-loading",children=[
+                                        dag.AgGrid(
+                                            id="ranking_table",
+                                            columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
+                                                        {"headerName": "Lab", "field": "lab"}, 
+                                                        #{"headerName": "Fumehood", "field": "hood_name"}, 
+                                                        {"headerName": "Time Opened (min)", "field": "value"}],
+                                            defaultColDef={"editable": False, 
+                                                        'cellRendererSelector': {"function": "rowPinningBottom(params)"},
+                                                        "cellStyle": {"fontSize": "15px", "height": "50px"}},
+                                            columnSize="sizeToFit"
+                                    )])), 
+                                    label="Table"
+                                ),
+                                dbc.Tab(
+                                    dbc.Col(dcc.Loading(id="is-loading",children=[
+                                        dcc.Graph(id="ranking_graph",
+                                                # eventually change these styles into a classname to put in css file
+                                                style={
+                                                    'border-radius': '5px', 'background-color': '#f3f3f3', "margin-bottom": "10px"}
+                                                # figure=fig
+                                            )
+                                    ],
+                                    type="circle"
+                                    )), 
+                                    label="Graph"
+                                )
+                            ])
+                        ]) ], width=6),
+
+                        dbc.Col([
+                            dcc.Loading(
                                 id="is-loading",
                                 children=[
                                     dcc.Graph(
@@ -279,8 +281,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         # figure=fig
                                     )],
                                 type="circle"
-                ),
-                    
+                            ),
+                        ]),
+                        
+                    ], className="mb-4"),
                     dbc.Row([
                         dbc.Col([
                             dcc.Loading(
