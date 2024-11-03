@@ -140,10 +140,39 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         )),
 
                         # Maggie's Task
-                        dbc.Col(
-                            html.H1("Maggie add here!")
-                        )
-                    ]),
+                        dbc.Col([
+                        html.H4("Energy wasted by this lab is equivalent to", className="section-title"),
+                        html.Div([
+                            dbc.Card(
+                                [
+                                    html.Span("💰", className="metric-emoji"),
+                                    html.Span("$100", className="metric-text") 
+                                ],
+                                className="metric-card energy-cost"
+                            ),
+                            dbc.Card(
+                                [
+                                    html.Span("🏠", className="metric-emoji"),
+                                    html.Span("5 homes' energy", className="metric-text")
+                                ],
+                                className="metric-card energy-homes"
+                            ),
+                            dbc.Card(
+                                [
+                                    html.Span("🏭", className="metric-emoji"),
+                                    html.Span("200kg CO₂", className="metric-text")
+                                ],
+                                className="metric-card energy-co2"
+                            )
+                        ], className="metric-container"),
+                    ], style={
+                        "maxHeight": "17rem",
+                        "padding": "1rem",
+                        "backgroundColor": "#fff",
+                        "borderRadius": "1rem",
+                        "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+                    }, className="mb-4")]),
+
 
                 
                     dbc.Col([
