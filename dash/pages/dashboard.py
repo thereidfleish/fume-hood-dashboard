@@ -109,7 +109,16 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     children=[
                                         html.H4("Live Fumehood Status"),
                                         html.P("last updated 15 min ago"),
+                                        html.Div(className="d-flex", children=[
+                                            html.P("Fumehood"),                    
+                                            dcc.Dropdown(options=[
+                                                            {'label': "fumehood 1", 'value': 'hood 1'},
+                                                            {'label': "fumehood 2", 'value': 'hood 2'},
+                                                            {'label': 'fumehood 3', 'value': 'hood 3'},
+                                                        ], value="hood 1", clearable=False, id="fumehood_selector", style={'minWidth': "200px"}),
+                                        ]),
                                         html.P("🚨 Sash Open when Unoccupied NOW"),
+
                                     ]
                                 ),
 
@@ -145,23 +154,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 )) 
                     ]),
                     
-                        
-
-
-                        dbc.Col(dcc.Loading(id="is-loading",children=[
-                            dag.AgGrid(
-                                id="ranking_table",
-                                columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
-                                            {"headerName": "Lab", "field": "lab"}, 
-                                            #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                            {"headerName": "Time Opened (min)", "field": "value"}],
-                                defaultColDef={"editable": False, 
-                                               'cellRendererSelector': {"function": "rowPinningBottom(params)"},
-                                               "cellStyle": {"fontSize": "15px", "height": "50px"}},
-                                columnSize="sizeToFit"
-                            )]
-                        )),
-
                         # Steven add carousel
 
 
@@ -494,11 +486,10 @@ def individual(start_date, end_date, url):
 
 @callback(
     Output("closedSash", "height"),
-    Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 
 )
-def ssh_height (url, location):
+def ssh_height (url):
     sash_complete_height = 30
     sash_height_data = 10
     return (sash_complete_height - sash_height_data) / sash_complete_height * 200
