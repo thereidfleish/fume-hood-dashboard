@@ -127,6 +127,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             width="300", height="300"
                             )
                         ),
+                        
+                        dbc.Col(
+                            html.H3("Another task here")
+                        ),
 
                         # Maggie's Task
                         dbc.Col([
