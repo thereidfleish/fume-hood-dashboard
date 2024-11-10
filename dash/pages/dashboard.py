@@ -477,14 +477,14 @@ def individual(start_date, end_date, url):
         x=sash_df["timestamp"],
         y=sash_df["below_avg_time_closed"],
         name="Below Average",
-        marker_color='mediumseagreen'
+        marker_color='#d62728'
     ))
 
     sash_fig.add_trace(go.Bar(
         x=sash_df["timestamp"],
         y=sash_df["above_avg_time_closed"],
         name="Above Average",
-        marker_color='#d62728'
+        marker_color='mediumseagreen'
     ))
 
     sash_fig.add_shape(
@@ -506,9 +506,9 @@ def individual(start_date, end_date, url):
 
     sash_fig.update_layout(
         barmode="stack",
-        title="When and how much is your fume hood sash open?",
+        title="When and how much is your fume hood sash closed?",
         xaxis_title="Date",
-        yaxis_title="Time open overnight (mins)",
+        yaxis_title="Time closed overnight (mins)",
     )
 
     total_mins_unocc = query["value"].sum()
