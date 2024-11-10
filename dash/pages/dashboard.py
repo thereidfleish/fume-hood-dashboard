@@ -275,13 +275,14 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     dbc.Col(dcc.Loading(id="is-loading",children=[
                                         dag.AgGrid(
                                             id="ranking_table",
-                                            columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}}, 
-                                                        {"headerName": "Lab", "field": "lab"}, 
-                                                        #{"headerName": "Fumehood", "field": "hood_name"}, 
-                                                        {"headerName": "Time Opened (min)", "field": "value"}],
-                                            defaultColDef={"editable": False, 
-                                                        'cellRendererSelector': {"function": "rowPinningBottom(params)"},
-                                                        "cellStyle": {"fontSize": "15px", "height": "50px"}},
+                                            columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}},
+                                                        {"headerName": "Lab",
+                                                        "field": "lab"},
+                                                        # {"headerName": "Fumehood", "field": "hood_name"},
+                                                        {"headerName": "Time Closed (min)", "field": "time_closed"}],
+                                            defaultColDef={"editable": False,
+                                                           'cellRendererSelector': {"function": "rowPinningBottom(params)"},
+                                                           "cellStyle": {"fontSize": "15px", "height": "50px"}},
                                             columnSize="sizeToFit"
                                     )])), 
                                     label="Table"
@@ -385,26 +386,36 @@ clientside_callback(
 def rankings(start_date, end_date, location, url):
     print("====Getting Rankings====")
 
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+    date_diff_min = ((end_date - start_date).total_seconds())//60
+
     url_query_params = parse_qs(urlparse(url).query)
     building = url_query_params["building"][0]
     floor = url_query_params["floor"][0]
     lab = url_query_params["lab"][0]
 
-    print("Lab:"+lab)
-
     if location == "floor":
-        labs_df_filtered = labs_df.filter(like=building.capitalize() + "." + "Floor_" + floor, axis=0)
+        labs_df_filtered = labs_df.filter(
+            like=building.capitalize() + "." + "Floor_" + floor, axis=0)
     elif location == "building":
         labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
     else:
         labs_df_filtered = labs_df
 
     query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-                                    start=str(start_date),
-                                    end=str(end_date),
-                                    aggType="aggD")
+                            start=str(start_date),
+                            end=str(end_date),
+                            aggType="aggD")
 
-    rankings = query.groupby([query.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True).sort_values(by="value")
+    rankings = query.groupby([query.index, "building", "floor",
+                             "lab", "hood"], as_index=False).sum(numeric_only=True)
+
+    rankings['time_closed'] = (date_diff_min - rankings['value'])
+    rankings.loc[rankings['time_closed'] < 0, 'time_closed'] = 0
+    rankings = rankings.rename({'value': 'time_opened'}, axis=1)
+
+    rankings = rankings.sort_values(by="time_closed", ascending=False)
 
     rankings["Ranking"] = np.arange(1, len(rankings) + 1)
     rankings['Ranking_Emoji'] = rankings['Ranking'].copy()
@@ -416,21 +427,22 @@ def rankings(start_date, end_date, location, url):
     dashGridOptions = {"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
 
     getRowStyle = {"styleConditions": [
-            {
-                "condition": f"params.data.lab == {lab}",
-                "style": {"backgroundColor": "red", "color": "white"},
-            },
-        ]
+        {
+            "condition": f"params.data.lab == {lab}",
+            "style": {"backgroundColor": "red", "color": "white"},
+        },
+    ]
     }
 
-    ranking_graph = px.bar(rankings, x="lab", y="value", labels={
-                            "value": "Time Open when Unused",
-                            "lab": "Lab",
-                        },
-                        title="Time Left Open Overnight"
+    ranking_graph = px.bar(rankings, x="lab", y="time_closed", labels={
+        "time_closed": "Time Closed when Unused",
+        "lab": "Lab",
+    },
+        title="Time Closed Overnight"
     )
 
-    ranking_graph["data"][0]["marker"]["color"] = ["red" if c == lab else "blue" for c in ranking_graph["data"][0]["x"]]
+    ranking_graph["data"][0]["marker"]["color"] = ["red" if c ==
+                                                   lab else "blue" for c in ranking_graph["data"][0]["x"]]
 
     return rankings.to_dict("records"), dashGridOptions, getRowStyle, ranking_graph
 
