@@ -383,8 +383,7 @@ def individual(start_date, end_date, location, url):
 
     print("====Getting Individual====")
     url_query_params = urlparse(url).query
-    target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)[
-        'floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
+    target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
 
     query = synthetic_query(targets=[target], server="biotech_main",
                             start=str(start_date),
