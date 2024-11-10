@@ -454,16 +454,62 @@ def individual(start_date, end_date, url):
     
     print("EDEN", query)
 
-    # Create the line chart
-    sash_fig = px.bar(query, x="timestamp", y="value",
-                        labels={
-                            "value": "Time open overnight (mins)",
-                            "timestamp": "Date",
-                        },
-                        title="When and how much is your fume hood sash open?")
+    sash_time = query["timestamp"]
+    time_closed = 1440-query["value"]
+    average_time_closed = 1440 - np.mean(query["value"])
+    above_average = time_closed >= average_time_closed
+
     
-    print(datetime.fromisoformat(start_date))
-    print(end_date)
+    sash_df = pd.DataFrame({
+    "timestamp": sash_time,
+    "time_open": query["value"],
+    "time_closed": time_closed,
+    "above_average": above_average})
+    
+    print(sash_df)
+
+    sash_df["below_avg_time_closed"] = sash_df["time_closed"].clip(upper=float(average_time_closed))
+    sash_df["above_avg_time_closed"] = sash_df["time_closed"] - sash_df["below_avg_time_closed"]
+
+    sash_fig = go.Figure()
+
+    sash_fig.add_trace(go.Bar(
+        x=sash_df["timestamp"],
+        y=sash_df["below_avg_time_closed"],
+        name="Below Average",
+        marker_color='mediumseagreen'
+    ))
+
+    sash_fig.add_trace(go.Bar(
+        x=sash_df["timestamp"],
+        y=sash_df["above_avg_time_closed"],
+        name="Above Average",
+        marker_color='#d62728'
+    ))
+
+    sash_fig.add_shape(
+        type="line",
+        x0=sash_df["timestamp"].min(), x1=sash_df["timestamp"].max(),
+        y0=average_time_closed, y1=average_time_closed,
+        line=dict(color="black", width=2),
+        name="Average Time Closed"
+    )
+
+    sash_fig.add_annotation(
+        x=sash_df["timestamp"].max(),
+        y=average_time_closed,
+        text=f"Average = {average_time_closed:.1f} mins",
+        showarrow=False,
+        yshift=10,
+        font=dict(color="black")
+    )
+
+    sash_fig.update_layout(
+        barmode="stack",
+        title="When and how much is your fume hood sash open?",
+        xaxis_title="Date",
+        yaxis_title="Time open overnight (mins)",
+    )
 
     total_mins_unocc = query["value"].sum()
     total_mins_in_time_period = (datetime.fromisoformat(end_date)-datetime.fromisoformat(start_date)).total_seconds() / 60
