@@ -300,64 +300,66 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     )), 
                                     label="Graph"
                                 )
-                            ])
-                        ]) ], width=6),
+                            ]),
+                        ])
+                    ])], width=6),
 
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="sash_graph",
-                                        style={'border-radius': '10px',
-                                               'background-color': '#f3f3f3'}
+                    dbc.Col([dcc.Loading(id="is-loading", children=[
+                        dbc.Card([
+                            html.P("Daily Average:"),
+                            html.Div(id='sash_graph_average'),
+                            html.Div(id='sash_graph_average_change'),
+                            dcc.Graph(
+                                id="sash_graph",
+                                style={'border-radius': '10px',
+                                       'background-color': '#f3f3f3'}
 
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
-                        ]),
-                        
-                    ], className="mb-4"),
-                    dbc.Row([
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="pie",
-                                        style={'border-radius': '10px',
-                                               'background-color': '#f3f3f3'}
-
-                                        # figure=fig
-                                    )],
-                                type="circle"
+                                # figure=fig
                             )
                         ]),
+                    ], type="circle")])
+                ], className="mb-4"),
 
-                        dbc.Col([
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="sash_graphs",
-                                        style={'border-radius': '10px',
-                                               'background-color': '#f3f3f3'}
+                dbc.Row([
+                    dbc.Col([
+                        dcc.Loading(
+                            id="is-loading",
+                            children=[
+                                dcc.Graph(
+                                    id="pie",
+                                    style={'border-radius': '10px',
+                                           'background-color': '#f3f3f3'}
 
-                                        # figure=fig
-                                    )],
-                                type="circle"
-                            ),
-                        ]),
-                        
-                    ], className="mb-4"),
-                ])
-            ]),
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        )
+                    ]),
 
-            # Need this to do the page click callback for some reason!
-            html.Div(id='output-selected'),
-            dcc.Location(id='url')
-        ])
+                    dbc.Col([
+                        dcc.Loading(
+                            id="is-loading",
+                            children=[
+                                dcc.Graph(
+                                    id="sash_graphs",
+                                    style={'border-radius': '10px',
+                                           'background-color': '#f3f3f3'}
+
+                                    # figure=fig
+                                )],
+                            type="circle"
+                        ),
+                    ]),
+
+                ], className="mb-4"),
+            ])
+        ]),
+
+        # Need this to do the page click callback for some reason!
+        html.Div(id='output-selected'),
+        dcc.Location(id='url')
+    ])
+
 
 clientside_callback(
     """
@@ -446,60 +448,102 @@ def rankings(start_date, end_date, location, url):
 
     return rankings.to_dict("records"), dashGridOptions, getRowStyle, ranking_graph
 
+
 @callback(
-    Output("sash_graph", "figure"),
-    Output("pie", "figure"),
+    Output(component_id="sash_graph", component_property="figure"),
+    Output(component_id="pie", component_property="figure"),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
+    Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 )
-def individual(start_date, end_date, url):
+def individual(start_date, end_date, location, url):
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+    week_prior_start_date = start_date - timedelta(weeks=1)
+    date_diff_min = ((end_date - start_date).total_seconds())//60
+
     print("====Getting Individual====")
     url_query_params = urlparse(url).query
     target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
     print("Target: "+target)
 
     query = synthetic_query(targets=[target], server="biotech_main",
-                                    start=str(start_date),
-                                    end=str(end_date),
-                                    aggType="aggD")
-    
-    print("EDEN", query)
+                            start=str(start_date),
+                            end=str(end_date),
+                            aggType="aggD")
+
+    week_prior_query = synthetic_query(targets=[target], server="biotech_main",
+                                       start=str(week_prior_start_date),
+                                       end=str(start_date),
+                                       aggType="aggD")
+
+    # url_query_params = parse_qs(urlparse(url).query)
+    # building = url_query_params["building"][0]
+    # floor = url_query_params["floor"][0]
+    # lab = url_query_params["lab"][0]
+
+    # if location == "floor":
+    #     labs_df_filtered = labs_df.filter(like=building.capitalize() + "." + "Floor_" + floor, axis=0)
+    # elif location == "building":
+    #     labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
+    # else:
+    #     labs_df_filtered = labs_df
+
+    # all_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
+    #                                 start=str(start_date),
+    #                                 end=str(end_date),
+    #                                 aggType="aggD")
+
+    query['time_closed'] = (60*24 - query['value'])
+    query.loc[query['time_closed'] < 0, 'time_closed'] = 0
+    query = query.rename({'value': 'time_opened'}, axis=1)
+
+    week_prior_query['time_closed'] = (60*24 - week_prior_query['value'])
+    average = week_prior_query['time_closed'].mean()
+
+    query['above_average'] = query['time_closed'] > average
+
+    # all_query['time_closed'] = (60*24 - all_query['value'])
+    # all_query.loc[all_query['time_closed'] < 0, 'time_closed'] = 0
+    # all_query = all_query.rename({'value':'time_opened'}, axis=1)
+
+    # average = all_query.groupby('timestamp')['time_closed'].mean()
+    # average.name = 'average_time_closed'
+
+    # query = query.merge(average, left_on='timestamp', right_index=True)
+
+    # query['above_average'] = query['time_closed'] > query['average_time_closed']
 
     # Create the line chart
-    sash_fig = px.bar(query, x="timestamp", y="value",
-                        labels={
-                            "value": "Time open overnight (mins)",
-                            "timestamp": "Date",
-                        },
-                        title="When and how much is your fume hood sash open?")
-    
-    print(datetime.fromisoformat(start_date))
-    print(end_date)
+    sash_fig = px.bar(query, x="timestamp", y="time_closed",
+                      labels={
+                          "time_closed": "Time closed (mins)",
+                          "timestamp": "Date",
+                      },
+                      color='above_average',
+                      color_discrete_map={
+                          True: 'mediumseagreen', False: '#d62728'},
+                      title="When and how much is your fume hood sash closed?")
 
-    total_mins_unocc = query["value"].sum()
-    total_mins_in_time_period = (datetime.fromisoformat(end_date)-datetime.fromisoformat(start_date)).total_seconds() / 60
+    sash_fig.add_hline(y=average,
+                       annotation_text="Last Week Average",
+                       annotation_position="bottom right")
 
-    pie_df = pd.DataFrame([[total_mins_unocc, "Wasted"], [total_mins_in_time_period - total_mins_unocc, "Used"]], columns=["Mins", "Type"]) # time sash opened v.s. time sash unopened
-    print(pie_df)
-    
-    pie_fig = px.pie(pie_df, values="Mins", names="Type", color="Type", 
-                        title=str(round(total_mins_unocc/total_mins_in_time_period*100)).rstrip('0') + "% of your fume hood's energy was wasted when unused",
-                        color_discrete_map={'Used': 'mediumseagreen', 'Wasted': '#d62728'},
-                        # hover_data = {"occupancy": True, "value": False},
-                        # custom_data = ['occupancy']
-                        )
+    total_mins_unocc = query["time_opened"].sum()
 
-    pie_fig.update_layout(
-        margin=dict(t=55, b=20),
-        paper_bgcolor="rgba(0,0,0,0)",
-        legend=dict(
-            yanchor="top",
-            y=1,
-            xanchor="left",
-            x=-0.5
-        )
-    )
+    pie_df = pd.DataFrame([[total_mins_unocc, "Wasted"], [date_diff_min - total_mins_unocc, "Used"]],
+                          # time sash opened v.s. time sash unopened
+                          columns=["Mins", "Type"])
+
+    pie_fig = px.pie(pie_df, values="Mins", names="Type", color="Type",
+                     title=str(round(total_mins_unocc/date_diff_min*100)).rstrip('0') +
+                     "% of your fume hood's energy was wasted when unused",
+                     color_discrete_map={
+                         'Used': 'mediumseagreen', 'Wasted': '#d62728'},
+                     # hover_data = {"occupancy": True, "value": False},
+                     # custom_data = ['occupancy']
+                     )
 
     return sash_fig, pie_fig
 
