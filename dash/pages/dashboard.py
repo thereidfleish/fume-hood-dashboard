@@ -452,6 +452,8 @@ def rankings(start_date, end_date, location, url):
 @callback(
     Output(component_id="sash_graph", component_property="figure"),
     Output(component_id="pie", component_property="figure"),
+    Output(component_id='sash_graph_average', component_property='children'),
+    Output(component_id='sash_graph_average_change', component_property='children'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
     Input(component_id="location_selector", component_property="value"),
@@ -544,8 +546,19 @@ def individual(start_date, end_date, location, url):
                      # hover_data = {"occupancy": True, "value": False},
                      # custom_data = ['occupancy']
                      )
+    
+    sash_graph_average = query["time_opened"].mean()
+    sash_graph_average_string = f'{sash_graph_average:.0f} mins'
+    
+    sash_graph_average_change = ((query["time_opened"].mean() - average) / average) * 100
+    if sash_graph_average_change > 0:
+        sash_graph_average_change_string = f'↑ {sash_graph_average_change:.0f}% from last week'
+    elif sash_graph_average_change == 0:
+        sash_graph_average_change_string = f'No change from last week'
+    else:
+        sash_graph_average_change_string = f'↓ {-sash_graph_average_change:.0f}% from last week'
 
-    return sash_fig, pie_fig
+    return sash_fig, pie_fig, sash_graph_average_string, sash_graph_average_change_string
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
