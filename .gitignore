@@ -1,5 +1,5 @@
-__pycache__/
 *.pyc
+__pycache__/
 .env
 dash/.DS_Store
 .DS_Store
