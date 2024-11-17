@@ -251,10 +251,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         dag.AgGrid(
                                             id="ranking_table",
                                             columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}},
-                                                        {"headerName": "Lab",
-                                                        "field": "lab"},
+                                                        {"headerName": "Lab", "field": "lab"},
                                                         # {"headerName": "Fumehood", "field": "hood_name"},
-                                                        {"headerName": "Time Closed (min)", "field": "time_closed"}],
+                                                        {"headerName": "Time Closed (min)", "field": "time_closed"},
+                                                        {"headerName": "Change", "field": "change_display_string"}],
                                             defaultColDef={"editable": False,
                                                            'cellRendererSelector': {"function": "rowPinningBottom(params)"},
                                                            "cellStyle": {"fontSize": "15px", "height": "50px"}},
@@ -347,6 +347,7 @@ def rankings(start_date, end_date, location, url):
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     date_diff_min = ((end_date - start_date).total_seconds())//60
+    week_prior_start_date = start_date - timedelta(weeks=1)
 
     url_query_params = parse_qs(urlparse(url).query)
     building = url_query_params["building"][0]
@@ -365,8 +366,15 @@ def rankings(start_date, end_date, location, url):
                             start=str(start_date),
                             end=str(end_date),
                             aggType="aggD")
+    
+    last_week_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
+                            start=str(week_prior_start_date),
+                            end=str(start_date),
+                            aggType="aggD")
 
     rankings = query.groupby([query.index, "building", "floor",
+                             "lab", "hood"], as_index=False).sum(numeric_only=True)
+    last_week_rankings = last_week_query.groupby([last_week_query.index, "building", "floor",
                              "lab", "hood"], as_index=False).sum(numeric_only=True)
 
     rankings['time_closed'] = (date_diff_min - rankings['value'])
@@ -380,6 +388,21 @@ def rankings(start_date, end_date, location, url):
     rankings.loc[rankings['Ranking']==1, 'Ranking_Emoji'] = "🥇"
     rankings.loc[rankings['Ranking']==2, 'Ranking_Emoji'] = "🥈"
     rankings.loc[rankings['Ranking']==3, 'Ranking_Emoji'] = "🥉"
+    
+    last_week_rankings['time_closed'] = (date_diff_min - last_week_rankings['value'])
+    last_week_rankings.loc[last_week_rankings['time_closed'] < 0, 'time_closed'] = 0
+    last_week_rankings = last_week_rankings.rename({'value': 'time_opened'}, axis=1)
+
+    last_week_rankings = last_week_rankings.sort_values(by="time_closed", ascending=False)
+
+    last_week_rankings["Last_Week_Ranking"] = last_week_rankings['time_closed'].rank(method='min', ascending=False).astype(int)
+    
+    rankings = rankings.merge(last_week_rankings[["building", "floor", "lab", "hood", "Last_Week_Ranking"]], on=["building", "floor", "lab", "hood"])
+
+    rankings['change'] = rankings['Last_Week_Ranking'] - rankings['Ranking']
+
+    rankings['change_display_string'] = rankings['change'].apply(lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-")
+
 
     # Get the lab number from the query parameters
     dashGridOptions = {"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
