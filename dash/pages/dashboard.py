@@ -253,7 +253,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                             columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}},
                                                         {"headerName": "Lab", "field": "lab"},
                                                         # {"headerName": "Fumehood", "field": "hood_name"},
-                                                        {"headerName": "Time Closed (min)", "field": "time_closed"},
+                                                        {"headerName": "Time Closed", "field": "time_closed_hrmin"},
+                                                        {"headerName": "Percent of Time Closed", "field": "percent_time_closed"},
                                                         {"headerName": "Change", "field": "change_display_string"}],
                                             defaultColDef={"editable": False,
                                                            'cellRendererSelector': {"function": "rowPinningBottom(params)"},
@@ -403,6 +404,25 @@ def rankings(start_date, end_date, location, url):
 
     rankings['change_display_string'] = rankings['change'].apply(lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-")
 
+
+    rankings["percent_time_closed"] = (rankings['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
+
+    # Format `time_closed` to show in days, hours and minutes
+    def format_time(minutes):
+        if minutes > 1440:  # More than 24 hours (1440 minutes)
+            days = int(minutes // 1440)
+            remaining_minutes = minutes % 1440
+            hours = int(remaining_minutes // 60)
+            minutes_left = int(remaining_minutes % 60)
+            return f"{days}d {hours}h {minutes_left}m"
+        elif minutes > 60:  # More than 60 minutes
+            hours = int(minutes // 60)
+            remaining_minutes = int(minutes % 60)
+            return f"{hours}h {remaining_minutes}m"
+        else:  # 60 minutes or less
+            return f"{int(minutes)}m"
+
+    rankings['time_closed_hrmin'] = rankings['time_closed'].apply(format_time)
 
     # Get the lab number from the query parameters
     dashGridOptions = {"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
