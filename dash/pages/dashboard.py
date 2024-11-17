@@ -375,7 +375,7 @@ def rankings(start_date, end_date, location, url):
 
     rankings = rankings.sort_values(by="time_closed", ascending=False)
 
-    rankings["Ranking"] = np.arange(1, len(rankings) + 1)
+    rankings["Ranking"] = rankings['time_closed'].rank(method='min', ascending=False).astype(int)
     rankings['Ranking_Emoji'] = rankings['Ranking'].copy()
     rankings.loc[rankings['Ranking']==1, 'Ranking_Emoji'] = "🥇"
     rankings.loc[rankings['Ranking']==2, 'Ranking_Emoji'] = "🥈"
