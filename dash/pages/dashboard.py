@@ -458,42 +458,43 @@ def individual(start_date, end_date, location, url):
                                        end=str(start_date),
                                        aggType="aggD")
 
-    # url_query_params = parse_qs(urlparse(url).query)
-    # building = url_query_params["building"][0]
-    # floor = url_query_params["floor"][0]
-    # lab = url_query_params["lab"][0]
+    url_query_params = parse_qs(urlparse(url).query)
+    building = url_query_params["building"][0]
+    floor = url_query_params["floor"][0]
+    lab = url_query_params["lab"][0]
+    
+    if location == "floor":
+        location_string = building.capitalize() + "." + "Floor_" + floor
+        location_string_describe = f"on {location_string}"
+        labs_df_filtered = labs_df.filter(like=location_string, axis=0)
+    elif location == "building":
+        location_string = building.capitalize()
+        location_string_describe = f"in {location_string}"
+        labs_df_filtered = labs_df.filter(like=location_string, axis=0)
+    else:
+        location_string = "Cornell"
+        location_string_describe = f"at {location_string}"
+        labs_df_filtered = labs_df
 
-    # if location == "floor":
-    #     labs_df_filtered = labs_df.filter(like=building.capitalize() + "." + "Floor_" + floor, axis=0)
-    # elif location == "building":
-    #     labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
-    # else:
-    #     labs_df_filtered = labs_df
-
-    # all_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-    #                                 start=str(start_date),
-    #                                 end=str(end_date),
-    #                                 aggType="aggD")
+    all_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
+                                    start=str(week_prior_start_date),
+                                    end=str(start_date),
+                                    aggType="aggD")
 
     query['time_closed'] = (60*24 - query['value'])
     query.loc[query['time_closed'] < 0, 'time_closed'] = 0
     query = query.rename({'value': 'time_opened'}, axis=1)
 
     week_prior_query['time_closed'] = (60*24 - week_prior_query['value'])
-    average = week_prior_query['time_closed'].mean()
+    week_prior_average = week_prior_query['time_closed'].mean()
 
-    query['above_average'] = query['time_closed'] > average
+    query['above_average'] = query['time_closed'] > week_prior_average
 
-    # all_query['time_closed'] = (60*24 - all_query['value'])
-    # all_query.loc[all_query['time_closed'] < 0, 'time_closed'] = 0
-    # all_query = all_query.rename({'value':'time_opened'}, axis=1)
+    all_query['time_closed'] = (60*24 - all_query['value'])
+    all_query.loc[all_query['time_closed'] < 0, 'time_closed'] = 0
+    all_query = all_query.rename({'value':'time_opened'}, axis=1)
 
-    # average = all_query.groupby('timestamp')['time_closed'].mean()
-    # average.name = 'average_time_closed'
-
-    # query = query.merge(average, left_on='timestamp', right_index=True)
-
-    # query['above_average'] = query['time_closed'] > query['average_time_closed']
+    average = all_query['time_closed'].mean()
 
     # Create the line chart
     sash_fig = px.bar(query, x="timestamp", y="time_closed",
@@ -507,8 +508,12 @@ def individual(start_date, end_date, location, url):
                       #title="When and how much is your fume hood sash closed?"
                       )
 
+    sash_fig.add_hline(y=week_prior_average,
+                       annotation_text="Last week average of this lab",
+                       annotation_position="bottom right")
+    
     sash_fig.add_hline(y=average,
-                       annotation_text="Last Week Average",
+                       annotation_text=f"Last week average of all labs {location_string_describe}",
                        annotation_position="bottom right")
 
     total_mins_unocc = query["time_opened"].sum()
