@@ -108,7 +108,11 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     ])
                 ]),
 
+                dbc.Row(children=[
+                    html.H4("Live Fumehood Status"),
 
+                ],),
+                
                 dbc.Row(children=[
                     # Nuo's Task
 
@@ -117,7 +121,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 html.Div(
                                      
                                     children=[
-                                        html.H4("Live Fumehood Status"),
                                         html.P("last updated 15 min ago"),
                                         html.Div(className="d-flex", children=[
                                             html.P("Fumehood"),                    
@@ -131,8 +134,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
                                     ]
                                 ),
-
-                            dbc.Col(
+                                 dbc.Col(
                                 svg.Svg(children=[
                                     svg.Rect(
                                         x="0", y="0", width=220, height=220, 
@@ -164,9 +166,15 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         style={"fill": "#CBE1F1", "stroke": "black", "stroke-width": 2}
                                     ),
                                  ],
-                                width="300", height="300"
-                                )) 
-                    ]),
+                                width="300", height="300", 
+                                )), 
+                    ],style={
+                "maxHeight": "25rem",
+                "padding": "1rem",
+                "backgroundColor": "#fff",
+                "borderRadius": "1rem",
+                "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+            },),
 
                     dbc.Col([
                         dbc.Card(
@@ -175,19 +183,16 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 children=[
                                     dcc.Graph(
                                         id="pie",
-                                        style={'border-radius': '10px',
-                                            'background-color': '#f3f3f3'}
-
                                         # figure=fig
                                     )],
-                                type="circle"
+                                type="circle", 
                             ), style={
                                 "maxHeight": "25rem",
                                 "padding": "1rem",
                                 "backgroundColor": "#fff",
                                 "borderRadius": "1rem",
-                                "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
-                            }
+                                "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+            },
                         )
                     ]),
 
