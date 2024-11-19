@@ -5,6 +5,7 @@ RUN pip install pandas
 RUN pip install dash
 RUN pip install dash_bootstrap_components
 RUN pip install dash_treeview_antd
+RUN pip install dash-svg
 COPY dash/ dash/
 WORKDIR /dash
 EXPOSE 8055

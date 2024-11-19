@@ -21,6 +21,17 @@ label {
     background-color: #f3f3f3;
 }
 
+/*nav bar*/
+.navbar-nav .nav-link {
+    color: #000000; 
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link.active {
+    text-decoration: underline;
+}
+
 /*cards*/
 .card-title {
     color: #609F72

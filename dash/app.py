@@ -5,6 +5,8 @@ import dash
 from dash import Dash, html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
+import dash_svg
+from dash_svg import Svg, G, Path, Circle
 import plotly.express as px
 import pandas as pd
 import numpy as np
@@ -19,35 +21,26 @@ app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTS
 app.layout = html.Div([
     dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("Page 1", href="#")),
+        dbc.NavItem(dbc.NavLink("Home", href="..")),
         dbc.DropdownMenu(
             children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Page 2", href="#"),
-                dbc.DropdownMenuItem("Page 3", href="#"),
+                dbc.DropdownMenuItem("Buildings", header=True),
+                dbc.DropdownMenuItem("Biotech Shortcut", href="dashboard?building=biotech&floor=4&lab=441"),
+                dbc.DropdownMenuItem("Baker", href="dashboard"),
             ],
             nav=True,
             in_navbar=True,
-            label="More",
+            label="Dashboard",
         ),
+        dbc.NavItem(dbc.NavLink("About", href="404")),
+        dbc.NavItem(dbc.NavLink("Help", href="404")),
+        
     ],
-    brand="NavbarSimple",
+    brand=html.Img(src="/assets/esw_logo.png", height="80px", width="auto"),
     brand_href="#",
-    color="primary",
-    dark=True,
+    color="#B5E0BC",
+    dark=False,
 ),
-
-	html.H1('Cornell Fume Hood Dashboard'),
-
-    html.Div(
-        [
-            html.Div(
-                dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"], refresh=True)
-                # html.A('Biotech', href='/biotech')
-            )
-            for page in dash.page_registry.values()
-        ]
-    ),
 
 	dash.page_container
 ])
