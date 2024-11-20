@@ -472,6 +472,8 @@ def individual(start_date, end_date, location, url):
     average = week_prior_query['time_closed'].mean()
 
     query['above_average'] = query['time_closed'] > average
+    query['above_average_label'] = np.where(query['above_average'], 'Above Average', 'Below Average')
+
 
     # all_query['time_closed'] = (60*24 - all_query['value'])
     # all_query.loc[all_query['time_closed'] < 0, 'time_closed'] = 0
@@ -490,15 +492,20 @@ def individual(start_date, end_date, location, url):
                           "time_closed": "Time closed (mins)",
                           "timestamp": "Date",
                       },
-                      color='above_average',
+                      color='above_average_label',
                       color_discrete_map={
-                          True: 'mediumseagreen', False: '#d62728'},
+                          'Above Average': 'mediumseagreen', 'Below Average': '#d62728'}
                       #title="When and how much is your fume hood sash closed?"
                       )
 
     sash_fig.add_hline(y=average,
                        annotation_text="Last Week Average",
                        annotation_position="bottom right")
+    
+    sash_fig.update_traces(
+        customdata = query['above_average_label'],
+        hovertemplate="Date: %{x}<br>Time Closed: %{y} mins<br>%{customdata}"
+    )
 
     total_mins_unocc = query["time_opened"].sum()
 
