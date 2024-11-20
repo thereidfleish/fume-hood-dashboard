@@ -230,19 +230,29 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
 
                 # Visualization Section
-                html.H2("Visualizations"),
-
+                html.Div(className="d-flex align-items-center", children=[
+                            html.H2("Visualizations", className="me-3"),
+                            html.Div(style={'position': 'relative'}, children=[
+                                dcc.Dropdown(
+                                    options=[
+                                        {'label': format_floor(floor), 'value': 'floor'},
+                                        {'label': format_building(building), 'value': 'building'},
+                                        {'label': "Campus", 'value': 'cornell'},
+                                    ],
+                                    value="building",
+                                    clearable=False,
+                                    id="location_selector",
+                                    style={'minWidth': "200px", 'maxWidth': "200px"}
+                                )
+                            ]),
+                        ]),
+                        
                 dbc.Row([
                     dbc.Col([dcc.Loading(id="is-loading", children=[
                         dbc.Card([
                             html.Div(className="d-flex flex-wrap align-items-center", children=[
-                                html.H4("How does your lab compare to other labs",
+                                html.H4("How does your lab compare to other labs?",
                                         className="me-2 mb-0", style={'whiteSpace': 'nowrap'}),
-                                dcc.Dropdown(options=[
-                                    {'label': "on this floor", 'value': 'floor'},
-                                    {'label': "in " + format_building(building), 'value': 'building'},
-                                    {'label': 'across campus', 'value': 'cornell'},
-                                ], value="building", clearable=False, id="location_selector", style={'minWidth': "200px"}),
                             ]),
                             html.Br(),
                             dbc.Tabs([
@@ -423,7 +433,9 @@ def individual(start_date, end_date, location, url):
 
     print("====Getting Individual====")
     url_query_params = urlparse(url).query
+
     target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
+
 
     query = synthetic_query(targets=[target], server="biotech_main",
                             start=str(start_date),
@@ -506,7 +518,10 @@ def individual(start_date, end_date, location, url):
     sash_graph_average = query["time_opened"].mean()
     sash_graph_average_string = f'{sash_graph_average:.0f} mins'
     
-    sash_graph_average_change = ((query["time_opened"].mean() - average) / average) * 100
+    if average > 0: 
+        sash_graph_average_change = ((query["time_opened"].mean() - average) / average) * 100 
+    else: 
+        sash_graph_average_change = 0
     if sash_graph_average_change > 0:
         sash_graph_average_change_string = f'↑ {sash_graph_average_change:.0f}% from last week'
     elif sash_graph_average_change == 0:
