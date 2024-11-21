@@ -237,8 +237,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 # Visualization Section
                 html.H2("Visualizations", className="me-3"),
                 html.Div(className="d-flex align-items-center", children=[
-                            html.H4("Your lab compared to labs in ",
-                                        className="me-2 mb-0"),
+                            html.H5("Your lab compared to labs in ",
+                                        className="me-2 mb-2"),
                             html.Div(style={'position': 'relative'}, children=[
                                 dcc.Dropdown(
                                     options=[
@@ -249,7 +249,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     value="building",
                                     clearable=False,
                                     id="location_selector",
-                                    style={'minWidth': "200px", 'maxWidth': "200px"}
+                                    style={'minWidth': "200px", 'maxWidth': "200px"},
+                                    className="mb-2"
                                 )
                             ]),
                         ]),
