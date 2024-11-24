@@ -248,8 +248,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
 
                 # Visualization Section
+                html.H2("Visualizations", className="me-3"),
                 html.Div(className="d-flex align-items-center", children=[
-                            html.H2("Visualizations", className="me-3"),
+                            html.H5("How does your lab compare to labs in ",
+                                        className="me-2 mb-2"),
                             html.Div(style={'position': 'relative'}, children=[
                                 dcc.Dropdown(
                                     options=[
@@ -260,7 +262,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                     value="building",
                                     clearable=False,
                                     id="location_selector",
-                                    style={'minWidth': "200px", 'maxWidth': "200px"}
+                                    style={'minWidth': "200px", 'maxWidth': "200px"},
+                                    className="mb-2"
                                 )
                             ]),
                         ]),
@@ -269,7 +272,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     dbc.Col([dcc.Loading(id="is-loading", children=[
                         dbc.Card([
                             html.Div(className="d-flex flex-wrap align-items-center", children=[
-                                html.H4("How does your lab compare to other labs?",
+                                html.H4("What is the ranking of your lab?",
                                         className="me-2 mb-0", style={'whiteSpace': 'nowrap'}),
                             ]),
                             html.Br(),
@@ -554,7 +557,7 @@ def individual(start_date, end_date, location, url):
     
     sash_fig.update_traces(
         customdata = query['above_average_label'],
-        hovertemplate="Date: %{x}<br>Time Closed: %{y} mins<br>%{customdata}"
+        hovertemplate="Date: %{x}<br>Time Closed: %{y} mins"
     )
 
     total_mins_unocc = query["time_opened"].sum()
