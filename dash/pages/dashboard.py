@@ -28,8 +28,10 @@ dash.register_page(__name__)
 load_dotenv()
 dynamodb_client = boto3.client('dynamodb', region_name="us-east-1")
 
+TABLE_NAME = "fumehoods"
+
 labs_response = dynamodb_client.get_item(
-    TableName="fumehoods", Key={"id": {"S": "labs"}}
+    TableName=TABLE_NAME, Key={"id": {"S": "labs"}}
 )
 
 labs_dict = labs_response['Item']["map"]["M"]
@@ -54,6 +56,21 @@ def format_floor(floor):
 
 def format_lab(lab):
     return "" if lab is None else "Lab " + lab
+
+# Format `time_closed` to show in days, hours and minutes
+def format_time(minutes):
+    if minutes > 1440:  # More than 24 hours (1440 minutes)
+        days = int(minutes // 1440)
+        remaining_minutes = minutes % 1440
+        hours = int(remaining_minutes // 60)
+        minutes_left = int(remaining_minutes % 60)
+        return f"{days}d {hours}h {minutes_left}m"
+    elif minutes > 60:  # More than 60 minutes
+        hours = int(minutes // 60)
+        remaining_minutes = int(minutes % 60)
+        return f"{hours}h {remaining_minutes}m"
+    else:  # 60 minutes or less
+        return f"{int(minutes)}m"
 
 
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
@@ -121,14 +138,10 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 html.Div(
                                      
                                     children=[
-                                        html.P("last updated 15 min ago"),
+                                        html.Div(id="sashUpdateTimestamp"),
                                         html.Div(className="d-flex", children=[
                                             html.P("Fumehood"),                    
-                                            dcc.Dropdown(options=[
-                                                            {'label': "fumehood 1", 'value': 'hood 1'},
-                                                            {'label': "fumehood 2", 'value': 'hood 2'},
-                                                            {'label': 'fumehood 3', 'value': 'hood 3'},
-                                                        ], value="hood 1", clearable=False, id="fumehood_selector", style={'minWidth': "200px"}),
+                                            dcc.Dropdown(options=[{'label': "Fumehood 1", 'value': "1"}], value="1", clearable=False, id="fumehood_selector", style={'minWidth': "200px"}),
                                         ]),
                                         html.P("🚨 Sash Open when Unoccupied NOW"),
 
@@ -272,7 +285,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                                         {"headerName": "Percent of Time Closed", "field": "percent_time_closed"},
                                                         {"headerName": "Change", "field": "change_display_string"}],
                                             defaultColDef={"editable": False,
-                                                           'cellRendererSelector': {"function": "rowPinningBottom(params)"},
+                                                           'cellRendererSelector': {"function": "rowPinningTop(params)"},
                                                            "cellStyle": {"fontSize": "15px", "height": "50px"}},
                                             columnSize="sizeToFit"
                                         )
@@ -358,7 +371,7 @@ clientside_callback(
     Input(component_id='url', component_property='search')
 )
 def rankings(start_date, end_date, location, url):
-    print("====Getting Rankings====")
+    # print("====Getting Rankings====")
 
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
@@ -422,30 +435,15 @@ def rankings(start_date, end_date, location, url):
 
     rankings["percent_time_closed"] = (rankings['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
 
-    # Format `time_closed` to show in days, hours and minutes
-    def format_time(minutes):
-        if minutes > 1440:  # More than 24 hours (1440 minutes)
-            days = int(minutes // 1440)
-            remaining_minutes = minutes % 1440
-            hours = int(remaining_minutes // 60)
-            minutes_left = int(remaining_minutes % 60)
-            return f"{days}d {hours}h {minutes_left}m"
-        elif minutes > 60:  # More than 60 minutes
-            hours = int(minutes // 60)
-            remaining_minutes = int(minutes % 60)
-            return f"{hours}h {remaining_minutes}m"
-        else:  # 60 minutes or less
-            return f"{int(minutes)}m"
-
     rankings['time_closed_hrmin'] = rankings['time_closed'].apply(format_time)
 
     # Get the lab number from the query parameters
-    dashGridOptions = {"animateRows": True, 'pinnedBottomRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
+    dashGridOptions = {"animateRows": True, 'pinnedTopRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
 
     getRowStyle = {"styleConditions": [
             {
                 "condition": f"params.data.lab == {lab}",
-                "style": {"backgroundColor": "red", "color": "white"},
+                "style": {"backgroundColor": "blue", "color": "white", "opacity": 0.5},
             },
         ]
     }
@@ -479,11 +477,9 @@ def individual(start_date, end_date, location, url):
     week_prior_start_date = start_date - timedelta(weeks=1)
     date_diff_min = ((end_date - start_date).total_seconds())//60
 
-    print("====Getting Individual====")
+    # print("====Getting Individual====")
     url_query_params = urlparse(url).query
-
     target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
-
 
     query = synthetic_query(targets=[target], server="biotech_main",
                             start=str(start_date),
@@ -494,7 +490,7 @@ def individual(start_date, end_date, location, url):
                                        start=str(week_prior_start_date),
                                        end=str(start_date),
                                        aggType="aggD")
-
+    
     url_query_params = parse_qs(urlparse(url).query)
     building = url_query_params["building"][0]
     floor = url_query_params["floor"][0]
@@ -594,14 +590,59 @@ def individual(start_date, end_date, location, url):
 
 
 @callback(
-    Output("closedSash", "height"),
-    Input(component_id='url', component_property='search')
-
+    Output(component_id="closedSash", component_property="height"),
+    Output(component_id="sashUpdateTimestamp", component_property="children"),
+    Output(component_id="fumehood_selector", component_property="options"),
+    Input(component_id='url', component_property='search'),
+    Input(component_id='fumehood_selector', component_property='value')
 )
-def ssh_height (url):
-    sash_complete_height = 30
-    sash_height_data = 10
-    return (sash_complete_height - sash_height_data) / sash_complete_height * 200
+def ssh_height(url, hood):
+    url_query_params_parse = parse_qs(urlparse(url).query)
+    building = url_query_params_parse["building"][0]
+    floor = url_query_params_parse["floor"][0]
+    lab = url_query_params_parse["lab"][0]
+    
+    
+    lab_full_string = f'{building.capitalize()}.Floor_{floor}.Lab_{lab}'
+    
+    lab_dict_inside = labs_dict[lab_full_string]
+    hood_count = int(lab_dict_inside['M']['hood_count']['N'])
+    
+    hood_response = dynamodb_client.get_item(
+        TableName=TABLE_NAME, Key={"id": {"S": "hoods"}}, ProjectionExpression="#map_alt.#hood", ExpressionAttributeNames={"#map_alt":"map", "#hood":f"{lab_full_string}.Hood_{hood}"}
+    )
+
+    hood_dict = hood_response['Item']["map"]["M"]
+    
+    hood_full_string = f'{lab_full_string}.Hood_{1}'
+    
+    hood_dict_inside = hood_dict[hood_full_string]
+    hood_point_name = hood_dict_inside['M']['sash_position_sensor']['S']
+    
+    now = pd.Timestamp.now().tz_localize(tz="America/New_York")
+    one_day_ago = now - timedelta(days=1)
+
+    sash_query = raw_query(target=hood_point_name, server="biotech_main",
+                        start=str(one_day_ago),
+                        end=str(now),
+                        aggType="aggD")
+    
+    last_sash_height = sash_query['value'].iloc[-1]
+    last_timestamp = pd.to_datetime(sash_query['timestamp'].iloc[-1]).round('min')
+    
+    minutes_from_update = round((now - last_timestamp).total_seconds() / 60)
+    
+    sash_complete_height = 18
+    sash_height_data = last_sash_height
+    sash_height_pixel = (sash_complete_height - sash_height_data) / sash_complete_height * 200
+    
+    last_update_string = f"Last updated {format_time(minutes_from_update)} ago"
+    
+    fumehood_selector_options = []
+    for i in range(1, hood_count+1):
+        fumehood_selector_options.append({'label': f"Fumehood {i}", 'value': f"{i}"})
+    
+    return sash_height_pixel, last_update_string, fumehood_selector_options
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
