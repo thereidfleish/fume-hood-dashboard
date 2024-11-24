@@ -178,8 +178,13 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         id = "closedSash",
                                         style={"fill": "#CBE1F1", "stroke": "black", "stroke-width": 2}
                                     ),
+                                    svg.Text(
+                                        x="230", 
+                                        id="sashHeightLabel",
+                                        style={"fill": "black", "fontSize": "12px"}
+                                    ),
                                  ],
-                                width="300", height="300", 
+                                width="350", height="300", 
                                 )), 
                     ],style={
                 "maxHeight": "25rem",
@@ -596,6 +601,8 @@ def individual(start_date, end_date, location, url):
     Output(component_id="closedSash", component_property="height"),
     Output(component_id="sashUpdateTimestamp", component_property="children"),
     Output(component_id="fumehood_selector", component_property="options"),
+    Output(component_id="sashHeightLabel", component_property="children"),
+    Output(component_id="sashHeightLabel", component_property="y"),
     Input(component_id='url', component_property='search'),
     Input(component_id='fumehood_selector', component_property='value')
 )
@@ -645,7 +652,10 @@ def ssh_height(url, hood):
     for i in range(1, hood_count+1):
         fumehood_selector_options.append({'label': f"Fumehood {i}", 'value': f"{i}"})
     
-    return sash_height_pixel, last_update_string, fumehood_selector_options
+    sash_height_label = f"←{sash_height_data} inches opened"
+
+    
+    return sash_height_pixel, last_update_string, fumehood_selector_options, sash_height_label, sash_height_pixel+10
 
 # if __name__ == '__main__':
 #     app.run_server(debug=True)
