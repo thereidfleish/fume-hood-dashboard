@@ -115,8 +115,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                             min_date_allowed=datetime(2024, 1, 1),
                             max_date_allowed=datetime.now(),
                             initial_visible_month=datetime.now(),
-                            start_date=datetime.now() - timedelta(days=7),
-                            end_date=datetime.now(),
+                            start_date=datetime(2024, 10, 15) - timedelta(days=7),
+                            end_date=datetime(2024, 10, 15),
                             clearable=True,
                         ),
                         dcc.Dropdown(["Day", "Week", "Month", "Year"],
@@ -575,11 +575,11 @@ def individual(start_date, end_date, location, url):
                      # custom_data = ['occupancy']
                      )
     
-    sash_graph_average = query["time_opened"].mean()
+    sash_graph_average = query["time_closed"].mean()
     sash_graph_average_string = f'{sash_graph_average:.0f} mins'
     
     if average > 0: 
-        sash_graph_average_change = ((query["time_opened"].mean() - average) / average) * 100 
+        sash_graph_average_change = ((query["time_closed"].mean() - average) / average) * 100 
     else: 
         sash_graph_average_change = 0
     if sash_graph_average_change > 0:
