@@ -600,6 +600,11 @@ def individual(start_date, end_date, location, url):
                      # custom_data = ['occupancy']
                      )
     
+    pie_fig.update_layout(
+                    plot_bgcolor="rgba(0,0,0,0)", 
+                    paper_bgcolor="rgba(0,0,0,0)"  
+    )
+    
     sash_graph_average = query["time_closed"].mean()
     sash_graph_average_string = f'{sash_graph_average:.0f} mins'
     
