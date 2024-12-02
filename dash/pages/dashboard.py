@@ -250,7 +250,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         "borderRadius": "1rem",
                         "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
                     }, className="mb-4")]),
-
+  
 
                 # Visualization Section
                 html.H2("Visualizations", className="me-3"),
@@ -551,14 +551,34 @@ def individual(start_date, end_date, location, url):
                           'Above Average': 'mediumseagreen', 'Below Average': '#d62728'}
                       #title="When and how much is your fume hood sash closed?"
                       )
-
-    sash_fig.add_hline(y=week_prior_average,
-                       annotation_text="Last week average of this lab",
-                       annotation_position="bottom right")
     
+    sash_fig.update_layout(legend_title_text="",
+                           plot_bgcolor="white",
+                            yaxis=dict(gridcolor="lightgrey"
+    ))
+
+    sash_fig.add_hline(
+    y=week_prior_average,
+    annotation_text="Last week average of this lab",
+    annotation_position="bottom right",
+    annotation=dict(
+        font=dict(
+            color="black", 
+            size=12   
+        ),
+        bgcolor="rgba(255, 255, 255, 0.7)"  
+    ))
+
     sash_fig.add_hline(y=average,
                        annotation_text=f"Last week average of all labs {location_string_describe}",
-                       annotation_position="bottom right")
+                       annotation_position="bottom right",
+                       annotation=dict(
+        font=dict(
+            color="black", 
+            size=12   
+        ),
+        bgcolor="rgba(255, 255, 255, 0.7)"  
+    ))
     
     sash_fig.update_traces(
         customdata = query['above_average_label'],
