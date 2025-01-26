@@ -194,26 +194,6 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                 "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
             },),
 
-                    dbc.Col([
-                        dbc.Card(
-                            dcc.Loading(
-                                id="is-loading",
-                                children=[
-                                    dcc.Graph(
-                                        id="pie",
-                                        # figure=fig
-                                    )],
-                                type="circle", 
-                            ), style={
-                                "maxHeight": "25rem",
-                                "padding": "1rem",
-                                "backgroundColor": "#fff",
-                                "borderRadius": "1rem",
-                                "boxShadow": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-            },
-                        )
-                    ]),
-
                     # Maggie's Task
                     dbc.Col([
                         html.H4("Energy wasted by this lab is equivalent to",
@@ -238,7 +218,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 [
                                     html.Span("🏭", className="metric-emoji"),
                                     html.Span(
-                                        "200kg CO₂", className="metric-text")
+                                        "200kg CO₂ and xx trees absorb in a day", className="metric-text")
                                 ],
                                 className="metric-card energy-co2"
                             )
@@ -471,7 +451,6 @@ def rankings(start_date, end_date, location, url):
 
 @callback(
     Output(component_id="sash_graph", component_property="figure"),
-    Output(component_id="pie", component_property="figure"),
     Output(component_id='sash_graph_average', component_property='children'),
     Output(component_id='sash_graph_average_change', component_property='children'),
     Input(component_id="date-picker-range", component_property="start_date"),
@@ -586,24 +565,6 @@ def individual(start_date, end_date, location, url):
     )
 
     total_mins_unocc = query["time_opened"].sum()
-
-    pie_df = pd.DataFrame([[total_mins_unocc, "Wasted"], [date_diff_min - total_mins_unocc, "Used"]],
-                          # time sash opened v.s. time sash unopened
-                          columns=["Mins", "Type"])
-
-    pie_fig = px.pie(pie_df, values="Mins", names="Type", color="Type",
-                     title=str(round(total_mins_unocc/date_diff_min*100)).rstrip('0') +
-                     "% of your fume hood's energy was wasted when unused",
-                     color_discrete_map={
-                         'Used': 'mediumseagreen', 'Wasted': '#d62728'},
-                     # hover_data = {"occupancy": True, "value": False},
-                     # custom_data = ['occupancy']
-                     )
-    
-    pie_fig.update_layout(
-                    plot_bgcolor="rgba(0,0,0,0)", 
-                    paper_bgcolor="rgba(0,0,0,0)"  
-    )
     
     sash_graph_average = query["time_closed"].mean()
     sash_graph_average_string = f'{sash_graph_average:.0f} mins'
@@ -619,7 +580,7 @@ def individual(start_date, end_date, location, url):
     else:
         sash_graph_average_change_string = f'↓ {-sash_graph_average_change:.0f}% from last week'
 
-    return sash_fig, pie_fig, sash_graph_average_string, sash_graph_average_change_string
+    return sash_fig, sash_graph_average_string, sash_graph_average_change_string
 
 
 @callback(
