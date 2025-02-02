@@ -16,8 +16,9 @@
     1. `dash`
     2. `dash_bootstrap_components`
     3. `dash_treeview_antd`
-    4. `pandas`
-    5. `numpy`
+    4. `dash_svg`
+    5. `pandas`
+    6. `numpy`
 3. cd into the `dash` folder and run `python app.py`
     1. You should see something like `Dash is running on http://127.0.0.1:8055/` in the terminal.  Copy-paste this URL into a web browser to load the page.
         - If you get an error, you may not have all packages installed correctly.  Please reach out to rf377@cornell.edu for assistance.
