@@ -3,6 +3,7 @@ from dash import Dash, html, dcc, Input, Output, callback, clientside_callback, 
 import dash_ag_grid as dag
 import dash_bootstrap_components as dbc
 import dash_treeview_antd
+import feffery_antd_components as fac
 import dash_svg as svg
 import plotly.express as px
 import plotly.graph_objects as go
@@ -72,7 +73,6 @@ def format_time(minutes):
     else:  # 60 minutes or less
         return f"{int(minutes)}m"
 
-
 def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
 
     # if lab == None:
@@ -86,14 +86,27 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
         dbc.Row([
             # sidebar
             dbc.Col([
-                dash_treeview_antd.TreeView(
-                    id='input',
-                    multiple=False,
-                    checkable=False,
-                    checked=[],
-                    selected=[expanded_name(building, floor, lab)],
-                    expanded=[expanded_name(building, floor, lab)],
-                    data=json.loads(treeview(list(labs_dict.keys())))
+                fac.AntdSpace(
+                    [
+                        fac.AntdInput(
+                            id='tree-search-keyword',
+                            placeholder='Search for a building, floor or lab',
+                            style={'width': '100%'},
+                            mode='search',
+                            allowClear=True,
+                        ),
+                        fac.AntdTree(
+                            id='tree-search',
+                            treeData=treeview(list(labs_dict.keys())),
+                            defaultExpandAll=False,
+                            caseSensitive=False,
+                            defaultSelectedKeys=[expanded_name(building, floor, lab)],
+                            defaultExpandedKeys=[expanded_name(building, floor, lab)],
+                            highlightStyle={'background': '#ffffb8', 'padding': 0},
+                        ),
+                    ],
+                    direction='vertical',
+                    style={'width': '100%'},
                 )
             ], width=3),
 
@@ -352,19 +365,28 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
         dcc.Location(id='url')
     ])
 
+clientside_callback(
+    """(value) => value""",
+    Output('tree-search', 'searchKeyword'),
+    Input('tree-search-keyword', 'value'),
+)
 
 clientside_callback(
     """
-    function(input) {
-        console.log(input[0]);
-        if (input[0].includes("lab")) {
-            window.open(`/dashboard${input[0]}`, "_self");
+    function(selectedKeys) {
+        if (selectedKeys && selectedKeys.length > 0) {
+            var newUrl = `/dashboard${selectedKeys[0]}`;
+            // Only redirect if the URL is different
+            if (window.location.pathname + window.location.search !== newUrl) {
+                window.location.href = newUrl;
+            }
         }
-        return input[0];
+        return "";
     }
     """,
     Output('output-selected', 'children'),
-    Input('input', 'selected'), prevent_initial_call=True
+    Input('tree-search', 'selectedKeys'),
+    prevent_initial_call=True
 )
 
 

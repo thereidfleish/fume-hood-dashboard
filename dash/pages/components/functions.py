@@ -125,35 +125,33 @@ def lab_dictionary(id_list):
 # calls lab_dictionary() on hood IDs.
 # creates valid JSON string for dashboard treeview.
 def treeview(id_list):
-
-    dict = lab_dictionary(id_list)
-
-    # final_string = '['
-    final_string = '{\n"title": "Buildings",\n"children": [\n\t'
-    for building in dict:
-        floor_list = dict[building]["floor_list"]
-        floor_key_list = dict[building]["floor_key_list"]
-        lab_list = dict[building]["lab_list"]
-        lab_key_list = dict[building]["lab_key_list"]
-        
-        building_string = '{\n\t"title": "' + building + '",\n\t"key": "' + dict[building]["building_key"] + '",\n\t"children": [\n\t'
-        for i in range (0, len(floor_list)): 
-            floor_string = '\t{"title": "' + floor_list[i] + '",\n\t\t"key": "' + floor_key_list[i] + '",\n\t\t"children": [\n\t\t'
-            for j in range (0, len(lab_list[i])):
-                if j == (len(lab_list[i])-1):
-                    lab_string = '\t{"title": "' + lab_list[i][j] + '",\n\t\t\t"key": "' + lab_key_list[i][j] + '"}\n\t\t'
-                else:
-                    lab_string = '\t{"title": "' + lab_list[i][j] + '",\n\t\t\t"key": "' + lab_key_list[i][j] + '"},\n\t\t'
-                floor_string = floor_string + lab_string
-            if i == (len(floor_list)-1):
-                floor_string = floor_string + ']}]\n\t'
-            else:
-                floor_string = floor_string + ']},\n\t'
-            building_string = building_string + floor_string
-        final_string = final_string + building_string + '},'
-    final_string = final_string[0:-1] + ']}'
-    
-    return(final_string)
+    lab_dict = lab_dictionary(id_list)
+    tree_data = []
+    for building, b_data in lab_dict.items():
+        building_node = {
+            "title": building,
+            "key": building.lower(),
+            "children": []
+        }
+        # Loop through each floor for this building
+        for i, floor in enumerate(b_data.get("floor_list", [])):
+            floor_title = f"{building} {floor}"
+            floor_node = {
+                "title": floor_title,
+                "key": b_data["floor_key_list"][i].lower(),
+                "children": []
+            }
+            # Loop through each lab on this floor
+            for j, lab in enumerate(b_data["lab_list"][i]):
+                lab_title = f"{building} {lab}"
+                lab_node = {
+                    "title": lab_title,
+                    "key": b_data["lab_key_list"][i][j].lower()
+                }
+                floor_node["children"].append(lab_node)
+            building_node["children"].append(floor_node)
+        tree_data.append(building_node)
+    return tree_data
 
 def expanded_name(building=None, floor=None, lab=None):
     result = "?building="
