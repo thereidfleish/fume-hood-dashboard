@@ -162,3 +162,33 @@ def expanded_name(building=None, floor=None, lab=None):
             if lab != None:
                 result += "&lab="+lab
     return result
+
+def cascaderview(id_list):
+    lab_dict = lab_dictionary(id_list)
+    tree_data = []
+    for building, b_data in lab_dict.items():
+        # Create the building node (title remains the same)
+        building_node = {
+            "value": building.lower(), 
+            "label": building,
+            "children": []
+        }
+        # Loop through each floor for this building
+        for i, floor in enumerate(b_data.get("floor_list", [])):
+            floor_title = f"{building} {floor}"
+            floor_node = {
+                "value": b_data["floor_key_list"][i].lower(),
+                "label": floor_title,
+                "children": []
+            }
+            # Loop through each lab on this floor
+            for j, lab in enumerate(b_data["lab_list"][i]):
+                lab_title = f"{building} {lab}"
+                lab_node = {
+                    "value": b_data["lab_key_list"][i][j].lower(),
+                    "label": lab_title
+                }
+                floor_node["children"].append(lab_node)
+            building_node["children"].append(floor_node)
+        tree_data.append(building_node)
+    return tree_data

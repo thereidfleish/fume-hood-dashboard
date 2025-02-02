@@ -116,3 +116,10 @@ h1 {
 }
 
 /*Card*/
+
+
+.ant-select-dropdown,
+.ant-cascader-menus {
+    z-index: 999999 !important;
+    overflow: visible;
+}
