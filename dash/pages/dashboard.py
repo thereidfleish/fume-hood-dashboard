@@ -266,13 +266,14 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                         columnDefs=[{"headerName": "Ranking", "field": "Ranking_Emoji", "cellStyle": {"fontSize": "25px", "height": "50px"}},
                                                     {"headerName": "Lab", "field": "lab"},
                                                     # {"headerName": "Fumehood", "field": "hood_name"},
-                                                    {"headerName": "Time Closed", "field": "time_closed_hrmin"},
-                                                    {"headerName": "Percent of Time Closed", "field": "percent_time_closed"},
+                                                    # {"headerName": "Time Closed", "field": "time_closed_hrmin"},
+                                                    {"headerName": "Percent of Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
                                                     {"headerName": "Change", "field": "change_display_string"}],
                                         defaultColDef={"editable": False,
                                                         'cellRendererSelector': {"function": "rowPinningTop(params)"},
                                                         "cellStyle": {"fontSize": "15px", "height": "50px"}},
-                                        columnSize="sizeToFit"
+                                        columnSize="sizeToFit",
+                                        dashGridOptions = {'tooltipMouseTrack': True, 'tooltipShowDelay': 0, 'tooltipHideDelay': 10000}
                                     )
                                 ])),
                                 label="Table"
