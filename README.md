@@ -15,7 +15,7 @@
 2. Install the latest version of the following packages (via pip or equivalent)
     1. `dash`
     2. `dash_bootstrap_components`
-    3. `dash_treeview_antd`
+    3. `feffery-antd-components`
     4. `pandas`
     5. `numpy`
 3. cd into the `dash` folder and run `python app.py`
