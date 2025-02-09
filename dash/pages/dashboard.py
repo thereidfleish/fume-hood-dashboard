@@ -134,6 +134,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 start_date=datetime(2024, 10, 15) - timedelta(days=7),
                                 end_date=datetime(2024, 10, 15),
                                 clearable=False,
+                                style={'font-size': '11px', 'width': '300px'}  
                                 ),
                             ]),
                             dbc.Col([
@@ -377,6 +378,7 @@ def update_date_range(start_date, end_date, selected_range):
     Output(component_id="ranking_table", component_property="dashGridOptions"),
     Output(component_id="ranking_table", component_property="getRowStyle"),
     Output(component_id="ranking_graph", component_property="figure"),
+    # Output(component_id='ranking_table', component_property ='figure'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
     Input(component_id='date_selector', component_property="date_value"),
