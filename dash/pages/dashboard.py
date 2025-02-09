@@ -147,12 +147,12 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 dcc.Dropdown(
                                     id="date_selector",
                                     options=[
-                                        {"label": "Past Day", "date_value": "day"},
-                                        {"label": "Past Week", "date_value": "week"},
-                                        {"label": "Past Month", "date_value": "month"},
-                                        {"label": "Past Year", "date_value": "year"},
+                                        {"label": "Past Day", "value": "day"},
+                                        {"label": "Past Week", "value": "week"},
+                                        {"label": "Past Month", "value": "month"},
+                                        {"label": "Past Year", "value": "year"},
                                     ],
-                                    date_value="week", 
+                                    value="week", 
                                     clearable=False
                                 )
                             ]),
@@ -354,10 +354,9 @@ clientside_callback(
 @callback(
     Output(component_id='date-picker-range', component_property='start_date'),
     Output(component_id='date-picker-range', component_property='end_date'),
-    Output(component_id='output-div', component_property='children'),
     Input(component_id='date-picker-range', component_property='start_date'),
     Input(component_id='date-picker-range', component_property='end_date'),
-    Input(component_id='date_selector', component_property='date_value')
+    Input(component_id='date_selector', component_property='value')
 )
 def update_date_range(start_date, end_date, selected_range):
     trigger = ctx.triggered_id 
@@ -381,18 +380,14 @@ def update_date_range(start_date, end_date, selected_range):
     # Output(component_id='ranking_table', component_property ='figure'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
-    Input(component_id='date_selector', component_property="date_value"),
+    Input(component_id='date_selector', component_property="value"),
     Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 )
-def rankings(start_date, end_date, date_value, location, url):
+def rankings(start_date, end_date, value, location, url):
     # print("====Getting Rankings====")
-
-    date_range = update_date_range(start_date, end_date, date_value)
-    start_date = pd.to_datetime(date_range[0])
-    end_date = pd.to_datetime(date_range[1])
-    # start_date = pd.to_datetime(start_date)
-    # end_date = pd.to_datetime(end_date)
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
     date_diff_min = ((end_date - start_date).total_seconds())//60
     week_prior_start_date = start_date - timedelta(weeks=1)
 
@@ -485,16 +480,13 @@ def rankings(start_date, end_date, date_value, location, url):
     Output(component_id='sash_graph_average_change', component_property='children'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
-    Input(component_id='date_selector', component_property="date_value"),
+    Input(component_id='date_selector', component_property="value"),
     Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 )
-def individual(start_date, end_date, date_value, location, url):
-    date_range = update_date_range(start_date, end_date, date_value)
-    start_date = pd.to_datetime(date_range[0])
-    end_date = pd.to_datetime(date_range[1])
-    # start_date = pd.to_datetime(start_date)
-    # end_date = pd.to_datetime(end_date)
+def individual(start_date, end_date, value, location, url):
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
     week_prior_start_date = start_date - timedelta(weeks=1)
     date_diff_min = ((end_date - start_date).total_seconds())//60
 
