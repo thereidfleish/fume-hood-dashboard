@@ -111,7 +111,9 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                     style={'width': '100%'},
                 )
             ], width=2),
-
+            
+            ### BEGIN INTERVIEW QUESTION ###
+            
             # Main Section (Building and Date )
             dbc.Col(className="m-2", children=[
                 dbc.Row(children=[
@@ -146,6 +148,8 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                         ], align="center"),
                     ])
                 ]),
+                
+                ### END INTERVIEW QUESTION ####
 
 
                 html.H3("Live Fumehood Status"),
