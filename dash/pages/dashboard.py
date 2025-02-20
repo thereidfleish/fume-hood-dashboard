@@ -18,6 +18,7 @@ from urllib.parse import parse_qs
 import os
 import boto3
 from dotenv import load_dotenv
+from dash import ctx
 
 from .components.functions import synthetic_query, treeview, expanded_name, raw_query
 
@@ -133,14 +134,27 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                 start_date=datetime(2024, 10, 15) - timedelta(days=7),
                                 end_date=datetime(2024, 10, 15),
                                 clearable=False,
+                                style={'font-size': '11px', 'width': '300px'}  
                                 ),
                             ]),
                             dbc.Col([
                                 html.Label('or'),
                             ], width=1),
+                            
                             dbc.Col([
-                                dcc.Dropdown(["Past Day", "Past Week", "Past Month", "Past Year"],
-                                     "Past Week", clearable=False, id="date_selector")
+                                    # dcc.Dropdown(["Past Day", "Past Week", "Past Month", "Past Year"], "Past Week", clearable=False, id="date_selector")
+
+                                dcc.Dropdown(
+                                    id="date_selector",
+                                    options=[
+                                        {"label": "Past Day", "value": "day"},
+                                        {"label": "Past Week", "value": "week"},
+                                        {"label": "Past Month", "value": "month"},
+                                        {"label": "Past Year", "value": "year"},
+                                    ],
+                                    value="week", 
+                                    clearable=False
+                                )
                             ]),
                             
                         ], align="center"),
@@ -338,20 +352,41 @@ clientside_callback(
     prevent_initial_call=True
 )
 
+@callback(
+    Output(component_id='date-picker-range', component_property='start_date'),
+    Output(component_id='date-picker-range', component_property='end_date'),
+    Input(component_id='date-picker-range', component_property='start_date'),
+    Input(component_id='date-picker-range', component_property='end_date'),
+    Input(component_id='date_selector', component_property='value')
+)
+def update_date_range(start_date, end_date, selected_range):
+    trigger = ctx.triggered_id 
+    if trigger == "date_selector" and selected_range:
+        if selected_range == "day":
+            start_date = datetime.now() - timedelta(days=1)
+        elif selected_range == "week":
+            start_date = datetime.now() - timedelta(weeks=1)
+        elif selected_range == "month":
+            start_date = datetime.now() - timedelta(weeks=4)
+        elif selected_range == "year":
+            start_date = datetime.now() - timedelta(weeks=52)
+        end_date = datetime.now()
+    return [start_date, end_date]
 
 @callback(
     Output(component_id="ranking_table", component_property="rowData"),
     Output(component_id="ranking_table", component_property="dashGridOptions"),
     Output(component_id="ranking_table", component_property="getRowStyle"),
     Output(component_id="ranking_graph", component_property="figure"),
+    # Output(component_id='ranking_table', component_property ='figure'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
+    Input(component_id='date_selector', component_property="value"),
     Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 )
-def rankings(start_date, end_date, location, url):
+def rankings(start_date, end_date, value, location, url):
     # print("====Getting Rankings====")
-
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     date_diff_min = ((end_date - start_date).total_seconds())//60
@@ -446,10 +481,11 @@ def rankings(start_date, end_date, location, url):
     Output(component_id='sash_graph_average_change', component_property='children'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
+    Input(component_id='date_selector', component_property="value"),
     Input(component_id="location_selector", component_property="value"),
     Input(component_id='url', component_property='search')
 )
-def individual(start_date, end_date, location, url):
+def individual(start_date, end_date, value, location, url):
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     week_prior_start_date = start_date - timedelta(weeks=1)
