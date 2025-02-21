@@ -22,9 +22,9 @@ from dash import ctx
 
 from .components.functions import synthetic_query, treeview, expanded_name, raw_query
 
-app = Dash(__name__, meta_tags=[
-        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
-    ],)
+# app = Dash(__name__, meta_tags=[
+#         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+#     ],)
 
 dash.register_page(__name__)
 

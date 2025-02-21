@@ -18,7 +18,7 @@ app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTS
         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
     ])
 
-app.layout = html.Div([
+app.layout = dbc.Container(className="p-0", fluid=True, children=[
     dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="..")),
