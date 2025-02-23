@@ -48,10 +48,12 @@ def generate_table(type):
                                  orient='index')
     
     res_df.index = res_df.index.droplevel(1)
+    res_df.index.name = "id"
     
-    res_df = res_df.applymap(lambda x: list(x.values())[0]).iloc[:, ::-1]
+    res_df = res_df.applymap(lambda x: list(x.values())[0]).iloc[:, ::-1].reset_index()
     
-    print("<<<\n\n", res_df)
+    print("<<<\n\n", res_df.to_dict('records', index=True))
+    print(res_df.index)
 
     return html.Div([
         dash_table.DataTable(
@@ -78,36 +80,39 @@ def generate_table(type):
                         'type': 'save-db-button',
                         'index': type
                     }, color="primary", className="m-1", n_clicks=0),
-        ])
+        ]),
+        html.Div(id={'type': 'output-message', 'index': type}, style={'margin-top': '10px', 'color': 'green'}),
     ])
 
 # Update DynamoDB
-def update_dynamodb(type, column_name, new_value):
-    buildings = {
-                "id": "buildings",
-                "map": buildings_names_df.to_dict()
+def update_dynamodb(type, data):
+    df = pd.DataFrame.from_dict(data).set_index("id")
+    # print(df)
+    
+    item = {
+                "id": type,
+                "map": df.to_dict("index")
     }
     
-    with table.batch_writer() as writer:
-        writer.put_item(Item=get_buildings_dict())
-#     dynamodb_client.update_item(
-#         Key={'id': type},
-#         UpdateExpression=f"SET {column_name} = :val",
-#         ExpressionAttributeValues={':val': new_value}
-# )
+    print(item)
+    # return
     
+    with table.batch_writer() as writer:
+        writer.put_item(Item=item)
+
 @callback(
-Output({'type': 'output-message', 'index': MATCH}, 'children'),
-Input({'type': 'save-db-button', 'index': MATCH}, 'n_clicks'),
-State({'type': 'db-table', 'index': MATCH}, 'data'),
-prevent_initial_call=True
-)
-def save_changes(data):
-    try:
-        update_dynamodb(data["index"], data)
-        return "Changes saved successfully!"
-    except Exception as e:
-        return f"Error updating database: {str(e)}"
+    Output({'type': 'output-message', 'index': MATCH}, 'children'),
+    Input({'type': 'save-db-button', 'index': MATCH}, 'n_clicks'),
+    State({'type': 'db-table', 'index': MATCH}, 'data'))
+def save_changes(n_clicks, data):
+    if n_clicks > 0:
+        # print(data)
+        # print(ctx.triggered_id["index"])
+        try:
+            update_dynamodb(ctx.triggered_id["index"], data)
+            return "Changes saved successfully!"
+        except Exception as e:
+            return f"Error updating database: {str(e)}"
 
 @callback(
     Output({'type': 'db-table', 'index': MATCH}, 'data'),
@@ -124,8 +129,6 @@ def layout(**other_unknown_query_strings):
     return html.Main(className="p-2", children=[
         
         html.H1("Admin Dashboard"),
-        
-        html.Div(id='output-message', style={'margin-top': '10px', 'color': 'green'}),
         
         html.H3("Buildings"),
         generate_table("buildings"),

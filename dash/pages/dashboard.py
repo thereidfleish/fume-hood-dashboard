@@ -629,7 +629,8 @@ def ssh_height(url, hood):
     lab_full_string = f'{building.capitalize()}.Floor_{floor}.Lab_{lab}'
     
     lab_dict_inside = labs_dict[lab_full_string]
-    hood_count = int(lab_dict_inside['M']['hood_count']['N'])
+        
+    hood_count = int(list(lab_dict_inside['M']['hood_count'].values())[0])
     
     hood_response = dynamodb_client.get_item(
         TableName=TABLE_NAME, Key={"id": {"S": "hoods"}}, ProjectionExpression="#map_alt.#hood", ExpressionAttributeNames={"#map_alt":"map", "#hood":f"{lab_full_string}.Hood_{hood}"}
