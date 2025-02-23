@@ -19,6 +19,9 @@
     4. `dash_svg`
     5. `pandas`
     6. `numpy`
+    7. `boto3`
+    8. `feffery_antd_components`
+    9. `dash_ag_grid`
 3. cd into the `dash` folder and run `python app.py`
     1. You should see something like `Dash is running on http://127.0.0.1:8055/` in the terminal.  Copy-paste this URL into a web browser to load the page.
         - If you get an error, you may not have all packages installed correctly.  Please reach out to rf377@cornell.edu for assistance.
