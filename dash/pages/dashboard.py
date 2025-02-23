@@ -281,7 +281,7 @@ def layout(building=None, floor=None, lab=None, **other_unknown_query_strings):
                                                     {"headerName": "Lab", "field": "lab"},
                                                     # {"headerName": "Fumehood", "field": "hood_name"},
                                                     # {"headerName": "Time Closed", "field": "time_closed_hrmin"},
-                                                    {"headerName": "Percent of Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
+                                                    {"headerName": "% of Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
                                                     {"headerName": "Change", "field": "change_display_string"}],
                                         defaultColDef={"editable": False,
                                                         'cellRendererSelector': {"function": "rowPinningTop(params)"},
