@@ -50,7 +50,12 @@ def generate_table(type):
     res_df.index = res_df.index.droplevel(1)
     res_df.index.name = "id"
     
-    res_df = res_df.applymap(lambda x: list(x.values())[0]).iloc[:, ::-1].reset_index()
+    def process_item(x):
+        if "NULL" in x.keys():
+            return None
+        return list(x.values())[0]
+    
+    res_df = res_df.applymap(lambda x: process_item(x)).iloc[:, ::-1].reset_index()
     
     # print("<<<\n\n", res_df.to_dict('records', index=True))
 
@@ -60,7 +65,7 @@ def generate_table(type):
                 'type': 'db-table',
                 'index': type
             },
-            columns=[{'name': col, 'id': col, 'editable': True} for col in res_df.columns],
+            columns=[{'name': col, 'id': col, 'editable': True, "type": "text"} for col in res_df.columns],
             data=res_df.to_dict('records'),
             editable=True,
             row_deletable=True,
@@ -68,6 +73,17 @@ def generate_table(type):
             sort_action='native',
             # style_header={"overflow": "hidden"},
             style_table={'overflowX': 'auto', 'maxHeight': '400px'},
+            style_cell={'textAlign': 'left'},
+            style_data_conditional=[
+                {
+                    'if': {
+                        'filter_query': '{{{}}} is blank'.format(col),
+                        'column_id': col
+                    },
+                    'backgroundColor': 'tomato',
+                    'color': 'white'
+                } for col in res_df.columns
+            ]
         ),
         html.Div(className="d-flex justify-content-between", children=[
                     dbc.Button("Add Row", id={
