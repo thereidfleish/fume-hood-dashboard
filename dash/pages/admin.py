@@ -52,8 +52,7 @@ def generate_table(type):
     
     res_df = res_df.applymap(lambda x: list(x.values())[0]).iloc[:, ::-1].reset_index()
     
-    print("<<<\n\n", res_df.to_dict('records', index=True))
-    print(res_df.index)
+    # print("<<<\n\n", res_df.to_dict('records', index=True))
 
     return html.Div([
         dash_table.DataTable(
@@ -94,7 +93,7 @@ def update_dynamodb(type, data):
                 "map": df.to_dict("index")
     }
     
-    print(item)
+    # print(item)
     # return
     
     with table.batch_writer() as writer:

@@ -26,7 +26,7 @@ labs_response = dynamodb_client.get_item(
 
 labs_dict = labs_response['Item']["map"]["M"]
 
-print(cascaderview(list(labs_dict.keys())))
+# print(cascaderview(list(labs_dict.keys())))
 
 dash.register_page(__name__, path='/')
 
