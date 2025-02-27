@@ -30,24 +30,33 @@ labs_dict = labs_response['Item']["map"]["M"]
 
 dash.register_page(__name__, path='/')
 
+
 def layout(building=None, floor=None, **other_unknown_query_strings):
-    return html.Span([html.H1("Cornell Fume Hood Dashboard", style={'textAlign':'center'}),
-        fac.AntdCascader(
-            placeholder='Select a building, floor or lab',
-            options=cascaderview(list(labs_dict.keys())),
-            changeOnSelect=True,
-            popupContainer='parent',
-            popupClassName='cascaderPopup',
-            locale='en-us',
-            size='large',
-            style={'width':'1000px'})
-    ], style={
-        'overflow': 'visible',
-        'position': 'absolute',
-        'left': '50%',  # horizontal center
-        'top': '50%',  # vertical center
-        'transform': 'translate(-50%, -50%)'
-    })
+    return html.Div([  # Switch to Div for better flow control
+        html.Div([  # This div wraps the title and cascader for centralized styling
+            html.H1("Cornell Fume Hood Dashboard", style={'textAlign': 'center'}),
+            fac.AntdCascader(
+                placeholder='Select a building, floor or lab',
+                options=cascaderview(list(labs_dict.keys())),
+                changeOnSelect=True,
+                popupContainer='parent',
+                popupClassName='cascaderPopup',
+                locale='en-us',
+                size='large',
+                style={'width': '800px', 'display': 'block', 'margin': 'auto'}
+            )
+        ], style={
+            'text-align': 'left',
+            'padding': '20px'
+        }),
+        dbc.Row([  # Row for images
+            dbc.Col(html.Img(src="/assets/campus.png", style={'width': '70%', 'height': 'auto'}), md=1),
+            dbc.Col(html.Img(src="/assets/building.png", style={'width': '70%', 'height': 'auto'}), md=1),
+            dbc.Col(html.Img(src="/assets/floor.png", style={'width': '70%', 'height': 'auto'}), md=1),
+            dbc.Col(html.Img(src="/assets/lab.png", style={'width': '70%', 'height': 'auto'}), md=1)
+        ], justify="center")
+    ],
+    style={'margin-top':'200px'})
 
 # def layout(building=None, floor=None, **other_unknown_query_strings):
 #     return html.Span([fac.AntdCascader(
