@@ -192,3 +192,46 @@ def cascaderview(id_list):
             building_node["children"].append(floor_node)
         tree_data.append(building_node)
     return tree_data
+
+def get_fumehood_text(building, floor, lab):
+    if lab is not None:
+        return "fumehood(s) in this lab"
+    elif floor is not None:
+        return "fumehoods on this floor"
+    else:
+        return "fumehoods in this building"
+    
+def get_level_text(building, floor, lab):
+    if lab is not None:
+        return "lab"
+    elif floor is not None:
+        return "floor"
+    else:
+        return "building"
+    
+
+def format_building(building):
+    return "" if building is None else building.capitalize()
+
+
+def format_floor(floor):
+    return "" if floor is None else "Floor " + floor
+
+
+def format_lab(lab):
+    return "" if lab is None else "Lab " + lab
+
+# Format `time_closed` to show in days, hours and minutes
+def format_time(minutes):
+    if minutes > 1440:  # More than 24 hours (1440 minutes)
+        days = int(minutes // 1440)
+        remaining_minutes = minutes % 1440
+        hours = int(remaining_minutes // 60)
+        minutes_left = int(remaining_minutes % 60)
+        return f"{days}d {hours}h {minutes_left}m"
+    elif minutes > 60:  # More than 60 minutes
+        hours = int(minutes // 60)
+        remaining_minutes = int(minutes % 60)
+        return f"{hours}h {remaining_minutes}m"
+    else:  # 60 minutes or less
+        return f"{int(minutes)}m"
