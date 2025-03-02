@@ -77,16 +77,16 @@ Keyword arguments:
     标题css样式.
 
 - bordered (boolean; default True):
-    是否渲染边框  默认值：`True`.
+    是否渲染边框 默认值：`True`.
 
 - hoverable (boolean; default False):
-    是否在鼠标悬停时显示特殊样式  默认值：`False`.
+    是否在鼠标悬停时显示特殊样式 默认值：`False`.
 
 - size (a value equal to: 'default', 'small'; default 'default'):
-    卡片尺寸规格，可选项有`'default'`、`'small'`  默认值：`'default'`.
+    卡片尺寸规格，可选项有`'default'`、`'small'` 默认值：`'default'`.
 
 - nClicks (number; default 0):
-    监听当前卡片累计点击次数  默认值：`0`.
+    监听当前卡片累计点击次数 默认值：`0`.
 
 - data-* (string; optional):
     `data-*`格式属性通配.

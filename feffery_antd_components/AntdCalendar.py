@@ -33,7 +33,7 @@ Keyword arguments:
     默认值：`'YYYY-MM-DD'`.
 
 - size (a value equal to: 'default', 'large'; default 'default'):
-    日历尺寸规格，可选项有`'default'`、`'large'`  默认值：`'default'`.
+    日历尺寸规格，可选项有`'default'`、`'large'` 默认值：`'default'`.
 
 - value (string; optional):
     监听或设置当前选中日期值.
@@ -95,7 +95,7 @@ Keyword arguments:
     是否开启[属性持久化](/prop-persistence).
 
 - persisted_props (list of a value equal to: 'value's; default ['value']):
-    开启属性持久化功能的若干属性名，可选项有`'value'`  默认值：`['value']`.
+    开启属性持久化功能的若干属性名，可选项有`'value'` 默认值：`['value']`.
 
 - persistence_type (a value equal to: 'local', 'session', 'memory'; default 'local'):
     属性持久化存储类型，可选项有`'local'`（本地持久化），`'session'`（会话持久化），`'memory'`（内存持久化）

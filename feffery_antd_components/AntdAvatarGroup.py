@@ -28,7 +28,7 @@ Keyword arguments:
     最多显示的头像个数，默认无限制.
 
 - maxPopoverPlacement (a value equal to: 'top', 'bottom'; default 'top'):
-    超出`maxCount`数量限制之外的头像气泡卡片弹出方位，可选项有`'top'`、`'bottom'`  默认值：`'top'`.
+    超出`maxCount`数量限制之外的头像气泡卡片弹出方位，可选项有`'top'`、`'bottom'` 默认值：`'top'`.
 
 - maxPopoverTrigger (a value equal to: 'hover', 'click'; default 'hover'):
     超出`maxCount`数量限制之外的头像气泡卡片弹出触发方式，可选项有`'hover'`、`'click'`

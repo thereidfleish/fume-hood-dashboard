@@ -25,7 +25,7 @@ Keyword arguments:
     目录层次数据结构.
 
 - align (a value equal to: 'left', 'right'; default 'right'):
-    锚点位置，可选项有`'left'`、`'right'`  默认值：`'right'`.
+    锚点位置，可选项有`'left'`、`'right'` 默认值：`'right'`.
 
 - containerId (string; optional):
     锚点目标容器id.
@@ -34,10 +34,10 @@ Keyword arguments:
     锚点位移偏移量，默认同参数offsetTop.
 
 - affix (boolean; default True):
-    是否开启固定模式  默认值：`True`.
+    是否开启固定模式 默认值：`True`.
 
 - bounds (number; default 5):
-    锚点像素边距  默认值：`5`.
+    锚点像素边距 默认值：`5`.
 
 - offsetTop (number; optional):
     设置距离窗口顶部触发锚定效果的指定像素偏移量.

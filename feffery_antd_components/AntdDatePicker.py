@@ -43,10 +43,10 @@ Keyword arguments:
     自定义每周起始日下标.
 
 - disabled (boolean; default False):
-    是否禁用当前组件  默认值：`False`.
+    是否禁用当前组件 默认值：`False`.
 
 - showTime (dict; default False):
-    配置时间选择面板相关参数  默认值：`False`.
+    配置时间选择面板相关参数 默认值：`False`.
 
     `showTime` is a boolean | dict with keys:
 
@@ -58,10 +58,10 @@ Keyword arguments:
         默认值：`'HH:mm:ss'`.
 
 - size (a value equal to: 'small', 'middle', 'large'; default 'middle'):
-    当前组件尺寸规格，可选项有`'small'`、`'middle'`、`'large'`  默认值：`'middle'`.
+    当前组件尺寸规格，可选项有`'small'`、`'middle'`、`'large'` 默认值：`'middle'`.
 
 - bordered (boolean; default True):
-    是否显示边框，设置为`True`时等价于`variant='outlined'`  默认值：`True`.
+    是否显示边框，设置为`True`时等价于`variant='outlined'` 默认值：`True`.
 
 - variant (a value equal to: 'outlined', 'borderless', 'filled'; optional):
     形态变体类型，可选项有`'outlined'`、`'borderless'`、`'filled'`，其中`'outlined'`等价于`bordered=True`，但优先级更高.
@@ -103,19 +103,19 @@ Keyword arguments:
     控制校验状态，可选项有`'error'`、`'warning'`.
 
 - allowClear (boolean; default True):
-    是否允许一键清空已选值  默认值：`True`.
+    是否允许一键清空已选值 默认值：`True`.
 
 - autoFocus (boolean; default False):
-    是否自动获取焦点  默认值：`False`.
+    是否自动获取焦点 默认值：`False`.
 
 - readOnly (boolean; optional):
-    是否渲染为只读状态  默认值：`False`.
+    是否渲染为只读状态 默认值：`False`.
 
 - extraFooter (a list of or a singular dash component, string or number; optional):
     组件型，底部额外区域内容.
 
 - showToday (boolean; default True):
-    是否显示“今天”快捷选择按钮  默认值：`True`.
+    是否显示“今天”快捷选择按钮 默认值：`True`.
 
 - presets (list of dicts; optional):
     配置预设项列表.
@@ -140,7 +140,7 @@ Keyword arguments:
         事件对应时间戳信息.
 
 - needConfirm (boolean; default False):
-    是否需要点击按钮确认选值，传入`False`时失去焦点即代表选择  默认值：`False`.
+    是否需要点击按钮确认选值，传入`False`时失去焦点即代表选择 默认值：`False`.
 
 - customCells (list of dicts; optional):
     自定义对应日期的单元格样式.
@@ -169,7 +169,7 @@ Keyword arguments:
     自定义选择框后缀图标内容.
 
 - popupContainer (a value equal to: 'parent', 'body'; default 'body'):
-    相关展开层锚定策略，可选项有`'parent'`、`'body'`  默认值：`'body'`.
+    相关展开层锚定策略，可选项有`'parent'`、`'body'` 默认值：`'body'`.
 
 - batchPropsNames (list of strings; optional):
     需要纳入[批量属性监听](/batch-props-values)的若干属性名.
@@ -202,7 +202,7 @@ Keyword arguments:
     是否开启[属性持久化](/prop-persistence).
 
 - persisted_props (list of a value equal to: 'value's; default ['value']):
-    开启属性持久化功能的若干属性名，可选项有`'value'`  默认值：`['value']`.
+    开启属性持久化功能的若干属性名，可选项有`'value'` 默认值：`['value']`.
 
 - persistence_type (a value equal to: 'local', 'session', 'memory'; default 'local'):
     属性持久化存储类型，可选项有`'local'`（本地持久化），`'session'`（会话持久化），`'memory'`（内存持久化）

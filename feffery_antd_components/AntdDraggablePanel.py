@@ -25,7 +25,7 @@ Keyword arguments:
     当前组件css类名，支持[动态css](/advanced-classname).
 
 - mode (a value equal to: 'fixed', 'float'; default 'fixed'):
-    设置面板模式，可选项有`'fixed'`（固定模式）、`'float'`（浮动窗口模式）  默认值：`'fixed'`.
+    设置面板模式，可选项有`'fixed'`（固定模式）、`'float'`（浮动窗口模式） 默认值：`'fixed'`.
 
 - defaultSize (dict; optional):
     设置当前面板默认尺寸.
@@ -87,7 +87,7 @@ Keyword arguments:
     - topRight (boolean; optional)
 
 - expandable (boolean; default True):
-    面板是否可展开  默认值：`True`.
+    面板是否可展开 默认值：`True`.
 
 - data-* (string; optional):
     `data-*`格式属性通配.

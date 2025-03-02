@@ -28,7 +28,7 @@ Keyword arguments:
     配合`AntdForm`表单批量值搜集/控制功能使用，充当当前表单项的字段名，以`id`作为缺省值.
 
 - autoSize (dict; default False):
-    配置输入框高度自适应相关功能  默认值：`False`.
+    配置输入框高度自适应相关功能 默认值：`False`.
 
     `autoSize` is a boolean | dict with keys:
 
@@ -39,7 +39,7 @@ Keyword arguments:
         输入框最大行数.
 
 - prefix (string; default '@'):
-    触发选择菜单展开的关键字  默认值：`'@'`.
+    触发选择菜单展开的关键字 默认值：`'@'`.
 
 - value (string; optional):
     监听或设置已输入值.
@@ -62,13 +62,13 @@ Keyword arguments:
     监听输入内容中对应的已选子项值.
 
 - disabled (boolean; default False):
-    是否禁用当前组件  默认值：`False`.
+    是否禁用当前组件 默认值：`False`.
 
 - placement (a value equal to: 'top', 'bottom'; default 'bottom'):
-    选择菜单弹出方向，可选项有`'top'`、`'bottom'`  默认值：`'bottom'`.
+    选择菜单弹出方向，可选项有`'top'`、`'bottom'` 默认值：`'bottom'`.
 
 - bordered (boolean; default True):
-    是否显示边框，设置为`True`时等价于`variant='outlined'`  默认值：`True`.
+    是否显示边框，设置为`True`时等价于`variant='outlined'` 默认值：`True`.
 
 - variant (a value equal to: 'outlined', 'borderless', 'filled'; optional):
     形态变体类型，可选项有`'outlined'`、`'borderless'`、`'filled'`，其中`'outlined'`等价于`bordered=True`，但优先级更高.
@@ -80,10 +80,10 @@ Keyword arguments:
     控制校验状态，可选项有`'error'`、`'warning'`.
 
 - autoFocus (boolean; default False):
-    是否自动获取焦点  默认值：`False`.
+    是否自动获取焦点 默认值：`False`.
 
 - popupContainer (a value equal to: 'parent', 'body'; optional):
-    相关展开层锚定策略，可选项有`'parent'`、`'body'`  默认值：`'body'`.
+    相关展开层锚定策略，可选项有`'parent'`、`'body'` 默认值：`'body'`.
 
 - batchPropsNames (list of strings; optional):
     需要纳入[批量属性监听](/batch-props-values)的若干属性名.

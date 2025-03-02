@@ -69,16 +69,16 @@ Keyword arguments:
     默认值：`'default'`.
 
 - autoComplete (a value equal to: 'off', 'on'; default 'on'):
-    是否开启浏览器自带的自动补全功能，可选项有`'off'`、`'on'`  默认值：`'on'`.
+    是否开启浏览器自带的自动补全功能，可选项有`'off'`、`'on'` 默认值：`'on'`.
 
 - disabled (boolean; default False):
-    是否禁用当前组件  默认值：`False`.
+    是否禁用当前组件 默认值：`False`.
 
 - size (a value equal to: 'small', 'middle', 'large'; default 'middle'):
-    当前组件尺寸规格，可选项有`'small'`、`'middle'`、`'large'`  默认值：`'middle'`.
+    当前组件尺寸规格，可选项有`'small'`、`'middle'`、`'large'` 默认值：`'middle'`.
 
 - bordered (boolean; default True):
-    是否显示边框，设置为`True`时等价于`variant='outlined'`  默认值：`True`.
+    是否显示边框，设置为`True`时等价于`variant='outlined'` 默认值：`True`.
 
 - variant (a value equal to: 'outlined', 'borderless', 'filled'; optional):
     形态变体类型，可选项有`'outlined'`、`'borderless'`、`'filled'`，其中`'outlined'`等价于`bordered=True`，但优先级更高.
@@ -93,7 +93,7 @@ Keyword arguments:
     初始化已输入值.
 
 - passwordUseMd5 (boolean; default False):
-    针对`'password'`模式，是否启用md5加密功能  默认值：`False`.
+    针对`'password'`模式，是否启用md5加密功能 默认值：`False`.
 
 - md5Value (string; optional):
     当`passwordUseMd5=True`时，监听已输入值md5编码结果.
@@ -102,7 +102,7 @@ Keyword arguments:
     监听防抖版本的已输入值.
 
 - debounceWait (number; default 0):
-    防抖延时时长，单位：毫秒  默认值：`0`.
+    防抖延时时长，单位：毫秒 默认值：`0`.
 
 - addonBefore (a list of or a singular dash component, string or number; optional):
     组件型，前置标签内容.
@@ -120,13 +120,13 @@ Keyword arguments:
     限制输入框最大可输入字符数量.
 
 - showCount (boolean; default False):
-    是否显示已输入字符计数  默认值：`False`.
+    是否显示已输入字符计数 默认值：`False`.
 
 - countFormat (string; optional):
     正则表达式，用于配合字符计数相关功能，自定义计数规则.
 
 - autoSize (dict; default False):
-    针对`'text-area'`模式，配置输入框高度自适应相关功能  默认值：`False`.
+    针对`'text-area'`模式，配置输入框高度自适应相关功能 默认值：`False`.
 
     `autoSize` is a boolean | dict with keys:
 
@@ -137,28 +137,28 @@ Keyword arguments:
         输入框最大行数.
 
 - nSubmit (number; default 0):
-    监听输入框聚焦状态下，键盘enter键累计点按次数  默认值：`0`.
+    监听输入框聚焦状态下，键盘enter键累计点按次数 默认值：`0`.
 
 - nClicksSearch (number; default 0):
-    针对`'search'`模式，监听搜索按钮累计点击次数  默认值：`0`.
+    针对`'search'`模式，监听搜索按钮累计点击次数 默认值：`0`.
 
 - status (a value equal to: 'error', 'warning'; optional):
     控制校验状态，可选项有`'error'`、`'warning'`.
 
 - allowClear (boolean; default False):
-    是否允许一键清空已输入值  默认值：`False`.
+    是否允许一键清空已输入值 默认值：`False`.
 
 - autoFocus (boolean; default False):
-    是否自动获取焦点  默认值：`False`.
+    是否自动获取焦点 默认值：`False`.
 
 - focusing (boolean; optional):
     监听输入框是否聚焦.
 
 - readOnly (boolean; optional):
-    是否渲染为只读状态  默认值：`False`.
+    是否渲染为只读状态 默认值：`False`.
 
 - emptyAsNone (boolean; default False):
-    当输入框已输入值为空时，是否强制更新`value`为空值，从而统一空字符串与空值混合的情况  默认值：`False`.
+    当输入框已输入值为空时，是否强制更新`value`为空值，从而统一空字符串与空值混合的情况 默认值：`False`.
 
 - batchPropsNames (list of strings; optional):
     需要纳入[批量属性监听](/batch-props-values)的若干属性名.
@@ -189,7 +189,7 @@ Keyword arguments:
     是否开启[属性持久化](/prop-persistence).
 
 - persisted_props (list of a value equal to: 'value', 'md5Value's; default ['value', 'md5Value']):
-    开启属性持久化功能的若干属性名，可选项有`'value'`、`'md5Value'`  默认值：`['value',
+    开启属性持久化功能的若干属性名，可选项有`'value'`、`'md5Value'` 默认值：`['value',
     'md5Value']`.
 
 - persistence_type (a value equal to: 'local', 'session', 'memory'; default 'local'):

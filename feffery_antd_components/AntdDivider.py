@@ -25,13 +25,13 @@ Keyword arguments:
     当前组件css样式.
 
 - innerTextOrientation (a value equal to: "left", "center", "right"; default 'center'):
-    内嵌元素对齐方式，可选项有`'left'`、`'center'`、`'right'`  默认值：`'center'`.
+    内嵌元素对齐方式，可选项有`'left'`、`'center'`、`'right'` 默认值：`'center'`.
 
 - isDashed (boolean; default False):
-    是否渲染为虚线形式  默认值：`False`.
+    是否渲染为虚线形式 默认值：`False`.
 
 - direction (a value equal to: "horizontal", "vertical"; default 'horizontal'):
-    分割线方向，可选项有`'horizontal'`、`'vertical'`  默认值：`'horizontal'`.
+    分割线方向，可选项有`'horizontal'`、`'vertical'` 默认值：`'horizontal'`.
 
 - fontSize (string | number; optional):
     内嵌元素字体大小.
@@ -56,7 +56,7 @@ Keyword arguments:
     默认值：`'solid'`.
 
 - plain (boolean; default True):
-    文字内容是否呈现为常规正文形式  默认值：`True`.
+    文字内容是否呈现为常规正文形式 默认值：`True`.
 
 - data-* (string; optional):
     `data-*`格式属性通配.

@@ -28,7 +28,7 @@ Keyword arguments:
     组件型，标题内容.
 
 - span (number; default 1):
-    所占宽度份数  默认值：`1`.
+    所占宽度份数 默认值：`1`.
 
 - labelStyle (dict; optional):
     标签css样式.
