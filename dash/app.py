@@ -34,6 +34,7 @@ app.layout = dbc.Container(className="p-0", fluid=True, children=[
         ),
         dbc.NavItem(dbc.NavLink("About", href="404")),
         dbc.NavItem(dbc.NavLink("Help", href="404")),
+        dbc.NavItem(dbc.NavLink("Admin", href="admin")),
         
     ],
     brand=html.Img(src="/assets/esw_logo.png", height="80px", width="auto"),
