@@ -50,6 +50,24 @@ labs_df.index = labs_df.index.droplevel(1)
 
 labs_df = labs_df.applymap(lambda x: list(x.values())[0])
 
+
+# floors_response = dynamodb_client.get_item(
+#     TableName=TABLE_NAME, Key={"id": {"S": "floors"}}
+# )
+
+# floors_dict = floors_response['Item']["map"]["M"]
+
+# floors_df = pd.DataFrame.from_dict({(i, j): floors_dict[i][j]
+#                                   for i in floors_dict.keys()
+#                                   for j in floors_dict[i].keys()},
+#                                  orient='index')
+
+# floors_df.index = floors_df.index.droplevel(1)
+
+# floors_df = floors_df.applymap(lambda x: list(x.values())[0])
+
+
+
 def layout(building=None, floor=None, lab=None):
     sidebar = get_sidebar(building, floor, lab, labs_dict)
     titles = get_titles(building, floor, lab)
@@ -83,7 +101,15 @@ def layout(building=None, floor=None, lab=None):
                 html.H3("Comparisons"),
                 html.Div(
                     className="d-flex align-items-center",
-                    children=[html.H5(f"How does your floor compare to other floors in {building}", className="me-2 mb-2")]
+                    children=[
+                        html.H5(f"How does your floor compare to other floors in {building}", className="me-2 mb-2"),
+                        dcc.Dropdown(
+                            options=[{'label': 'building', 'value': 'building'}],
+                            value="building",
+                            id="location_selector",
+                            style={"display": "none"},
+                        )
+                    ]
                 ),
                 ranking_pane,
                 comparison_graph_pane,
@@ -162,7 +188,6 @@ def update_date_range(start_date, end_date, selected_range):
     Output(component_id="ranking_table", component_property="dashGridOptions"),
     Output(component_id="ranking_table", component_property="getRowStyle"),
     Output(component_id="ranking_graph", component_property="figure"),
-    # Output(component_id='ranking_table', component_property ='figure'),
     Input(component_id="date-picker-range", component_property="start_date"),
     Input(component_id="date-picker-range", component_property="end_date"),
     Input(component_id='date_selector', component_property="value"),
@@ -170,16 +195,23 @@ def update_date_range(start_date, end_date, selected_range):
     Input(component_id='url', component_property='search')
 )
 def rankings(start_date, end_date, value, location, url):
-    # print("====Getting Rankings====")
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     date_diff_min = ((end_date - start_date).total_seconds())//60
     week_prior_start_date = start_date - timedelta(weeks=1)
 
     url_query_params = parse_qs(urlparse(url).query)
+    try:
+        lab = url_query_params["lab"][0]
+    except:
+        lab = None
+    
+    try:
+        floor = url_query_params["floor"][0]
+    except:
+        floor = None
+    
     building = url_query_params["building"][0]
-    floor = url_query_params["floor"][0]
-    lab = url_query_params["lab"][0]
 
     if location == "floor":
         labs_df_filtered = labs_df.filter(
@@ -193,7 +225,6 @@ def rankings(start_date, end_date, value, location, url):
                             start=str(start_date),
                             end=str(end_date),
                             aggType="aggD")
-    print(query)
     
     last_week_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
                             start=str(week_prior_start_date),
@@ -208,24 +239,38 @@ def rankings(start_date, end_date, value, location, url):
     rankings['time_closed'] = (date_diff_min - rankings['value'])
     rankings.loc[rankings['time_closed'] < 0, 'time_closed'] = 0
     rankings = rankings.rename({'value': 'time_opened'}, axis=1)
-
-    rankings = rankings.sort_values(by="time_closed", ascending=False)
-
-    rankings["Ranking"] = rankings['time_closed'].rank(method='min', ascending=False).astype(int)
-    rankings['Ranking_Emoji'] = rankings['Ranking'].copy()
-    rankings.loc[rankings['Ranking']==1, 'Ranking_Emoji'] = "🥇"
-    rankings.loc[rankings['Ranking']==2, 'Ranking_Emoji'] = "🥈"
-    rankings.loc[rankings['Ranking']==3, 'Ranking_Emoji'] = "🥉"
     
     last_week_rankings['time_closed'] = (date_diff_min - last_week_rankings['value'])
     last_week_rankings.loc[last_week_rankings['time_closed'] < 0, 'time_closed'] = 0
     last_week_rankings = last_week_rankings.rename({'value': 'time_opened'}, axis=1)
+    
+    if lab is None:
+        if floor is None:
+            level = "building"
+            level_data = building
+            merging_keys = ["building"]
+        else:
+            level = "floor"
+            level_data = floor
+            merging_keys = ["building", "floor"]
+        rankings = rankings.groupby(merging_keys)
+        last_week_rankings = last_week_rankings.groupby(merging_keys)
+        rankings = rankings[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
+        last_week_rankings = last_week_rankings[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
+    else:
+        level = "lab"
+        level_data = lab
+        merging_keys = ["building", "floor", "lab", "hood"]
+    
+    rankings = rankings.sort_values(by="time_closed", ascending=False)
 
+    rankings["Ranking"] = rankings['time_closed'].rank(method='min', ascending=False).astype(int)
+    
     last_week_rankings = last_week_rankings.sort_values(by="time_closed", ascending=False)
 
     last_week_rankings["Last_Week_Ranking"] = last_week_rankings['time_closed'].rank(method='min', ascending=False).astype(int)
-    
-    rankings = rankings.merge(last_week_rankings[["building", "floor", "lab", "hood", "Last_Week_Ranking"]], on=["building", "floor", "lab", "hood"])
+            
+    rankings = rankings.merge(last_week_rankings[merging_keys+["Last_Week_Ranking"]], on=merging_keys)
 
     rankings['change'] = rankings['Last_Week_Ranking'] - rankings['Ranking']
 
@@ -237,22 +282,22 @@ def rankings(start_date, end_date, value, location, url):
     rankings['time_closed_hrmin'] = rankings['time_closed'].apply(format_time)
 
     # Get the lab number from the query parameters
-    dashGridOptions = {"animateRows": True, 'pinnedTopRowData': rankings.loc[rankings['lab'] == lab].to_dict('records')}
+    pinnedTopRowData = rankings.loc[rankings[level] == level_data].to_dict('records')
+
+    dashGridOptions = {"animateRows": True, 'pinnedTopRowData': pinnedTopRowData}
 
     getRowStyle = {"styleConditions": [
             {
-                "condition": f"params.data.lab == {lab}",
+                "condition": f"params.data.{level} == {level_data}",
                 "style": {"backgroundColor": "blue", "color": "white", "opacity": 0.5},
             },
         ]
     }
 
-    ranking_graph = px.bar(rankings, x="lab", y="time_closed", labels={
+    ranking_graph = px.bar(rankings, x=level, y="time_closed", labels={
         "time_closed": "Time Closed when Unused",
-        "lab": "Lab",
-    },
-        #title="Time Closed Overnight"
-    )
+        level: level.capitalize(),
+    })
 
     ranking_graph["data"][0]["marker"]["color"] = ["red" if c ==
                                                    lab else "blue" for c in ranking_graph["data"][0]["x"]]

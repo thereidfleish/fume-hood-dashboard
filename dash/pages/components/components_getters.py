@@ -203,6 +203,24 @@ def get_comparison_selector(building, floor, lab):
     )
 
 def get_ranking_pane(building, floor, lab):
+    if (lab is None):
+        columnDefs=[
+            {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
+            {"headerName": "Average % Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
+            {"headerName": "Change", "field": "change_display_string"}
+        ]
+        if (floor is None):
+            columnDefs.insert(1, {"headerName": "Building", "field": "building"})
+        else:
+            columnDefs.insert(1, {"headerName": "Floor", "field": "floor"})
+    else:
+        columnDefs=[
+            {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
+            {"headerName": "Lab", "field": "lab"},
+            {"headerName": "% Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
+            {"headerName": "Change", "field": "change_display_string"}
+        ]
+    
     return dbc.Col(
         className="card mx-1",
         children=[
@@ -219,12 +237,7 @@ def get_ranking_pane(building, floor, lab):
                                         children=[
                                             dag.AgGrid(
                                                 id="ranking_table",
-                                                columnDefs=[
-                                                    {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
-                                                    {"headerName": "Lab", "field": "lab"},
-                                                    {"headerName": "Percent of Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
-                                                    {"headerName": "Change", "field": "change_display_string"}
-                                                ],
+                                                columnDefs=columnDefs,
                                                 defaultColDef={
                                                     "editable": False,
                                                     'cellRendererSelector': {"function": "rowPinningTop(params)"},
