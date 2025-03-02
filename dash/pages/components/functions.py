@@ -110,13 +110,20 @@ def lab_dictionary(id_list):
         
         lab_list = []
         lab_key_list = []
-        for i in range (0, len(floor_list)):
+        for i in range(len(floor_list)):
             lab_list.append([])
             lab_key_list.append([])
-            for j in range(0, len(id_list_split)):
-                if floor_list[i][-1] == id_list_split[j][1][-1]:
-                    lab_list[i].append(id_list_split[j][2].replace("_", " "))
-                    lab_key_list[i].append(floor_key_list[i] + "&" + id_list_split[j][2].lower().replace("_", "="))
+            for j in range(len(id_list_split)):
+                current_floor = id_list_split[j][1].replace("_", " ")
+                if floor_list[i] == current_floor:
+                    lab_title = id_list_split[j][2].replace("_", " ")
+                    # Only add if not already present
+                    if lab_title not in lab_list[i]:
+                        lab_list[i].append(lab_title)
+                        lab_key_list[i].append(
+                            floor_key_list[i] + "&" + id_list_split[j][2].lower().replace("_", "=")
+                        )
+
         building_list[building]["lab_list"] = lab_list
         building_list[building]["lab_key_list"] = lab_key_list
         
