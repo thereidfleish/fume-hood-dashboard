@@ -137,7 +137,7 @@ def treeview(id_list):
     for building, b_data in lab_dict.items():
         building_node = {
             "title": building,
-            "key": building.lower(),
+            "key": "?building="+building.lower(),
             "children": []
         }
         # Loop through each floor for this building
@@ -162,11 +162,11 @@ def treeview(id_list):
 
 def expanded_name(building=None, floor=None, lab=None):
     result = "?building="
-    if building != None:
+    if building is not None:
         result += building
-        if floor != None:
+        if floor is not  None:
             result += "&floor="+floor
-            if lab != None:
+            if lab is not None:
                 result += "&lab="+lab
     return result
 
@@ -176,7 +176,7 @@ def cascaderview(id_list):
     for building, b_data in lab_dict.items():
         # Create the building node (title remains the same)
         building_node = {
-            "value": building.lower(), 
+            "value": "?building="+building.lower(), 
             "label": building,
             "children": []
         }

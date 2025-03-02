@@ -51,22 +51,6 @@ labs_df.index = labs_df.index.droplevel(1)
 labs_df = labs_df.applymap(lambda x: list(x.values())[0])
 
 
-# floors_response = dynamodb_client.get_item(
-#     TableName=TABLE_NAME, Key={"id": {"S": "floors"}}
-# )
-
-# floors_dict = floors_response['Item']["map"]["M"]
-
-# floors_df = pd.DataFrame.from_dict({(i, j): floors_dict[i][j]
-#                                   for i in floors_dict.keys()
-#                                   for j in floors_dict[i].keys()},
-#                                  orient='index')
-
-# floors_df.index = floors_df.index.droplevel(1)
-
-# floors_df = floors_df.applymap(lambda x: list(x.values())[0])
-
-
 
 def layout(building=None, floor=None, lab=None):
     sidebar = get_sidebar(building, floor, lab, labs_dict)
@@ -86,7 +70,13 @@ def layout(building=None, floor=None, lab=None):
                 html.Div(
                     className="d-flex align-items-center",
                     children=[
-                        html.H5("How does your building compare to other buildings on campus", className="me-2 mb-2")
+                        html.H5("How does your building compare to other buildings on campus", className="me-2 mb-2"),
+                        dcc.Dropdown(
+                            options=[{'label': 'Campus', 'value': 'cornell'}],
+                            value='cornell',
+                            id="location_selector",
+                            style={"display": "none"},
+                        )
                     ]
                 ),
                 ranking_pane,
@@ -321,7 +311,6 @@ def individual(start_date, end_date, value, location, url):
     week_prior_start_date = start_date - timedelta(weeks=1)
     date_diff_min = ((end_date - start_date).total_seconds())//60
 
-    # print("====Getting Individual====")
     url_query_params = urlparse(url).query
     target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
 
