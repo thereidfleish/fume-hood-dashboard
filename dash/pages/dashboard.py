@@ -23,9 +23,9 @@ from dash import ctx
 from .components.functions import synthetic_query, raw_query, format_time
 from .components.components_getters import get_sidebar, get_titles, get_date_selector, get_live_fumehood_pane, get_stats_pane, get_comparison_selector, get_ranking_pane, get_comparison_graph_pane
 
-app = Dash(__name__, meta_tags=[
-        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
-    ],)
+# app = Dash(__name__, meta_tags=[
+#         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+#     ],)
 
 dash.register_page(__name__)
 
@@ -414,7 +414,8 @@ def ssh_height(url, hood):
     lab_full_string = f'{building.capitalize()}.Floor_{floor}.Lab_{lab}'
     
     lab_dict_inside = labs_dict[lab_full_string]
-    hood_count = int(lab_dict_inside['M']['hood_count']['N'])
+        
+    hood_count = int(list(lab_dict_inside['M']['hood_count'].values())[0])
     
     hood_response = dynamodb_client.get_item(
         TableName=TABLE_NAME, Key={"id": {"S": "hoods"}}, ProjectionExpression="#map_alt.#hood", ExpressionAttributeNames={"#map_alt":"map", "#hood":f"{lab_full_string}.Hood_{hood}"}

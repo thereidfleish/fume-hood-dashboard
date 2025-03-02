@@ -1,0 +1,3 @@
+[submodule "dash/pages/components/antd-components"]
+	path = dash/pages/components/antd-components
+	url = https://github.com/ste-z/antd-components
