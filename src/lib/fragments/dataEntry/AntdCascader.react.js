@@ -143,14 +143,28 @@ const AntdCascader = (props) => {
         options = flatToTreeOptions
     }
 
-    // 搜索函数
+    // Helper function to tokenize search strings
+    const tokenize = (inputValue) => {
+        if (!inputValue) return [];
+        return inputValue.split(' ').filter(Boolean).map(token => token.toLowerCase());
+    };
+  
+
+    // Search function for token-based matching
     const filter = (inputValue, path) => {
-        // 若以value字段为搜索目标
+        const tokens = tokenize(inputValue);
         if (optionFilterProp === 'value') {
-            return path.some(option => option.value?.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+            return path.some(option => {
+                const text = option.value ? String(option.value).toLowerCase() : '';
+                return tokens.every(token => text.includes(token));
+            });
         }
-        return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-    }
+        return path.some(option => {
+            const text = option.label ? String(option.label).toLowerCase() : '';
+            return tokens.every(token => text.includes(token));
+        });
+    };
+
 
     const onSelect = (e) => {
         // AntdForm表单批量控制
