@@ -30,35 +30,61 @@ const isSameParent = (a, b) => {
     return aLevel.join('') === bLevel.join('');
 }
 
-const filterTree = (toFilterData, keyword, caseSensitive) => {
-    return toFilterData.filter(node => {
-        // 首先检查当前节点是否匹配关键字
-        let isMatch = false;
-        if (Array.isArray(keyword)) {
-            isMatch = keyword.some(s => caseSensitive ? node.title.includes(s) : node.title.toLowerCase().includes(s.toLowerCase()));
-        } else {
-            isMatch = caseSensitive ? node.title.includes(keyword) : node.title.toLowerCase().includes(keyword.toLowerCase());
-        }
+// 1. Helper to tokenize search keywords
+const tokenize = (keyword) => {
+    if (!keyword) return [];
+    if (Array.isArray(keyword)) {
+        return keyword.reduce((acc, k) => acc.concat(k.split(' ').filter(Boolean)), []);
+    }
+    return keyword.split(' ').filter(Boolean);
+};
+  
+// 2. Helper to extract plain text from title
+const extractTextFromTitle = (title) => {
+    if (typeof title === 'string') return title;
+    if (React.isValidElement(title)) {
+        const { children } = title.props;
+        if (typeof children === 'string') return children;
+        if (Array.isArray(children)) return children.join('');
+    }
+    return '';
+};
 
-        // 如果当前节点匹配关键字，但不是根节点，才保留它及其全部后代节点信息
-        if (isMatch) {
-            return true;
-        }
-
-        // 如果当前节点不匹配关键字，检查它的子节点
-        if (node.children && node.children.length > 0) {
-            node.children = filterTree(node.children, keyword, caseSensitive);
-
-            // 如果有匹配的子节点，保留当前节点及其匹配的后代节点信息
-            if (node.children.length > 0) {
-                return true;
-            }
-        }
-
-        // 如果当前节点和它的子节点都不匹配，返回 false，表示不保留该节点
-        return false;
-    });
-}
+// 3. Modified filterTree function
+const filterTree = (data, keyword, caseSensitive) => {
+    if (!keyword || (typeof keyword === 'string' && keyword.trim() === '')) {
+      return data;
+    }
+  
+    const tokens = tokenize(keyword);
+  
+    return data.reduce((acc, node) => {
+      const titleText = extractTextFromTitle(node.title);
+      if (!titleText) return acc;
+  
+      const compareTitle = caseSensitive ? titleText : titleText.toLowerCase();
+      const isMatch = tokens.every(token => {
+        const compareToken = caseSensitive ? token : token.toLowerCase();
+        return compareTitle.includes(compareToken);
+      });
+  
+      let filteredChildren = [];
+      if (node.children && node.children.length > 0) {
+        filteredChildren = filterTree(node.children, keyword, caseSensitive);
+      }
+  
+      if (isMatch || filteredChildren.length > 0) {
+        acc.push({
+          ...node,
+          children: filteredChildren
+        });
+      }
+      return acc;
+    }, []);
+  };
+  
+  
+  
 
 /**
  * 树形控件组件AntdTree
@@ -346,10 +372,10 @@ const AntdTree = (props) => {
             key={key}
             ref={treeRef}
             treeData={
-                searchKeyword ?
-                    add_leaf_node_icon(filterTree(cloneDeep(treeData), searchKeyword, caseSensitive)) :
-                    add_leaf_node_icon(cloneDeep(treeData))
-            }
+                searchKeyword
+                  ? add_leaf_node_icon(filterTree(cloneDeep(treeData), searchKeyword, caseSensitive))
+                  : add_leaf_node_icon(cloneDeep(treeData))
+              }         
             selectedKeys={selectedKeys}
             checkedKeys={checkedKeys}
             selectable={selectable}
@@ -370,6 +396,10 @@ const AntdTree = (props) => {
             showIcon={showIcon}
             height={height}
             titleRender={(nodeData) => {
+                // Compute tokenized search words for highlighting
+                const searchTokens = tokenize(searchKeyword);
+                // Extract plain text title
+                const textTitle = extractTextFromTitle(nodeData.title);
                 return (
                     nodeData.contextMenu ?
                         (
@@ -418,18 +448,18 @@ const AntdTree = (props) => {
                                         ...nodeData.style // 优先级更高
                                     }}>
                                     {
-                                        searchKeyword ?
-                                            <Highlighter
-                                                highlightStyle={highlightStyle}
-                                                searchWords={Array.isArray(searchKeyword) ? searchKeyword : [searchKeyword]}
-                                                autoEscape
-                                                textToHighlight={nodeData.title}
-                                            /> :
-                                            (
-                                                treeNodeKeyToTitle && treeNodeKeyToTitle[nodeData.key] ?
-                                                    treeNodeKeyToTitle[nodeData.key] :
-                                                    nodeData.title
-                                            )
+                                    searchKeyword ?
+                                        <Highlighter
+                                        highlightStyle={highlightStyle}
+                                        searchWords={searchTokens}
+                                        autoEscape
+                                        textToHighlight={extractTextFromTitle(nodeData.title)}
+                                        /> :
+                                        (
+                                        treeNodeKeyToTitle && treeNodeKeyToTitle[nodeData.key] ?
+                                            treeNodeKeyToTitle[nodeData.key] :
+                                            nodeData.title
+                                        )
                                     }
                                     {
                                         // 若当前节点满足收藏控件渲染条件
@@ -474,16 +504,16 @@ const AntdTree = (props) => {
                                                 <Tooltip {...nodeData.tooltipProps}>
                                                     <Highlighter
                                                         highlightStyle={highlightStyle}
-                                                        searchWords={Array.isArray(searchKeyword) ? searchKeyword : [searchKeyword]}
+                                                        searchWords={searchTokens}
                                                         autoEscape
-                                                        textToHighlight={nodeData.title.props.children}
+                                                        textToHighlight={extractTextFromTitle(nodeData.title)}
                                                     />
                                                 </Tooltip> :
                                                 <Highlighter
                                                     highlightStyle={highlightStyle}
-                                                    searchWords={Array.isArray(searchKeyword) ? searchKeyword : [searchKeyword]}
+                                                    searchWords={searchTokens}
                                                     autoEscape
-                                                    textToHighlight={nodeData.title}
+                                                    textToHighlight={extractTextFromTitle(nodeData.title)}
                                                 />
                                         ) :
                                         (
