@@ -174,125 +174,107 @@ def update_date_range(start_date, end_date, selected_range):
     return [start_date, end_date]
 
 @callback(
-    Output(component_id="ranking_table", component_property="rowData"),
-    Output(component_id="ranking_table", component_property="dashGridOptions"),
-    Output(component_id="ranking_table", component_property="getRowStyle"),
-    Output(component_id="ranking_graph", component_property="figure"),
-    Input(component_id="date-picker-range", component_property="start_date"),
-    Input(component_id="date-picker-range", component_property="end_date"),
-    Input(component_id='date_selector', component_property="value"),
-    Input(component_id="location_selector", component_property="value"),
-    Input(component_id='url', component_property='search')
+    Output("ranking_table", "rowData"),
+    Output("ranking_table", "dashGridOptions"),
+    Output("ranking_table", "getRowStyle"),
+    Output("ranking_graph", "figure"),
+    Input("date-picker-range", "start_date"),
+    Input("date-picker-range", "end_date"),
+    Input("date_selector", "value"),
+    Input("location_selector", "value"),
+    Input("url", "search")
 )
 def rankings(start_date, end_date, value, location, url):
+    # Convert date strings to datetime objects
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
-    date_diff_min = ((end_date - start_date).total_seconds())//60
+    date_diff_min = (end_date - start_date).total_seconds() // 60
     week_prior_start_date = start_date - timedelta(weeks=1)
 
-    url_query_params = parse_qs(urlparse(url).query)
-    try:
-        lab = url_query_params["lab"][0]
-    except:
-        lab = None
-    
-    try:
-        floor = url_query_params["floor"][0]
-    except:
-        floor = None
-    
-    building = url_query_params["building"][0]
+    # Parse URL parameters
+    params = parse_qs(urlparse(url).query)
+    lab = params.get("lab", [None])[0]
+    floor = params.get("floor", [None])[0]
+    building = params.get("building", [None])[0]
 
-    if location == "floor":
-        labs_df_filtered = labs_df.filter(
-            like=building.capitalize() + "." + "Floor_" + floor, axis=0)
+    # Filter labs_df based on location selection
+    if location == "floor" and floor:
+        labs_df_filtered = labs_df.filter(like=f"{building.capitalize()}.Floor_{floor}", axis=0)
     elif location == "building":
         labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
     else:
         labs_df_filtered = labs_df
 
-    query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-                            start=str(start_date),
-                            end=str(end_date),
-                            aggType="aggD")
-    
-    last_week_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-                            start=str(week_prior_start_date),
-                            end=str(start_date),
-                            aggType="aggD")
+    # Create targets for the synthetic queries
+    targets = labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc"
+    query = synthetic_query(
+        targets=targets, server="biotech_main",
+        start=str(start_date), end=str(end_date), aggType="aggD"
+    )
+    last_week_query = synthetic_query(
+        targets=targets, server="biotech_main",
+        start=str(week_prior_start_date), end=str(start_date), aggType="aggD"
+    )
 
-    rankings = query.groupby([query.index, "building", "floor",
-                             "lab", "hood"], as_index=False).sum(numeric_only=True)
-    last_week_rankings = last_week_query.groupby([last_week_query.index, "building", "floor",
-                             "lab", "hood"], as_index=False).sum(numeric_only=True)
+    # Helper function to process queries
+    def process_query(q):
+        df = q.groupby([q.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True)
+        df['time_closed'] = (date_diff_min - df['value']).clip(lower=0)
+        return df.rename({'value': 'time_opened'}, axis=1)
 
-    rankings['time_closed'] = (date_diff_min - rankings['value'])
-    rankings.loc[rankings['time_closed'] < 0, 'time_closed'] = 0
-    rankings = rankings.rename({'value': 'time_opened'}, axis=1)
-    
-    last_week_rankings['time_closed'] = (date_diff_min - last_week_rankings['value'])
-    last_week_rankings.loc[last_week_rankings['time_closed'] < 0, 'time_closed'] = 0
-    last_week_rankings = last_week_rankings.rename({'value': 'time_opened'}, axis=1)
-    
+    rankings_df = process_query(query)
+    last_week_df = process_query(last_week_query)
+
+    # Adjust grouping based on whether lab is specified
     if lab is None:
         if floor is None:
-            level = "building"
-            level_data = building
-            merging_keys = ["building"]
+            level, level_data, merging_keys = "building", building, ["building"]
         else:
-            level = "floor"
-            level_data = floor
-            merging_keys = ["building", "floor"]
-        rankings = rankings.groupby(merging_keys)
-        last_week_rankings = last_week_rankings.groupby(merging_keys)
-        rankings = rankings[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
-        last_week_rankings = last_week_rankings[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
+            level, level_data, merging_keys = "floor", floor, ["building", "floor"]
+
+        rankings_df = rankings_df.groupby(merging_keys)[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
+        last_week_df = last_week_df.groupby(merging_keys)[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
     else:
-        level = "lab"
-        level_data = lab
-        merging_keys = ["building", "floor", "lab", "hood"]
-    
-    rankings = rankings.sort_values(by="time_closed", ascending=False)
+        level, level_data, merging_keys = "lab", lab, ["building", "floor", "lab", "hood"]
 
-    rankings["Ranking"] = rankings['time_closed'].rank(method='min', ascending=False).astype(int)
-    
-    last_week_rankings = last_week_rankings.sort_values(by="time_closed", ascending=False)
+    # Calculate rankings and differences
+    rankings_df = rankings_df.sort_values(by="time_closed", ascending=False)
+    rankings_df["Ranking"] = rankings_df['time_closed'].rank(method='min', ascending=False).astype(int)
+    last_week_df = last_week_df.sort_values(by="time_closed", ascending=False)
+    last_week_df["Last_Week_Ranking"] = last_week_df['time_closed'].rank(method='min', ascending=False).astype(int)
+    rankings_df = rankings_df.merge(last_week_df[merging_keys + ["Last_Week_Ranking"]], on=merging_keys)
+    rankings_df['change'] = rankings_df['Last_Week_Ranking'] - rankings_df['Ranking']
+    rankings_df['change_display_string'] = rankings_df['change'].apply(
+        lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-"
+    )
+    rankings_df["percent_time_closed"] = (rankings_df['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
+    rankings_df['time_closed_hrmin'] = rankings_df['time_closed'].apply(format_time)
 
-    last_week_rankings["Last_Week_Ranking"] = last_week_rankings['time_closed'].rank(method='min', ascending=False).astype(int)
-            
-    rankings = rankings.merge(last_week_rankings[merging_keys+["Last_Week_Ranking"]], on=merging_keys)
-
-    rankings['change'] = rankings['Last_Week_Ranking'] - rankings['Ranking']
-
-    rankings['change_display_string'] = rankings['change'].apply(lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-")
-
-
-    rankings["percent_time_closed"] = (rankings['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
-
-    rankings['time_closed_hrmin'] = rankings['time_closed'].apply(format_time)
-
-    # Get the lab number from the query parameters
-    pinnedTopRowData = rankings.loc[rankings[level] == level_data].to_dict('records')
-
-    dashGridOptions = {"animateRows": True, 'pinnedTopRowData': pinnedTopRowData}
-
-    getRowStyle = {"styleConditions": [
+    # Prepare dash grid options and style for the pinned top row
+    pinnedTopRowData = rankings_df.loc[rankings_df[level] == level_data].to_dict('records')
+    dashGridOptions = {"animateRows": True, "pinnedTopRowData": pinnedTopRowData}
+    getRowStyle = {
+        "styleConditions": [
             {
-                "condition": f"params.data.{level} == {level_data}",
+                "condition": f"params.data.{level} == '{level_data}'",
                 "style": {"backgroundColor": "blue", "color": "white", "opacity": 0.5},
             },
         ]
     }
 
-    ranking_graph = px.bar(rankings, x=level, y="time_closed", labels={
-        "time_closed": "Time Closed when Unused",
-        level: level.capitalize(),
-    })
+    # Create the ranking graph
+    ranking_graph = px.bar(
+        rankings_df,
+        x=level,
+        y="time_closed",
+        labels={"time_closed": "Time Closed when Unused", level: level.capitalize()},
+    )
+    ranking_graph["data"][0]["marker"]["color"] = [
+        "red" if c == lab else "blue" for c in ranking_graph["data"][0]["x"]
+    ]
 
-    ranking_graph["data"][0]["marker"]["color"] = ["red" if c ==
-                                                   lab else "blue" for c in ranking_graph["data"][0]["x"]]
+    return rankings_df.to_dict("records"), dashGridOptions, getRowStyle, ranking_graph
 
-    return rankings.to_dict("records"), dashGridOptions, getRowStyle, ranking_graph
 
 
 @callback(
