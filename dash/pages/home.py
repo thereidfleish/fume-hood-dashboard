@@ -50,19 +50,33 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
             'padding': '20px'
         }),
         dbc.Row([  # Row for images
-            dbc.Col(html.Img(src="/assets/campus.png", style={'width': '90%', 'height': 'auto'}), md=1)
+            dbc.Col(html.Img(src="/assets/campus.png", style={'width': '100%', 'height': 'auto'}), md=1)
             # dbc.Col(html.Img(src="/assets/building.png", style={'width': '70%', 'height': 'auto'}), md=1),
             # dbc.Col(html.Img(src="/assets/floor.png", style={'width': '70%', 'height': 'auto'}), md=1),
             # dbc.Col(html.Img(src="/assets/lab.png", style={'width': '70%', 'height': 'auto'}), md=1)
         ], justify="center"),
         dbc.Row([  # Row for images
-            dbc.Col(html.Img(src="/assets/baker.png", style={'width': '90%', 'height': 'auto'}), md=1),
-            dbc.Col(html.Img(src="/assets/bard.png", style={'width': '90%', 'height': 'auto'}), md=1),
-            dbc.Col(html.Img(src="/assets/biotech.png", style={'width': '90%', 'height': 'auto'}), md=1),
-            dbc.Col(html.Img(src="/assets/olin.png", style={'width': '90%', 'height': 'auto'}), md=1),
-            dbc.Col(html.Img(src="/assets/weill.png", style={'width': '90%', 'height': 'auto'}), md=1)
-        ], justify="center", style={'margin-top':'20px'})
-    ],
+            dbc.Col(html.Div([html.A(
+                html.Img(src="/assets/baker.png", style={'width': '90%', 'height': 'auto'}),
+                href="http://0.0.0.0:8055/dashboard?building="
+            )]), md=1),
+            dbc.Col(html.Div([html.A(
+                html.Img(src="/assets/bard.png", style={'width': '90%', 'height': 'auto'}),
+                href="http://0.0.0.0:8055/dashboard?building=bard"
+            )]), md=1),
+            dbc.Col(html.Div([html.A(
+                html.Img(src="/assets/biotech.png", style={'width': '90%', 'height': 'auto'}),
+                href="http://0.0.0.0:8055/dashboard?building=biotech"
+            )]), md=1),
+            dbc.Col(html.Div([html.A(
+                html.Img(src="/assets/olin.png", style={'width': '90%', 'height': 'auto'}),
+                href="http://0.0.0.0:8055/dashboard?building=olin"
+            )]), md=1),
+            dbc.Col(html.Div([html.A(
+                html.Img(src="/assets/weill.png", style={'width': '90%', 'height': 'auto'}),
+                href="http://0.0.0.0:8055/dashboard?building=weill"
+            )]), md=1)
+    ], justify="center", style={'margin-top':'20px'})],
     style={'margin-top':'150px'})
 
 # def layout(building=None, floor=None, **other_unknown_query_strings):
