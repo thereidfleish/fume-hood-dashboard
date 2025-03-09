@@ -206,8 +206,10 @@ def rankings(start_date, end_date, value, location, url):
         labs_df_filtered = labs_df
 
     # Create targets for the synthetic queries
+    # FIXME: Change to accomodate for all hoods
     targets = labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc"
     query = synthetic_query(
+        # FIXME: change to accomodate other buildings
         targets=targets, server="biotech_main",
         start=str(start_date), end=str(end_date), aggType="aggD"
     )
@@ -278,137 +280,131 @@ def rankings(start_date, end_date, value, location, url):
 
 
 @callback(
-    Output(component_id="sash_graph", component_property="figure"),
-    Output(component_id='sash_graph_average', component_property='children'),
-    Output(component_id='sash_graph_average_change', component_property='children'),
-    Input(component_id="date-picker-range", component_property="start_date"),
-    Input(component_id="date-picker-range", component_property="end_date"),
-    Input(component_id='date_selector', component_property="value"),
-    Input(component_id="location_selector", component_property="value"),
-    Input(component_id='url', component_property='search')
+    Output("sash_graph", "figure"),
+    Output("sash_graph_average", "children"),
+    Output("sash_graph_average_change", "children"),
+    Input("date-picker-range", "start_date"),
+    Input("date-picker-range", "end_date"),
+    Input("date_selector", "value"),
+    Input("location_selector", "value"),
+    Input("url", "search")
 )
 def individual(start_date, end_date, value, location, url):
+    # Convert dates
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     week_prior_start_date = start_date - timedelta(weeks=1)
-    date_diff_min = ((end_date - start_date).total_seconds())//60
+    date_diff_min = ((end_date - start_date).total_seconds()) // 60
 
-    url_query_params = urlparse(url).query
-    target = f"{parse_qs(url_query_params)['building'][0].capitalize()}.Floor_{parse_qs(url_query_params)['floor'][0]}.Lab_{parse_qs(url_query_params)['lab'][0]}.Hood_1.sashOpenTime.unocc"
+    # Parse URL parameters
+    params = parse_qs(urlparse(url).query)
+    lab = params.get("lab", [None])[0]
+    floor = params.get("floor", [None])[0]
+    building = params.get("building", [None])[0]
 
-    query = synthetic_query(targets=[target], server="biotech_main",
-                            start=str(start_date),
-                            end=str(end_date),
-                            aggType="aggD")
-
-    week_prior_query = synthetic_query(targets=[target], server="biotech_main",
-                                       start=str(week_prior_start_date),
-                                       end=str(start_date),
-                                       aggType="aggD")
-    
-    url_query_params = parse_qs(urlparse(url).query)
-    building = url_query_params["building"][0]
-    floor = url_query_params["floor"][0]
-    lab = url_query_params["lab"][0]
-    
-    if location == "floor":
-        location_string = building.capitalize() + "." + "Floor_" + floor
-        location_string_describe = f"on {location_string}"
-        labs_df_filtered = labs_df.filter(like=location_string, axis=0)
-    elif location == "building":
+    # Determine main query targets based on the page:
+    if lab is not None:
+        # LAB page: query this specific lab’s fumehood data
+        target = f"{building.capitalize()}.Floor_{floor}.Lab_{lab}.Hood_1.sashOpenTime.unocc"
+        main_targets = [target]
+        comparison_descriptor = "all labs in the building"
+    elif floor is not None:
+        # FLOOR page: query all labs on this floor
+        location_string = f"{building.capitalize()}.Floor_{floor}"
+        main_targets = labs_df.filter(like=location_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
+        comparison_descriptor = "all labs in the building"
+    elif building is not None:
+        # BUILDING page: query all labs in the building
         location_string = building.capitalize()
-        location_string_describe = f"in {location_string}"
-        labs_df_filtered = labs_df.filter(like=location_string, axis=0)
+        main_targets = labs_df.filter(like=location_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
+        comparison_descriptor = "all labs on campus"
+
+    # Query the main data for the current period
+    query = synthetic_query(
+        targets=main_targets, server="biotech_main",
+        start=str(start_date), end=str(end_date), aggType="aggD"
+    )
+    # Compute time_closed (in minutes) for each data point
+    query['time_closed'] = (60*24 - query['value']).clip(lower=0)
+    query = query.rename(columns={'value': 'time_opened'})
+    # If multiple labs are in the query (e.g. floor or building pages), average the values per day
+    query = query.groupby("timestamp", as_index=False).mean(numeric_only=True)
+
+    # Determine the overall (comparison) query based on the location selector.
+    if location == "floor" and floor is not None:
+        overall_string = f"{building.capitalize()}.Floor_{floor}"
+        overall_desc = f"all labs on {overall_string}"
+        overall_targets = labs_df.filter(like=overall_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
+    elif location == "building" and building is not None:
+        overall_string = building.capitalize()
+        overall_desc = f"all labs in {overall_string}"
+        overall_targets = labs_df.filter(like=overall_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
     else:
-        location_string = "Cornell"
-        location_string_describe = f"at {location_string}"
-        labs_df_filtered = labs_df
+        overall_desc = "all labs on campus"
+        overall_targets = labs_df.index + ".Hood_1.sashOpenTime.unocc"
 
-    all_query = synthetic_query(targets=labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc", server="biotech_main",
-                                    start=str(week_prior_start_date),
-                                    end=str(start_date),
-                                    aggType="aggD")
+    # Query overall data from the week prior window to use for the horizontal average line.
+    overall_query = synthetic_query(
+        targets=overall_targets, server="biotech_main",
+        start=str(week_prior_start_date), end=str(start_date), aggType="aggD"
+    )
+    overall_query['time_closed'] = (60*24 - overall_query['value']).clip(lower=0)
+    comparison_average = overall_query['time_closed'].mean()
 
-    query['time_closed'] = (60*24 - query['value'])
-    query.loc[query['time_closed'] < 0, 'time_closed'] = 0
-    query = query.rename({'value': 'time_opened'}, axis=1)
-
-    week_prior_query['time_closed'] = (60*24 - week_prior_query['value'])
-    week_prior_average = week_prior_query['time_closed'].mean()
-
-
-    query['above_average'] = query['time_closed'] > week_prior_average
+    # Calculate above average flag for coloring the bars
+    query['above_average'] = query['time_closed'] > comparison_average
     query['above_average_label'] = np.where(query['above_average'], 'Above Average', 'Below Average')
 
-
-    all_query['time_closed'] = (60*24 - all_query['value'])
-    all_query.loc[all_query['time_closed'] < 0, 'time_closed'] = 0
-    all_query = all_query.rename({'value':'time_opened'}, axis=1)
-
-    average = all_query['time_closed'].mean()
-
-    # Create the line chart
-    sash_fig = px.bar(query, x="timestamp", y="time_closed",
-                      labels={
-                          "time_closed": "Time closed (mins)",
-                          "timestamp": "Date",
-                      },
-                      color='above_average_label',
-                      color_discrete_map={
-                          'Above Average': 'mediumseagreen', 'Below Average': '#d62728'}
-                      #title="When and how much is your fume hood sash closed?"
-                      )
-    
-    sash_fig.update_layout(legend_title_text="",
-                           plot_bgcolor="white",
-                            yaxis=dict(gridcolor="lightgrey"
-    ))
-
+    # Build the bar chart
+    sash_fig = px.bar(
+        query, 
+        x="timestamp", 
+        y="time_closed",
+        labels={
+            "time_closed": "Time closed (mins)",
+            "timestamp": "Date"
+        },
+        color='above_average_label',
+        color_discrete_map={'Above Average': 'mediumseagreen', 'Below Average': '#d62728'}
+    )
+    sash_fig.update_layout(
+        legend_title_text="",
+        plot_bgcolor="white",
+        yaxis=dict(gridcolor="lightgrey")
+    )
     sash_fig.add_hline(
-    y=week_prior_average,
-    annotation_text="Last week average of this lab",
-    annotation_position="bottom right",
-    annotation=dict(
-        font=dict(
-            color="black", 
-            size=12   
-        ),
-        bgcolor="rgba(255, 255, 255, 0.7)"  
-    ))
-
-    sash_fig.add_hline(y=average,
-                       annotation_text=f"Last week average of all labs {location_string_describe}",
-                       annotation_position="bottom right",
-                       annotation=dict(
-        font=dict(
-            color="black", 
-            size=12   
-        ),
-        bgcolor="rgba(255, 255, 255, 0.7)"  
-    ))
-    
+        y=comparison_average,
+        annotation_text=f"Last week average of {overall_desc}",
+        annotation_position="bottom right",
+        annotation=dict(
+            font=dict(color="black", size=12),
+            bgcolor="rgba(255, 255, 255, 0.7)"
+        )
+    )
     sash_fig.update_traces(
-        customdata = query['above_average_label'],
         hovertemplate="Date: %{x}<br>Time Closed: %{y} mins"
     )
 
-    total_mins_unocc = query["time_opened"].sum()
-    
-    sash_graph_average = query["time_closed"].mean()
-    sash_graph_average_string = f'{sash_graph_average:.0f} mins'
-    
-    if average > 0: 
-        sash_graph_average_change = ((query["time_closed"].mean() - average) / average) * 100 
-    else: 
-        sash_graph_average_change = 0
-    if sash_graph_average_change > 0:
-        sash_graph_average_change_string = f'↑ {sash_graph_average_change:.0f}% from last week'
-    elif sash_graph_average_change == 0:
-        sash_graph_average_change_string = f'No change from last week'
+    # Compute the average time closed for the current period for display
+    current_average = query['time_closed'].mean()
+    sash_graph_average_string = f'{current_average:.0f} mins'
+
+    # Compute percent change compared to the comparison average
+    if comparison_average > 0:
+        change = ((current_average - comparison_average) / comparison_average) * 100
     else:
-        sash_graph_average_change_string = f'↓ {-sash_graph_average_change:.0f}% from last week'
+        change = 0
+
+    if change > 0:
+        sash_graph_average_change_string = f'↑ {change:.0f}% from last week'
+    elif change == 0:
+        sash_graph_average_change_string = 'No change from last week'
+    else:
+        sash_graph_average_change_string = f'↓ {-change:.0f}% from last week'
 
     return sash_fig, sash_graph_average_string, sash_graph_average_change_string
+
+
 
 
 @callback(
