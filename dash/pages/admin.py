@@ -53,6 +53,8 @@ def generate_table(type):
     def process_item(x):
         if "NULL" in x.keys():
             return None
+        elif "L" in x: 
+            return ", ".join([list(item.values())[0] for item in x["L"]])
         return list(x.values())[0]
     
     res_df = res_df.applymap(lambda x: process_item(x)).iloc[:, ::-1].reset_index()
@@ -102,16 +104,19 @@ def generate_table(type):
 # Update DynamoDB
 def update_dynamodb(type, data):
     df = pd.DataFrame.from_dict(data).set_index("id")
-    # print(df)
     
+    def process_value(value):
+        if isinstance(value, str) and ", " in value:  
+            return value.split(", ")  
+        return value 
+    
+    processed_data = df.applymap(process_value).to_dict("index")
+
     item = {
-                "id": type,
-                "map": df.to_dict("index")
+        "id": type,
+        "map": processed_data
     }
-    
-    # print(item)
-    # return
-    
+
     with table.batch_writer() as writer:
         writer.put_item(Item=item)
 
@@ -144,6 +149,9 @@ def layout(**other_unknown_query_strings):
     return html.Main(className="p-2", children=[
         
         html.H1("Admin Dashboard"),
+
+        html.H3("Occupants"),
+        generate_table("occupants"),
         
         html.H3("Buildings"),
         generate_table("buildings"),
@@ -155,5 +163,6 @@ def layout(**other_unknown_query_strings):
         generate_table("hoods"),
 
     ])
+
 
 
