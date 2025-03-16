@@ -27,7 +27,7 @@ def synthetic_query(targets, server, start, end, aggType):
     response = requests.post(url, json=data)
     # print(response)
     # if response.status_code != 200:
-         # print(response.json())
+    #      raise Exception("BAD")
     # print(len(response.json()))
 
     master = pd.json_normalize(response.json(), record_path="datapoints", meta=["target", "metric"]).rename(columns={0: "value", 1: "timestamp"}).set_index("target").rename_axis(None)
