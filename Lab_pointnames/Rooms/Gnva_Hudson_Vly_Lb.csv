@@ -1,0 +1,3 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Gnva Hudson Vly Lb,4950H,4950H-091-6001,6001.0,54017.0,"Hood Fume, 4950H-G07",Room G07,Hood Room G07,OPERATING,,,,,,,,
+,,4950H-091-6002,6002.0,54018.0,"Hood Fume, 4950H-G08",Room G08,Hood Room G08,OPERATING,,,,,,,,

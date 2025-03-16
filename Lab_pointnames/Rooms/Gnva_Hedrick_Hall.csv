@@ -1,0 +1,12 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Gnva Hedrick Hall,4904,4904-091-6001,6001.0,53938.0,"Hood Fume, 4904-119A",Room 119,Hood Room 119,OPERATING,,,,,,,,
+,,4904-091-6002,6002.0,53939.0,"Hood Fume, 4904-207",Room 207,Hood Room 207,OPERATING,,,,,,,,
+,,4904-091-6003,6003.0,53940.0,"Hood Fume, 4904-208-E",Room 208-E,Hood Room 208-E,OPERATING,,,,,,,,
+,,4904-091-6004,6004.0,53941.0,"Hood Fume, 4904-208-W",Room 208,Hood Room 208,OPERATING,,,,,,,,
+,,4904-091-6005,6005.0,53942.0,"Hood Fume, 4904-222",Room 222,Hood Room 222,OPERATING,,,,,,,,
+,,4904-091-6006,6006.0,53943.0,"Hood Fume, 4904-223",Room 223,Hood Room 223,OPERATING,,,,,,,,
+,,4904-091-6007,6007.0,53946.0,"Hood Fume, 4904-224",Room 224,Hood Room 224,OPERATING,,,,,,,,
+,,4904-091-6008,6008.0,53947.0,"Hood Fume, 4904-225",Room 225,Hood Room 225,OPERATING,,,,,,,,
+,,4904-091-6009,6009.0,53948.0,"Hood Fume, 4904-305",Room 305,Hood Room 305,OPERATING,,,,,,,,
+,,4904-091-6010,6010.0,53949.0,"Hood Fume, 4904-316",Room 316,Hood Room 316,OPERATING,,,,,,,,
+,,4904-091-6011,6011.0,53950.0,"Hood Fume, 4904-G13",Room G13,Hood Room G13,OPERATING,,,,,,,,

@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Baker Inst Micro Wing,2758,2758-091-6001,6001.0,53900.0,"Hood,Fume, 2758-115",Room 115,Hood room 115,OPERATING,,,,,,,,
+,,2758-091-6002,6002.0,53901.0,"Hood,Fume, 2758-215",Room 215,Hood room 215,OPERATING,,,,,,,,
+,,2758-091-6003,6003.0,53902.0,"Hood,Fume, 2758-B11A",Room B11A,Hood room B11A,OPERATING,,,,,,,,

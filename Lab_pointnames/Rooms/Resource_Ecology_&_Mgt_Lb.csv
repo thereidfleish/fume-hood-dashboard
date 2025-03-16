@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Resource Ecology & Mgt Lb,1013B,1013B-091-6001,6001.0,52275.0,"Hood,Fume, 1013B-104",Room 104,Room 104,OPERATING,,,,,,,,
+,,1013B-091-6002,6002.0,52353.0,"Hood,Fume, 1013B-207A",Room 207A,Room 207A,OPERATING,,,,,,,,
+,,1013B-091-6003,6003.0,52939.0,"Hood,Fume, 1013B-212A",Room 212A,Hood Room 212A,OPERATING,,,,,,,,

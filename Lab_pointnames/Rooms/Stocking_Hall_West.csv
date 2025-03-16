@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Stocking Hall West,1041,1041-091-6000,6000.0,118279.0,"Hood,Fume, 1041-231",Room 231,Hood Room 231,OPERATING,,,,,,,,
+,,1041-091-6001,6001.0,118280.0,"Hood,Fume, 1041-231A",Room 231A,Hood Room 231A,OPERATING,,,,,,,,
+,,1041-091-6002,6002.0,118281.0,"Hood,Fume, 1041-M31A",Room M31A,Hood Room M31A,OPERATING,,,,,,,,
+,,1041-091-6003,6003.0,118282.0,"Hood,Fume, 1041-M31-1",Room M31-1,Hood Room M31-1,OPERATING,,,,,,,,
+,,1041-091-6004,6004.0,118283.0,"Hood,Fume, 1041-M31-2",Room M31-2,Hood Room M31-2,OPERATING,,,,,,,,
+,,1041-091-6005,6005.0,118284.0,"Hood,Fume, 1041-M31-3",Room M31-3,Hood Room M31-3,OPERATING,,,,,,,,
+,,1041-091-6006,6006.0,118285.0,"Hood,Fume, 1041-131B",Room 131B,Hood Room 131B,OPERATING,,,,,,,,

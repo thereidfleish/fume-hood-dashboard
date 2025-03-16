@@ -1,0 +1,6 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Martha Van Rensselaer Hall Wst,1015W,1015W-091-6001,6001.0,52772.0,"Hood,Fume, 1015W-2151",2151,2151 Hood Room,OPERATING,,,,,,,,
+,,1015W-091-6002,6002.0,52773.0,"Hood,Fume, 1015W-2152-N",2152,2152 Hood Room,OPERATING,,,,,,,,
+,,1015W-091-6003,6003.0,52774.0,"Hood,Fume, 1015W-2152-S",2152,2152 Hood Room,OPERATING,,,,,,,,
+,,1015W-091-6004,6004.0,52775.0,"Hood,Fume, 1015W-2164",2164,2164 Hood Room,OPERATING,,,,,,,,
+,,1015W-091-6005,6005.0,52776.0,"Hood,Fume, 1015W-2166",2166,2166 Hood Room,OPERATING,,,,,,,,

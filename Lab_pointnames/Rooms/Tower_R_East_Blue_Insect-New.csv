@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Tower R East Blue Insect-New,1061D,1061D-091-6001,6001.0,53238.0,"Hood Fume, 1061D-180-E",ROOM 180,HOOD ROOM 180,OPERATING,,,,,,,,
+,,1061D-091-6002,6002.0,53239.0,"Hood Fume, 1016D-180-W",ROOM 180,HOOD ROOM 180,OPERATING,,,,,,,,
+,,1061D-091-6003,6003.0,53240.0,"Hood Fume, 1061D-194",ROOM 194,HOOD ROOM 194,OPERATING,,,,,,,,
+,,1061D-091-6004,6004.0,53242.0,"Hood Fume, 1061D-B6",ROOM B6,HOOD ROOM B6,OPERATING,,,,,,,,
+,,1061D-091-6005,6005.0,53243.0,"Hood Fume, 1061D-B8",ROOM B8,HOOD ROOM B8,OPERATING,,,,,,,,
+,,1061D-091-6006,6006.0,53237.0,"Hood Fume, 1061D-101",ROOM 101,HOOD ROOM 101,OPERATING,,,,,,,,
+,,1061D-091-6007,6006.0,125455.0,"Hood,Fume, 1061D-169",169,Hood Room 169,OPERATING,,,,,,,,

@@ -1,0 +1,12 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Guterman Bioclimatic Lb,1068B,1068B-091-6001,6001.0,53336.0,"Hood Fume, 1068B-101-01",Room 101,"Fume Hood, Room 101",OPERATING,,,,,,,,
+,,1068B-091-6002,6002.0,53337.0,"Hood,Fume, 1068B-101-02",Room 101,"Fume Hood, Room 101",OPERATING,,,,,,,,
+,,1068B-091-6004,6004.0,53430.0,"Hood,Fume, 1068B-105",Room 105,"Fume Hood, Room 105",OPERATING,,,,,,,,
+,,1068B-091-6005,6005.0,53399.0,"Hood,Fume, 1068B-112-01",Room 112,"Fume Hood, Room 112",OPERATING,,,,,,,,
+,,1068B-091-6006,6006.0,53431.0,"Hood,Fume, 1068B-112-02",Room 112,"Fume Hood, Room 112",OPERATING,,,,,,,,
+,,1068B-091-6007,6007.0,53432.0,"Hood,Fume, 1068B-113",Room 113,"Fume Hood, Room 113",OPERATING,,,,,,,,
+,,1068B-091-6008,6008.0,53433.0,"Hood,Fume, 1068B-115",Room 115,"Fume Hood, Room 115",OPERATING,,,,,,,,
+,,1068B-091-6009,6009.0,53434.0,"Hood,Fume, 1068B-121",Room 121,"Fume Hood, Room 121",OPERATING,,,,,,,,
+,,1068B-091-6010,6010.0,53435.0,"Hood,Fume, 1068B-122",Room 122,"Fume Hood, Room 122",OPERATING,,,,,,,,
+,,1068B-091-6011,6011.0,53436.0,"Hood,Fume, 1068B-127",Room 127,"Fume Hood, Room 127",OPERATING,,,,,,,,
+,,1068B-091-6012,6012.0,53437.0,"Hood,Fume, 1068B-130",Room 130,"Fume Hood, Room 130",OPERATING,,,,,,,,

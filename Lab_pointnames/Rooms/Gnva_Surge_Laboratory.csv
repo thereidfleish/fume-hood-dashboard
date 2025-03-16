@@ -1,0 +1,6 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Gnva Surge Laboratory,4955,4955-091-6001,6001.0,54020.0,"Hood Fume, 4955-110-NW",Room 110,Hood Room 110,OPERATING,,,,,,,,
+,,4955-091-6002,6002.0,54021.0,"Hood Fume, 4955-110-SW",Room 110,Hood Room 110,OPERATING,,,,,,,,
+,,4955-091-6003,6003.0,54022.0,"Hood Fume, 4955-111-NE",Room 111,Hood Room 111,OPERATING,,,,,,,,
+,,4955-091-6004,6004.0,54023.0,"Hood Fume, 4955-111-SE",Room 111,Hood Room 111,OPERATING,,,,,,,,
+,,4955-091-6005,6005.0,54024.0,"Hood Fume, 4955-113",Room 113,Hood Room 113,OPERATING,,,,,,,,

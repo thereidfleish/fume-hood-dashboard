@@ -1,0 +1,6 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Uris Hall,2087,2087-091-6001,6001.0,125467.0,"Hood,Fume, 2087-B109 80 FPM",B109,B109,OPERATING,,,,,,,,
+,,2087-091-6002,6002.0,53439.0,"Hood,Fume, 2087-B113",Room B113,Hood Room B113,OPERATING,,,,,,,,
+,,2087-091-6003,6003.0,53440.0,"Hood Fume, 2087-B132",Room B132,Hood Room B132,OPERATING,,,,,,,,
+,,2087-091-6004,6004.0,99354.0,"Hood,Fume, 2087-B118",Room B118,Hood Room B118,OPERATING,,,,,,,,
+,,2087-091-6005,6005.0,99355.0,"Hood,Fume, 2087-B15",Room B15,Hood Room B15,OPERATING,,,,,,,,

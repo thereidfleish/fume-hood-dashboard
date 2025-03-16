@@ -1,0 +1,5 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Plant Virology Nematology,1135A,1135A-091-6001,6002.0,53395.0,"Hood,Fume, 1135A-115",Room 115,Hood Room 115,OPERATING,,,,,,,,
+,,1135A-091-6002,6002.0,53396.0,"Hood,Fume, 1135A-103-E",Room 103,Hood Room 103,OPERATING,,,,,,,,
+,,1135A-091-6003,6003.0,53397.0,"Hood,Fume, 1135A-103-W",Room 103-W,Hood Room 103-W,OPERATING,,,,,,,,
+,,1135A-091-6004,6004.0,53398.0,"Hood,Fume, 1135A-B17",Room B17,Hood Room B17,HIBERNATION,,,,,,,,

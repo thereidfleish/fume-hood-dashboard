@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Grumman Hall,2043,2043-091-6002,6002.0,99195.0,"Hood,Fume, 2043-288",Lab Room 288,Hood Lab Room 288,OPERATING,,,,,,,,
+,,2043-091-6003,6003.0,53449.0,"Hood,Fume, 2043-188",Room-188,Hood Room-188,OPERATING,,,,,,,,
+,,2043-091-6004,6004.0,53450.0,"Hood Fume, 2043-281",Room-281,Hood Room-281,OPERATING,,,,,,,,
+,,2043-091-6005,6005.0,55838.0,"Hood,Fume, 2043-294",Room 294,Room 294,OPERATING,,,,,,,,
+,,2043-091-6006,6006.0,55839.0,"Hood,Fume, 2043-282",Room 282,Room 282,OPERATING,,,,,,,,
+,,2043-091-6007,6007.0,125468.0,"Hood,Fume, 2043-181",181 Lab,181 Lab Hood,OPERATING,,,,,,,,
+,,2043-091-6008,6008.0,125469.0,"Hood,Fume, 2043-182",182 Lab,182 Lab Hood,OPERATING,,,,,,,,

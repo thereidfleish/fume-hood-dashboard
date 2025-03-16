@@ -1,0 +1,3 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+LIHREC Office Lb,4815,4815-091-6001,6001.0,53936.0,"Hood Fume, 4815-110",Room 110,Hood Room 110,OPERATING,,,,,,,,
+,,4815-091-6002,6002.0,53937.0,"Hood Fume, 4815-114",Room 114,Hood Room 114,OPERATING,,,,,,,,

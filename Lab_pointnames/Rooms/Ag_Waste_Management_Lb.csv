@@ -1,0 +1,3 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Ag Waste Management Lb,1116,1116-091-6001,6001.0,53393.0,"Hood Fume, 1116-101-01",Room 101,Hood Room 101,OPERATING,,,,,,,,
+,,1116-091-6002,6002.0,53394.0,"Hood Fume, 1116-101-02",Room 101,Hood Room 101,OPERATING,,,,,,,,

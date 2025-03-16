@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Kenneth Post Laboratory,1045A,1045A-091-6002,6002.0,53215.0,"Hood Fume, 1045A-B1-S",Room B1,Hood Room B1,OPERATING,,,,,,,,
+,,1045A-091-6003,6003.0,53216.0,"Hood Fume, 1045A-B2",Room B2,Hood Room B2,OPERATING,,,,,,,,
+,,1045A-091-6004,6004.0,53218.0,"Hood Fume, 1045-HEADHOUSE",Headhouse,Hood Headhouse,OPERATING,,,,,,,,

@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+CALS Surge Facility,1047,1047-091-6001,6001.0,53220.0,"Hood Fume, 1047-10E",Room 10E,Hood Room 10E,OPERATING,,,,,,,,
+,,1047-091-6002,6002.0,53222.0,"Hood Fume, 1047-10W",1047-10W,Hood Room 10W,OPERATING,,,,,,,,
+,,1047-091-6003,6003.0,53224.0,"Hood Fume, 1047-11",ROOM 11,HOOD ROOM 11,OPERATING,,,,,,,,
+,,1047-091-6005,6005.0,53227.0,"Hood Fume, 1047-12H",ROOM 12 H,HOOD ROOM 12H,OPERATING,,,,,,,,
+,,1047-091-6006,6006.0,53228.0,"Hood Fume, 1047-3",ROOM 3,HOOD ROOM 3,OPERATING,,,,,,,,
+,,1047-091-6007,6007.0,53230.0,"Hood Fume, 1047-8",ROOM 8,HOOD ROOM 8,OPERATING,,,,,,,,
+,,1047-091-6008,6008.0,53234.0,"Hood Fume, 1047-9H",ROOM 9H,HOOD ROOM 9H,OPERATING,,,,,,,,

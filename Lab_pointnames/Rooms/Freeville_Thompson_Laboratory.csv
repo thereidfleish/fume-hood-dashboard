@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Freeville Thompson Laboratory,1941A,1941A-091-6001,6001.0,53401.0,"Hood Fume, 1941A-102 ***Compliance Testing Not Required***",Room 102,Hood Room 102,OPERATING,,,,,,,,
+,,1941A-091-6002,6002.0,53402.0,"Hood Fume, 1941A-105",Room 105,Hood Room 105,OPERATING,,,,,,,,
+,,1941A-091-6003,6003.0,53403.0,"Hood Fume, 1941A-120",Room 120,Hood Room 120,INACTIVE,,,,,,,,

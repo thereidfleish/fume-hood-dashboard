@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Basic Science Building,1150D,1150D-091-6001,6001.0,52696.0,"Hood,Fume, 1150D-S1093",Room S1093,Hood Room S1093,OPERATING,,,,,,,,
+,,1150D-091-6002,6002.0,52693.0,"Hood,Fume, 1150D-S1063",S1063,S1063,OPERATING,,,,,,,,
+,,1150D-091-6003,6003.0,125461.0,"Hood,Fume, 1150D-S1041",S1041,S1041,OPERATING,,,,,,,,
+,,1150D-091-6004,6004.0,125462.0,"Hood,Fume, 1150D-S1055",S1055,S1055,OPERATING,,,,,,,,
+,,1150D-091-6007,6007.0,86259.0,"Hood,Fume, 1150D-S1075",Room S1075,Hood Room S1075,OPERATING,,,,,,,,
+,,1150D-091-6008,6008.0,87321.0,"Hood,Fume, 1150D-S1091",Room S1091,Room S1091,OPERATING,,,,,,,,
+,,1150D-091-6009,6009.0,52692.0,"Hood,Fume, 1150D-S1057",Room S1057,Hood Room S1057,OPERATING,,,,,,,,

@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Johnson C Birds & Biodiversity,2802,2802-091-6001,6001.0,53404.0,"Hood Fume, 2802-174-01",Room 174,Hood Room 174,OPERATING,,,,,,,,
+,,2802-091-6002,6002.0,53405.0,"Hood Fume, 2802-174-02",Room 174,Hood Room 174,OPERATING,,,,,,,,
+,,2802-091-6005,6005.0,53407.0,"Hood Fume, 2802-188",Room 188,Hood Room 188,OPERATING,,,,,,,,

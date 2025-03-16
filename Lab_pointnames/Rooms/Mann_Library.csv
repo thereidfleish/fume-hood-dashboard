@@ -1,0 +1,12 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Mann Library,1027,1027-091-6000,6000.0,66371.0,"Hood,Fume, 1027-512",Room 512,Room 512,OPERATING,,,,,,,,
+,,1027-091-6001,6001.0,66372.0,"Hood,Fume, 1027-506",Room 506,Room 506,OPERATING,,,,,,,,
+,,1027-091-6002,6002.0,66373.0,"Hood,Fume, 1027-504",Room 504,Room 504,OPERATING,,,,,,,,
+,,1027-091-6003,6003.0,66374.0,"Hood,Fume, 1027-420B",Room 420B,Room 420B,OPERATING,,,,,,,,
+,,1027-091-6004,6004.0,66375.0,"Hood,Fume, 1027-420",Room 420,Room 420,OPERATING,,,,,,,,
+,,1027-091-6005,6005.0,66376.0,"Hood,Fume, 1027-410",Room 410,Room 410,OPERATING,,,,,,,,
+,,1027-091-6006,6006.0,66377.0,"Hood,Fume, 1027-408A",Room 408A,Room 408A,OPERATING,,,,,,,,
+,,1027-091-6007,6007.0,66378.0,"Hood,Fume, 1027-406",Room 406,Room 406,OPERATING,,,,,,,,
+,,1027-091-6008,6008.0,66379.0,"Hood,Fume, 1027-405A",Room 405A,Room 405A,OPERATING,,,,,,,,
+,,1027-091-6009,6009.0,66380.0,"Hood,Fume, 1027-405-02",Room 405,Room 405,OPERATING,,,,,,,,
+,,1027-091-6010,6010.0,66381.0,"Hood,Fume, 1027-405-01",Room 405,Room 405,OPERATING,,,,,,,,

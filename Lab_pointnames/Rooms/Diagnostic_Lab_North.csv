@@ -1,0 +1,4 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Diagnostic Lab North,2050U,2050U-091-6001,6001.0,53477.0,"Hood Fume, 2050U-104",Room 104,Hood Room 104,OPERATING,,,,,,,,
+,,2050U-091-6002,6002.0,53478.0,"Hood Fume, 2050U-106",Room 106,Hood Room 106,OPERATING,,,,,,,,
+,,2050U-091-6003,6003.0,53479.0,"Hood Fume, 2050U-106-L",Room 106,Hood Room 106,OPERATING,,,,,,,,

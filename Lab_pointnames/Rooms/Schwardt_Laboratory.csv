@@ -1,0 +1,3 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Schwardt Laboratory,1114A,1114A-091-6001,6001.0,53391.0,"Hood Fume, 1114-105-N",Room 105,Hood Room 105,DECOMMISSIONED,,,,,,,,
+,,1114A-091-6002,6002.0,53392.0,"Hood Fume, 1114-105-S",Room 105,Hood Room 105,DECOMMISSIONED,,,,,,,,

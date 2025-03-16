@@ -1,0 +1,8 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Phillips Hall,2039H,2039H-091-6002,6002.0,53460.0,"Hood Fume, 2039H-414-01",Room 414,Hood Room 414,OPERATING,,,,,,,,
+,,2039H-091-6003,6003.0,53461.0,"Hood Fume, 2039H-414-02",Room 414,Hood Room 414,OPERATING,,,,,,,,
+,,2039H-091-6004,6004.0,53462.0,"Hood Fume, 2039H-417-01",Room 417,Hood Room 417,OPERATING,,,,,,,,
+,,2039H-091-6005,6005.0,53463.0,"Hood Fume, 2039H-417-02",Room 417,Hood Room 417,OPERATING,,,,,,,,
+,,2039H-091-6006,6006.0,52613.0,"Hood,Fume, 2039H-325",Room 325,Hood Room 325,OPERATING,,,,,,,,
+,,2039H-091-6007,6007.0,134061.0,"Hood,Fume, 2039H-414A-01",Room 414A,Hood Room 414A,OPERATING,,,,,,,,
+,,2039H-091-6008,6008.0,134062.0,"Hood,Fume, 2039H-414A-02",Room 414A,Hood Room 414A,OPERATING,,,,,,,,

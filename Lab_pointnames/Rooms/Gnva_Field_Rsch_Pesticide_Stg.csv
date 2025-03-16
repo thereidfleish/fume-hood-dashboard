@@ -1,0 +1,5 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Gnva Field Rsch Pesticide Stg,4966A,4966A-091-6001,6001.0,54025.0,"Hood Fume, 4966A-101-N",Room 101,Hood Room 101,OPERATING,,,,,,,,
+,,4966A-091-6002,6002.0,54026.0,"Hood Fume, 4966A-101-S",Room 101,Hood Room 101,OPERATING,,,,,,,,
+,,4966A-091-6003,6003.0,54027.0,"Hood Fume, 4966A-102-N",Room 102,Hood Room 102,OPERATING,,,,,,,,
+,,4966A-091-6004,6004.0,54028.0,"Hood Fume, 4966A-102-S",Room 102,Hood Room 102,OPERATING,,,,,,,,

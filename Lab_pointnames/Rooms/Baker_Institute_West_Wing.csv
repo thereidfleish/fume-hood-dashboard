@@ -1,0 +1,11 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Baker Institute West Wing,2762,2762-091-6001,6001.0,53905.0,"Hood Fume, 2762-120",Room 120,Hood room 120,OPERATING,#baker_west_lab_120/fh_sash_pos,#baker_west_lab_120/occ_sens,,,,,no data,endowed_main
+,,2762-091-6002,6002.0,54031.0,"Hood Fume, 2762-122",Room 122,Hood Room 122,OPERATING,#baker_west_lab_122/fh_sash_pos,#baker_west_lab_122/occ_sens,,,,,no data,endowed_main
+,,2762-091-6003,6003.0,54032.0,"Hood Fume, 2762-131",Room 131,Hood Room 131,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6004,6004.0,54033.0,"Hood Fume, 2762-133",Room 133,Hood Room 133,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6005,6005.0,54034.0,"Hood Fume, 2762-135",Room 135,Hood Room 135,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6006,6006.0,54035.0,"Hood Fume, 2762-220",Room 220,Hood Room 220,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6007,6007.0,54036.0,"Hood Fume, 2762-222",Room 222,Hood Room 222,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6008,6008.0,54037.0,"Hood Fume, 2762-231",Room 231,Hood Room 231,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6009,6009.0,54038.0,"Hood Fume, 2762-233",Room 233,Hood Room 233,OPERATING,,,,,,,no data,endowed_main
+,,2762-091-6010,6010.0,54039.0,"Hood Fume, 2762-235",Room 235,Hood Room 235,OPERATING,,,,,,,no data,endowed_main

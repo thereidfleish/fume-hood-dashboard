@@ -1,0 +1,7 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Stocking Hall East,1063,1063-091-6001,6001.0,53248.0,"Hood,Fume, 1063-281",281,281,OPERATING,,,,,,,,
+,,1063-091-6002,6002.0,53250.0,"Hood,Fume, 1063-280-1 K",280,280,OPERATING,,,,,,,,
+,,1063-091-6003,6003.0,134058.0,"Hood,Fume, 1063-280-2",280,280,OPERATING,,,,,,,,
+,,1063-091-6004,6004.0,53252.0,"Hood,Fume, 1063-280-3 K",280,280,OPERATING,,,,,,,,
+,,1063-091-6005,6005.0,53253.0,"Hood,Fume, 1063-284-1",284,284,OPERATING,,,,,,,,
+,,1063-091-6006,6006.0,53254.0,"Hood,Fume, 1063-284-2",284,284,OPERATING,,,,,,,,

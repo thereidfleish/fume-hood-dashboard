@@ -1,0 +1,10 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Wing Hall,1042A,1042A-091-6001,6001.0,53166.0,"Hood Fume, 1042A-101",Room 101,Hood Room 101,OPERATING,,,,,,,,
+,,1042A-091-6002,6002.0,53183.0,"Hood Fume, 1042A-201",Room 201,Hood Room 201,HIBERNATION,,,,,,,,
+,,1042A-091-6003,6003.0,53184.0,"Hood Fume, 1042A-205",Room 205,Hood Room 205,OPERATING,,,,,,,,
+,,1042A-091-6004,6004.0,53186.0,"Hood Fume, 1042A-208",Room 208,Hood Room 208,OPERATING,,,,,,,,
+,,1042A-091-6005,6005.0,52322.0,"Hood,Fume, 1042A-216",Room 216,Room 216,OPERATING,,,,,,,,
+,,1042A-091-6006,6006.0,53188.0,"Hood Fume, 1042A-302",Room 302,Hood Room 302,HIBERNATION,,,,,,,,
+,,1042A-091-6007,6007.0,53177.0,"Hood Fume, 1042A-305A",Room 305A,Hood Room 305A,OPERATING,,,,,,,,
+,,1042A-091-6008,6008.0,53189.0,"Hood Fume, 1042A-306",Room 306,Hood Room 306,OPERATING,,,,,,,,
+,,1042A-091-6010,6010.0,53191.0,"Hood Fume, 1042A-B15",Room B15,Hood Room B15,HIBERNATION,,,,,,,,

@@ -1,0 +1,13 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Hollister Hall,2046,2046-091-6001,6001.0,52739.0,"Hood Fume, 2046-150-N",Room 150,Hood Room 150,OPERATING,,,,,,,,
+,,2046-091-6002,6002.0,52740.0,"Hood Fume, 2046-150-S",Room 150,Hood Room 150,OPERATING,,,,,,,,
+,,2046-091-6004,6004.0,52742.0,"Hood Fume, 2046-251",Room 251,Hood Room 251,OPERATING,,,,,,,,
+,,2046-091-6005,6005.0,52744.0,"Hood Fume, 2046-252-C",Room 252,Hood Room 252,OPERATING,,,,,,,,
+,,2046-091-6006,6006.0,52745.0,"Hood Fume, 2046-252-E",Room 252,Hood Room 252,OPERATING,,,,,,,,
+,,2046-091-6007,6007.0,52746.0,"Hood Fume, 2046-252-W",Room 252,Hood Room 252,OPERATING,,,,,,,,
+,,2046-091-6010,6010.0,87124.0,"Hood,Fume, 2046-B52-1",B52,B52,OPERATING,,,,,,,,
+,,2046-091-6011,6011.0,119408.0,"Hood,Fume, 2046-160-1",Room 160,Hood Room 160,OPERATING,,,,,,,,
+,,2046-091-6012,6012.0,119409.0,"Hood,Fume, 2046-160-2",Room 160,Hood Room 160,OPERATING,,,,,,,,
+,,2046-091-6013,6013.0,122324.0,"Hood,Fume, 2046-266-1",Environmetal Lab,Environmetal Lab,OPERATING,,,,,,,,
+,,2046-091-6014,6014.0,122325.0,"Hood,Fume, 2046-266-2",Environmetal Lab,Environmetal Lab,OPERATING,,,,,,,,
+,,2046-091-6015,6015.0,122326.0,"Hood,Fume, 2046-266-3",Environmetal Lab,Environmetal Lab,OPERATING,,,,,,,,

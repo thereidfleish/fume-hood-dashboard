@@ -1,0 +1,6 @@
+oli,Facility Code,Asset Location,Unit Number,Asset Number,Asset Description,PM Location,Area Served,Status,Sash Trend,Occ Trend,Temp Trend,Sash RealTime,Occ RealTime,Temp RealTime,Notes,Server
+Stimson Hall,2011,2011-091-6001,6001.0,53790.0,"Hood Fume, 2011-101",Room 101,Hood Room 101,OPERATING,,,,,,,,
+,,2011-091-6002,6002.0,53841.0,"Hood Fume, 2011-306",Room 306,Hood Room 306,OPERATING,,,,,,,,
+,,2011-091-6003,6003.0,53791.0,"Hood Fume, 2011-309",Room 309,Hood Room 309,OPERATING,,,,,,,,
+,,2011-091-6004,6004.0,53792.0,"Hood Fume, 2011-316",Room 316,Hood Room 316,OPERATING,,,,,,,,
+,,2011-091-6005,6005.0,53842.0,"Hood Fume, 2011-318",Room 318,Hood Room 318,OPERATING,,,,,,,,
