@@ -1,0 +1,75 @@
+Location,Control Program,Name,Type,ObjectId,DeviceId,ObjectName,Path
+,,Fume Hood Sash Position Input,BAI,AI:3,DEV:1018362,fh_sash_pos_1,#lab_g49/fh_sash_pos
+,,HOOD SASH POS,BAI,AI:4,DEV:1018354,hood_sash_1,#biotech/biotech_ground_floor/ground_floor_fume_hood_lab_spaces/lab_g54_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48702,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_141_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48703,HoodSash,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_143_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48705,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_147b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48706,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_153_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48707,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_153b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48708,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_155_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48709,hood_sash_1,#biotech/biotech_1st_floor/first_floor_fume_hood_lab_spaces/lab_160_control/hood_sash
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48553,fh-1_sash_pos_1,#biotech_lab_267b_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48515,fh-1_sash_pos_1,#biotech_209_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48516,fh-1_sash_pos_1,#biotech_209b_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48514,fh-1_sash_pos_2,#biotech_lab_203b_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48444,fh-1_sash_pos_2,#biotech_245_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:48445,fh-1_sash_pos_1,#biotech_lab_245b_hvac/fh-1_sash_pos
+,,HOOD SASH POS,BAI,AI:4,DEV:48303,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_217b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48305,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_221_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48306,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_221b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48307,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_227_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48308,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_227b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48309,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_233_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48310,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_233b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48411,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_241_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48412,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_241b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48446,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_253_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48447,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_253b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48448,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_257_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48449,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_257b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48450,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_260_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48451,hood_sash_1,#biotech/biotech_2nd_floor/second_floor_fume_hood_lab_spaces/lab_260b_control/hood_sash
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:49007,fh-1_sash_pos_1,#biotech_lab_345_hvac/fh-1_sash_pos
+,,HOOD SASH POS,BAI,AI:4,DEV:49143,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_303_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49144,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_303b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49102,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_309_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49103,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_309b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:489118,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_317_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48919,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_317b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48917,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_318_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48924,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_321_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48925,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_321b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48920,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_327_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48921,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_327b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48922,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_333_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:48923,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_333b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49005,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_341_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49006,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_341b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49013,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_360_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49014,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_360b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49115,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_367_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49116,hood_sash_1,#biotech/biotech_3rd_floor/third_floor_fume_hood_lab_spaces/lab_367b_control/hood_sash
+,,Fume Hood-1 Sash Position Input,BAI,AI:7,DEV:47606,fh-1_sash_pos_1,#biotech_336_hvac/fh-1_sash_pos
+,,Fume Hood 1 Sash Position Input,BAI,AI:4,DEV:47607,fh-1_sash_pos_1,#biotech_353_west_hvac/fh-1_sash_pos
+,,Fume Hood 1 Sash Position Input,BAI,AI:17,DEV:47607,fh-1_sash_pos_3,#biotech_353_east_hvac/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:49312,fh-1_sash_pos_1,#biotech_lab_445_hvac/fh-1_sash_pos
+,,HOOD SASH POS,BAI,AI:4,DEV:49435,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_403_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49436,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_403b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49437,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_409_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49438,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_409b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49239,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_417_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49240,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_417b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49241,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_418_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49242,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_421_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49243,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_421b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49221,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_427b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49222,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49223,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_433b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49310,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_441_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49311,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_441b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49314,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_453_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49315,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_453b_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49316,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_457_control/hood_sash
+,,HOOD SASH POS,BAI,AI:4,DEV:49317,hood_sash_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_457b_control/hood_sash
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:49319,fh-1_sash_pos_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460b_control/fh-1_sash_pos
+,,Fume Hood-1 Sash Position Input,BAI,AI:4,DEV:49425,fh-1_sash_pos_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467b_control/fh-1_sash_pos

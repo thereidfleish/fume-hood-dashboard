@@ -1,0 +1,197 @@
+Location,Control Program,Name,Type,ObjectId,DeviceId,ObjectName,Path
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-2 Zones,B08 (VAV-BL1),Occupancy Sensor,BBI,BI:1,DEV:30617,occ1_1,#baker_lab_b08_vav-bl1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-2 Zones,B12 (PHX-BM1),Occupancy Sensor,BBI,BI:2,DEV:30618,occ1_1,#baker_lab_b12_phx-bm1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-3 Zones,B16 (VAV-BY1),Occupancy Sensor,BBI,BI:1,DEV:30520,occ1_1,#baker_lab_b16_vav-by1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-3 Zones,B20 (VAV-BZ1),Occupancy Sensor,BBI,BI:1,DEV:30519,occ1_1,#baker_lab_b20_vav-bz1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-3 Zones,B22 (VAV-BV1),Occupancy Sensor,BBI,BI:1,DEV:30518,occ1_1,#baker_lab_b22_vav-bv1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-3 Zones,B24 (VAV-BW1),Occupancy Sensor,BBI,BI:1,DEV:30517,occ1_1,#baker_lab_b24_vav-bw1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-4 Zones,B26/B28/B30 (VAV-BT1),Occupancy Sensor,BBI,BI:1,DEV:30508,occ1_1,#baker_lab_b22b2628b30_vav-bt1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-4 Zones,B32 (VAV-BS1),Occupancy Sensor,BBI,BI:1,DEV:30507,occ1_1,#baker_lab_b32_vav-bs1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-4 Zones,B34 (VAV-BR1),Occupancy Sensor,BBI,BI:1,DEV:30505,occ1_1,#baker_lab_b34_vav-br1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-4 Zones,B38 (VAV-BP1),Occupancy Sensor,BBI,BI:1,DEV:30503,occ1_1,#baker_lab_b38_vav-bp1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-4 Zones,B40 (VAV-BO1),Occupancy Sensor,BBI,BI:1,DEV:30501,occ1_1,#baker_lab_b40_vav-bo1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-5 Zones,B46 (RHC-BR),Occupancy Sensor,BBI,BI:1,DEV:30705,occ1_1,#baker_lab_b46_gex-4j1_rhc-br/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-5 Zones,B46A (RHC-BS),Occupancy Sensor,BBI,BI:1,DEV:30706,occ1_1,#baker_lab_b46a_rhc-bs/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-5 Zones,B48 (RHC-BT),Occupancy Sensor,BBI,BI:1,DEV:30704,occ1_1,#baker_lab_b48_rhc-bt/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-5 Zones,B50 (RHC-BV),Occupancy Sensor,BBI,BI:1,DEV:30707,occ1_1,#baker_lab_b50_rhc-bv/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-5 Zones,B50A (RHC-BU),Occupancy Sensor,BBI,BI:1,DEV:30703,occ1_1,#baker_lab_b50a_gex-4k1_rhc-bu/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-7 Zones,B21 (PHX-BZ),Occupancy Sensor,BBI,BI:1,DEV:30515,occ1_1,#baker_lab_b21_phx-bz/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-7 Zones,B27 (VAV-BC1),Occupancy Sensor,BBI,BI:1,DEV:30512,occ1_1,#baker_lab_b27_vav-bc1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-7 Zones,B35 (VAV-BW),Occupancy Sensor,BBI,BI:1,DEV:30504,occ1_1,#baker_lab_b35_vav-bw/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-8 Zones,B19 (PHX-BE1),Occupancy Sensor,BBI,BI:4,DEV:30516,occ1_1,#baker_lab_b19_phx-be1/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B01 (VAV-BN),Occupancy Sensor,BBI,BI:1,DEV:30606,occ1_1,#baker_lab_b01_vav-bn/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B01A (VAV-BA),Occupancy Sensor,BBI,BI:1,DEV:30604,occ1_1,#baker_lab_b01a_vav-ba/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B01B (VAV-BB),Occupancy Sensor,BBI,BI:1,DEV:30607,occ1_1,#baker_lab_b01b_vav-bb/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B01E (VAV-BM),Occupancy Sensor,BBI,BI:1,DEV:30605,occ1_1,#baker_lab_b01e_vav-bm/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B52 (RHC-BJ),Occupancy Sensor,BBI,BI:1,DEV:30710,occ1_1,#baker_lab_b52_rhc-bj/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B52 (RHC-BK),Occupancy Sensor,BBI,BI:1,DEV:30711,occ1_1,#baker_lab_b52_rhc-bk/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-16 Zones,B54 (RHC-BI),Occupancy Sensor,BBI,BI:1,DEV:30709,occ1_1,#baker_lab_b54_gex-4x1_rhc-bi/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-17 Zones,B01 (VAV-BO),Occupancy Sensor,BBI,BI:1,DEV:30610,occ1_1,#baker_lab_b01_vav-bo/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-17 Zones,B01C (VAV-BE),Occupancy Sensor,BBI,BI:1,DEV:30609,occ1_1,#baker_lab_b01c_vav-be/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-17 Zones,B02/B02A/B02B (VAV-BG),Occupancy Sensor,BBI,BI:1,DEV:30615,occ1_1,#baker_lab_b02_vav-bg/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-17 Zones,B03 (VAV-BF),Occupancy Sensor,BBI,BI:1,DEV:30614,occ1_1,#baker_lab_b03_vav-bf/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement/AHU-17 Zones,B06 (VAV-BP),Occupancy Sensor,BBI,BI:1,DEV:30616,occ1_1,#baker_lab_b06_vav-bp/occ1
+/Cornell University/Biotech Server/Baker Lab/Basement,B01 Laser lab,Occ Sensor,BBI,BI:2,DEV:30602,occ_sensor_1,#baker_lab_basement/b01_laser_lab/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-2 Zones,G10 (VAV-GA2),Occupancy Sensor,BBI,BI:1,DEV:30917,occ1_1,#baker_lab_g10_vav-ga2/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-3 Zones,G24 (VAV-GU1),Occupancy Sensor,BBI,BI:1,DEV:30818,occ1_1,#baker_lab_g24_vav-gu1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-3 Zones,G16 (VAV-GC2),Occupancy Sensor,BBI,BI:1,DEV:30824,occ1_1,#baker_lab_g16_vav-gc2/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-3 Zones,G22 (RHC-GW1),Occupancy Sensor,BBI,BI:1,DEV:30823,occ1_1,#baker_lab_g20g22_rhc-gw1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-3 Zones,G20 (RHC-GX1),Occupancy Sensor,BBI,BI:1,DEV:30822,occ1_1,#baker_lab_g20g22_rhc-gx1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones/G32,G32 (VAV-GH1),Occupancy Sensor,BBI,BI:1,DEV:30808,occ1_1,#baker_lab_g32_vav-gh1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones/G34/36,G34 (VAV-GG1),Occupancy Sensor,BBI,BI:1,DEV:30807,occ1_1,#baker_lab_g34_vav-gg1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones/G34/36,G36 (VAV-GC1),Occupancy Sensor,BBI,BI:1,DEV:30806,occ1_1,#baker_lab_g36_vav-gc1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones/G38A,G38A (VAV-GB1),Occupancy Sensor,BBI,BI:1,DEV:30804,occ1_1,#baker_lab_g38a_vav-gb1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones/G40,G40 (VAV-GY),Occupancy Sensor,BBI,BI:1,DEV:30801,occ1_1,#baker_lab_g40_vav-g4/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones,G28 (VAV-GJ1),Occupancy Sensor,BBI,BI:1,DEV:30809,occ1_1,#baker_lab_g28_vav-gj1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-4 Zones,G38 (VAV-GA1),Occupancy Sensor,BBI,BI:1,DEV:30803,occ1_1,#baker_lab_g38_vav-ga1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-5 Zones,G50/G50B (VAV-GT),Occupancy Sensor,BBI,BI:1,DEV:30934,occ1_1,#baker_lab_g50g50b_vav-gt/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-5 Zones,G50A (VAV-GU),Occupancy Sensor,BBI,BI:1,DEV:30920,occ1_1,#g50a_vav-gu/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-7 Zones/G35/35A,G35 (VAV-GF1),Occupancy Sensor,BBI,BI:1,DEV:30805,occ1_1,#baker_lab_g35_vav-gf1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G19 (VAV-GV1),Occupancy Sensor,BBI,BI:1,DEV:30820,occ1_1,#baker_lab_g19_vav-gy1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G21 (VAV-GT1),Occupancy Sensor,BBI,BI:1,DEV:30819,occ1_1,#baker_lab_g21_vav-gt1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G29A/G29B (VAV-GP1),Occupancy Sensor,BBI,BI:1,DEV:30814,occ1_1,#baker_lab_g29a_g29b_vav-gp1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G29C (VAV-GS1),Occupancy Sensor,BBI,BI:1,DEV:30816,occ1_1,#baker_lab_g29c_vav-gs1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G29D (VAV-GO1),Occupancy Sensor,BBI,BI:1,DEV:30812,occ1_1,#baker_lab_g29d_vav-go1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-8 Zones,G31 (VAV-GN1),Occupancy Sensor,BBI,BI:1,DEV:30810,occ1_1,#baker_lab_g31_vav-gn1/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G01A (VAV-GE),Occupancy Sensor,BBI,BI:1,DEV:30906,occ1_1,#baker_lab_g01a_vav-ge/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G01B (VAV-GF),Occupancy Sensor,BBI,BI:1,DEV:30907,occ1_1,#baker_lab_g01b_vav-gf/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G01C (VAV-GC),Occupancy Sensor,BBI,BI:1,DEV:30904,occ1_1,#baker_lab_g01c_vav-gc/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G01F/GO1H (VAV-GJ),Occupancy Sensor,BBI,BI:1,DEV:30910,occ1_1,#baker_lab_g01f_go1h_vav-gj/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G01G (VAV-GH),Occupancy Sensor,BBI,BI:1,DEV:30909,occ1_1,#baker_lab_g01g_vav-gh/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G55 (VAV-GU2),Occupancy Sensor,BBI,BI:1,DEV:30905,occ1_1,#baker_lab_g55_vav-gu2/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-16 Zones,G00CB (VAV-GI),Occupancy Sensor,BBI,BI:1,DEV:30911,occ1_1,#baker_lab_g00cb_vav-gi/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-17 Zones,G01D (VAV-GO),Occupancy Sensor,BBI,BI:1,DEV:30913,occ1_1,#baker_lab_g01d_vav-go/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-17 Zones,G01E (VAV-GK),Occupancy Sensor,BBI,BI:1,DEV:30912,occ1_1,#baker_lab_g01e_vav-gk/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-17 Zones,G02 (VAV-GP),Occupancy Sensor,BBI,BI:1,DEV:30915,occ1_1,#baker_lab_g02_vav-gp/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-17 Zones,G03 (VAV-GM),Occupancy Sensor,BBI,BI:1,DEV:30914,occ1_1,#baker_lab_g03_vav-gm/occ1
+/Cornell University/Biotech Server/Baker Lab/Ground Floor/AHU-17 Zones,G08 (VAV-GQ),Occupancy Sensor,BBI,BI:1,DEV:30916,occ1_1,#baker_lab_g08_vav-gq/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-2 Zones,112 (VAV-1M),Occupancy Sensor,BBI,BI:1,DEV:31030,occ1_1,#baker_lab_112_vav-1m/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-2 Zones,112B (RHC),Occupancy Sensor,BBI,BI:1,DEV:31039,occ1_1,#baker_lab_112b_rhc/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-2 Zones,112A (RHC / FEV-4R5),Occupancy Sensor,BBI,BI:1,DEV:31041,occ_sensor_1,#112a3/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-2 Zones,114 (VAV-1N),Occupancy Sensor,BBI,BI:1,DEV:31029,occ1_1,#baker_lab_114_vav-1n/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,116/116A (VAV-1A),Occupancy Sensor,BBI,BI:1,DEV:31028,occ1_1,#baker_lab_116_116a_vav-1a/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,120 (RHC-1H),Occupancy Sensor,BBI,BI:1,DEV:31020,occ1_1,#baker_lab_120_gex-4l_rhc-1h/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,120A (RHC-1D),Occupancy Sensor,BBI,BI:1,DEV:31021,occ1_1,#baker_lab_120a_rhc-1d/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,120B (RHC-1C),Occupancy Sensor,BBI,BI:1,DEV:31022,occ1_1,#baker_lab_120b_rhc-1c/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,122A (RHC-1G),Occupancy Sensor,BBI,BI:1,DEV:31025,occ1_1,#baker_lab_122a_rhc-1g/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,122B (RHC-1F),Occupancy Sensor,BBI,BI:1,DEV:31026,occ1_1,#baker_lab_122b_rhc-1f/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,122C (RHC-1E),Occupancy Sensor,BBI,BI:1,DEV:31027,occ1_1,#baker_lab_122c_rhc-1e/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,122 North (RHC-1I),Occupancy Sensor,BBI,BI:1,DEV:31024,occ1_1,#baker_lab_122_n_rhc-1i/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-3 Zones,122 South (RHC-1J),Occupancy Sensor,BBI,BI:1,DEV:31023,occ1_1,#baker_lab_122_s_rhc-1j/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/132/136/138 Suite,132 (RHC-1Y),Occupancy Sensor,BBI,BI:1,DEV:31009,occ1_1,#baker_lab_132_rhc-1y/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/132/136/138 Suite,136 (RHC-1W),Occupancy Sensor,BBI,BI:1,DEV:31008,occ1_1,#baker_lab_136_rhc-1w/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/132/136/138 Suite,136A (RHC-1X),Occupancy Sensor,BBI,BI:1,DEV:31010,occ1_1,#baker_lab_136a_rhc-1x/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/132/136/138 Suite,136B (RHC-1V),Occupancy Sensor,BBI,BI:1,DEV:31011,occ1_1,#baker_lab_136b_rhc-1v/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/132/136/138 Suite,138 (RHC-1U),Occupancy Sensor,BBI,BI:1,DEV:31012,occ1_1,#baker_lab_138_rhc-1u/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/140 Suite,140A (RHC-1P),Occupancy Sensor,BBI,BI:1,DEV:31003,occ1_1,#baker_lab_140a_rhc-1p/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/140 Suite,140B (RHC-1Q),Occupancy Sensor,BBI,BI:1,DEV:31004,occ1_1,#baker_lab_140b_rhc-1q/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/140 Suite,140C (RHC-1R),Occupancy Sensor,BBI,BI:1,DEV:31005,occ1_1,#baker_lab_140c_rhc-1r/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/140 Suite,140D (RHC-1T),Occupancy Sensor,BBI,BI:2,DEV:31002,occ1_1,#baker_lab_140d_e_fcu/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-4 Zones/140 Suite,140F (RHC-1S),Occupancy Sensor,BBI,BI:1,DEV:31006,occ1_1,#baker_lab_140f_rhc-1s/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-5 Zones,146 (E FCU),Occupancy Sensor,BBI,BI:2,DEV:31103,occ1_1,#baker_lab_146_e_fcu/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-7 Zones/131,131 (VAV-1C1),Occupancy Sensor,BBI,BI:1,DEV:31014,occ1_1,#baker_lab_131_vav-1c1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-7 Zones/131,131 (GEX-4D2),Occupancy Sensor,BBI,BI:1,DEV:31807,occ_1,#baker_lab_131_rvav-4d2_penthse/occ
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-7 Zones/135,135 (VAV-1B1),Occupancy Sensor,BBI,BI:1,DEV:31013,occ1_1,#baker_lab_135_vav-1b1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-7 Zones/135,135 (GEX-4B2),Occupancy Sensor,BBI,BI:1,DEV:31803,occ_1,#baker_lab_135_rvav-4b2_penthse/occ
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-7 Zones/135,135 (GEX-4C2),Occupancy Sensor,BBI,BI:1,DEV:31804,occ_1,#baker_lab_135_rvav-4c2_penthse/occ
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-8 Zones,119 (VAV-1G1),Occupancy Sensor,BBI,BI:1,DEV:31018,occ1_1,#baker_lab_119_vav-1g1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-8 Zones,121 (VAV-1F1),Occupancy Sensor,BBI,BI:1,DEV:31017,occ1_1,#baker_lab_121_vav-1f1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-8 Zones,125 (VAV-1E1),Occupancy Sensor,BBI,BI:1,DEV:31016,occ1_1,#baker_lab_125_vav-1e1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,101A (VAV-1N1),Occupancy Sensor,BBI,BI:1,DEV:31110,occ1_1,#baker_lab_101a_vav-1n1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,101B (VAV-1O1),Occupancy Sensor,BBI,BI:1,DEV:31112,occ1_1,#baker_lab_101b_vav-1o1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,150/150A/150B (VAV-1H1),Occupancy Sensor,BBI,BI:1,DEV:31104,occ1_1,#baker_lab_150_vav-1h1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,154 (VAV-1I1),Occupancy Sensor,BBI,BI:1,DEV:31105,occ1_1,#baker_lab_154_vav-i1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,157A (VAV-1M1),Occupancy Sensor,BBI,BI:1,DEV:31109,occ1_1,#baker_lab_157a_vav-1m1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,156 (RHC-1K1),Occupancy Sensor,BBI,BI:1,DEV:31107,occ1_1,#baker_lab_156_rhc-1k1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,158 (RHC-1L1),Occupancy Sensor,BBI,BI:1,DEV:31108,occ1_1,#new_equipment2/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-16 Zones,100CC (VAV-1S1),Occupancy Sensor,BBI,BI:1,DEV:31113,occ1_1,#baker_lab_100cc_vav-1s1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,101C (VAV-1P1),Occupancy Sensor,BBI,BI:1,DEV:31117,occ1_1,#baker_lab_101c_vav-1p1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,101D (VAV-1Q1),Occupancy Sensor,BBI,BI:1,DEV:31118,occ1_1,#baker_lab_101d_vav-1q1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,101E (VAV-1R1),Occupancy Sensor,BBI,BI:1,DEV:31116,occ1_1,#baker_lab_101e_vav-1r1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,101F/101H (VAV-1U1),Occupancy Sensor,BBI,BI:1,DEV:31115,occ1_1,#baker_lab_101hf_vav-1u1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,101G (VAV-1T1),Occupancy Sensor,BBI,BI:1,DEV:31114,occ1_1,#baker_lab_101g_vav-1t1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,102 (RHC-1Z1),Occupancy Sensor,BBI,BI:1,DEV:31034,occ1_1,#baker_lab_102_102a_rhc-1z1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,102A (RHC-1Y1),Occupancy Sensor,BBI,BI:1,DEV:31035,occ1_1,#baker_lab_102a_rhc-1y1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,102B (RHC-1A2),Occupancy Sensor,BBI,BI:1,DEV:31036,occ1_1,#baker_lab_102b_rhc-1a2/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,103 (VAV-1W1),Occupancy Sensor,BBI,BI:1,DEV:31037,occ1_1,#baker_lab_103_vav-1w1/occ1
+/Cornell University/Biotech Server/Baker Lab/First Floor/AHU-17 Zones,110 (PHX-1B2),Occupancy Sensor,BBI,BI:2,DEV:31032,occ1_1,#baker_lab_110_phx-1b2/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-206C,Occupancy Sensor,BBI,BI:1,DEV:31312,occ1_1,#baker_vav-206c/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-206A/B,Occupancy Sensor,BBI,BI:1,DEV:31313,occ1_1,#baker_vav-206ab/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-206 + ETB 12-2,Occupancy Sensor,BBI,BI:1,DEV:31314,occ1_1,#baker_vav-206/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-210 + ETB 12-1,Occupancy Sensor,BBI,BI:1,DEV:31311,occ1_1,#baker_vav-210/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-210A/B,Occupancy Sensor,BBI,BI:1,DEV:31310,occ1_1,#baker_vav-210ab/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-212,Occupancy Sensor,BBI,BI:1,DEV:31309,occ1_1,#baker_vav-212/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-2 Zones,VAV-214 + ETB 7-1,Occupancy Sensor,BBI,BI:1,DEV:31308,occ1_1,#baker_vav-214/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-216 + ETB 10-1,Occupancy Sensor,BBI,BI:1,DEV:31307,occ1_1,#baker_vav-216/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-218,Occupancy Sensor,BBI,BI:1,DEV:31306,occ1_1,#baker_vav-218/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-220,Occupancy Sensor,BBI,BI:1,DEV:31305,occ1_1,#baker_vav-220/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-222 + ETB 10-2,Occupancy Sensor,BBI,BI:1,DEV:31304,occ1_1,#baker_vav-222/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-224 + ETB 10-3,Occupancy Sensor,BBI,BI:1,DEV:31303,occ1_1,#baker_vav-224/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-3 Zones,VAV-226,Occupancy Sensor,BBI,BI:1,DEV:31302,occ1_1,#baker_vav-226/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-4 Zones/230/230A/236 Suite,230 (PHX-2U),Occupancy Sensor,BBI,BI:1,DEV:31327,occ1_1,#baker_lab_230_phx-2u/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-4 Zones/230/230A/236 Suite,230A (PHX-2A1),Occupancy Sensor,BBI,BI:3,DEV:31326,occ1_1,#baker_lab_230a_phx-2a1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-4 Zones/230/230A/236 Suite,236 (PHX-2B1),Occupancy Sensor,BBI,BI:1,DEV:31324,occ1_1,#baker_lab_236_phx-2b1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-4 Zones/240 Suite,240A (PHX-2C1),Occupancy Sensor,BBI,BI:2,DEV:31323,occ1_1,#baker_lab_240a_phx-2c1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-4 Zones/240 Suite,240B (PHX-2E1),Occupancy Sensor,BBI,BI:2,DEV:31322,occ1_1,#baker_lab_240b_phx-2e1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-5 Zones,244/244A (VAV-2I1),Occupancy Sensor,BBI,BI:1,DEV:31401,occ1_1,#baker_lab_244_244a_vav-2i1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-7 Zones,235 (VAV-2K1),Occupancy Sensor,BBI,BI:1,DEV:31325,occ1_1,#baker_lab_235_vav-2k1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-8 Zones,219 (VAV-2M1),Occupancy Sensor,BBI,BI:1,DEV:31319,occ1_1,#baker_219_vav-2m1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-16 Zones,201A (VAV-2S1),Occupancy Sensor,BBI,BI:1,DEV:31409,occ1_1,#baker_lab_201a_vav-2s1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-16 Zones,201B (VAV-2T1),Occupancy Sensor,BBI,BI:1,DEV:31408,occ1_1,#baker_lab_201b_vav-2t1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-16 Zones,201C (VAV-2U1),Occupancy Sensor,BBI,BI:1,DEV:31414,occ1_1,#baker_lab_201c_vav-2u1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-16 Zones,201F/201H (VAV-2Y1),Occupancy Sensor,BBI,BI:1,DEV:31412,occ1_1,#baker_lab_201fh_vav-2y1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-16 Zones,201G (VAV-2X1),Occupancy Sensor,BBI,BI:1,DEV:31411,occ1_1,#baker_lab_201g_vav-2x1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,201D (VAV-2V1),Occupancy Sensor,BBI,BI:1,DEV:31415,occ1_1,#baker_lab_201d_vav-2v1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,201E (VAV-2W1),Occupancy Sensor,BBI,BI:1,DEV:31416,occ1_1,#baker_lab_201e_vav-2w1/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,VAV-202,Occupancy Sensor,BBI,BI:1,DEV:31316,occ1_1,#baker_vav-202/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,VAV-202A/B + ETB 9-1,Occupancy Sensor,BBI,BI:1,DEV:31317,occ1_1,#baker_vav-202ab/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,VAV-204,Occupancy Sensor,BBI,BI:1,DEV:31315,occ1_1,#baker_vav-204/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/AHU-17 Zones,VAV-205,Occupancy Sensor,BBI,BI:1,DEV:31318,occ1_1,#baker_vav-205/occ1
+/Cornell University/Biotech Server/Baker Lab/Second Floor/2019 Renovation,Rm 240C,Occupancy Sensor,BBI,BI:1,DEV:31328,occ_sensor_1,#bakerlab_240c/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Second Floor/2019 Renovation,Rm 250,Occupancy Sensor,BBI,BI:1,DEV:31403,occ_sensor_1,#bakerlab_rm_250/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Second Floor/2019 Renovation,Lab 256,Occupancy Sensor,BBI,BI:13,DEV:31404,occ_sensor_1,#bakerlab_lab_252/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Second Floor/2019 Renovation,Lab 258,Occupancy Sensor,BBI,BI:3,DEV:31405,occ_sensor_1,#bakerlab_lab_258/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Second Floor/2019 Renovation,Rm 257,Occupancy Sensor,BBI,BI:1,DEV:31406,occ_sensor_1,#bakerlab_rm_257/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Second Floor,Lab 200C SAV,Occupancy Sensor,BBI,BI:1,DEV:31330,occ1_1,#baker_lab_200c_sav/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-2 Zones,312 (VAV-3U),Occupancy Sensor,BBI,BI:1,DEV:31525,occ1_1,#baker_312_vav-3u/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-2 Zones,314/314A (VAV-3S),Occupancy Sensor,BBI,BI:1,DEV:31523,occ1_1,#baker_314314a_vav-3s/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-2 Zones,316A/316B (VAV-3T),Occupancy Sensor,BBI,BI:1,DEV:31524,occ1_1,#baker_316a_316b_vav-3t/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,332 (PHX-3I1),Occupancy Sensor,BBI,BI:1,DEV:31508,occ1_1,#baker_332_phx-3r/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,316 (VAV-3A),Occupancy Sensor,BBI,BI:1,DEV:31522,occ1_1,#baker_316_vav-3a/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,320A (VAV-3B),Occupancy Sensor,BBI,BI:1,DEV:31520,occ1_1,#baker_320a_vav-3b/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,320A (GEX-4J),Occupancy Sensor,BBI,BI:1,DEV:31918,occ_1,#baker_320a_gex-4j/occ
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,322 (PHX-3C),Occupancy Sensor,BBI,BI:1,DEV:31515,occ1_1,#baker_lab_322_phx-3c/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,324 (PHX-3D/3E),Occupancy Sensor,BBI,BI:2,DEV:31512,occ1_1,#baker_lab_324_phx-3d3e/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,326 (PHX-3M),Occupancy Sensor,BBI,BI:2,DEV:31511,occ1_1,#baker_lab_326_phx-3m/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,328 (PHX-3P),Occupancy Sensor,BBI,BI:1,DEV:31514,occ1_1,#baker_lab_328_phx-3p/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-3 Zones,330 (PHX-3Q),Occupancy Sensor,BBI,BI:1,DEV:31513,occ1_1,#baker_lab_330_phx-3q/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-4 Zones,338 (PHX-3R),Occupancy Sensor,BBI,BI:1,DEV:31505,occ1_1,#baker_338_phx-3i1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-4 Zones,334/334A (PHX-3Y),Occupancy Sensor,BBI,BI:3,DEV:31507,occ1_1,#baker_334334a_phx-3y/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-4 Zones,338A (PHX-3A1/3Z),Occupancy Sensor,BBI,BI:2,DEV:31506,occ1_1,#baker_338a_phx-3a13z/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-4 Zones,340A (PHX-3K1),Occupancy Sensor,BBI,BI:1,DEV:31502,occ1_1,#baker_340a_phx-3k1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-5 Zones,340B (PHX-3N1),Occupancy Sensor,BBI,BI:3,DEV:31501,occ1_1,#baker_340b_phx-3n1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-5 Zones,340 (PHX-3J1),Occupancy Sensor,BBI,BI:1,DEV:31503,occ1_1,#baker_340_phx-3j1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-5 Zones,344 (PHX-3Y1),Occupancy Sensor,BBI,BI:1,DEV:31601,occ1_1,#baker_344_phx-3y1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-5 Zones,344A (PHX-3T1),Occupancy Sensor,BBI,BI:2,DEV:31602,occ1_1,#baker_344a_phx-3t1/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-7 Zones,335 (VAV-3C2),Occupancy Sensor,BBI,BI:1,DEV:31509,occ1_1,#baker_335_vav-3c2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-8 Zones,317 (PHX-3I2/3J2),Occupancy Sensor,BBI,BI:2,DEV:31519,occ1_1,#baker_lab_317_phx-3i23j2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-8 Zones,317A (PHX-3G2),Occupancy Sensor,BBI,BI:2,DEV:31518,occ1_1,#baker_lab_317a_phx-3g2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-8 Zones,319 (PHX-3F2),Occupancy Sensor,BBI,BI:1,DEV:31517,occ1_1,#baker_lab_319_phx-3f2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-8 Zones,321/321A (PHX-3D2),Occupancy Sensor,BBI,BI:2,DEV:31516,occ1_1,#baker_lab_321321a_phx-3d2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-16 Zones,301A (VAV-3V2),Occupancy Sensor,BBI,BI:1,DEV:31609,occ1_1,#baker_lab_301a_vav-3v2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-16 Zones,301B (VAV-3W2),Occupancy Sensor,BBI,BI:1,DEV:31612,occ1_1,#baker_lab_301b_vav-3w2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,301C (VAV-3X2),Occupancy Sensor,BBI,BI:1,DEV:31613,occ1_1,#baker_lab_301c_vav-3x2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,301D (VAV-3Y2),Occupancy Sensor,BBI,BI:1,DEV:31618,occ1_1,#baker_lab_301d_vav-3y2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,301E (VAV-3Z2),Occupancy Sensor,BBI,BI:1,DEV:31617,occ1_1,#baker_301e_vav-3z2/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,301F (RHC-3M3),Occupancy Sensor,BBI,BI:1,DEV:31616,occ1_1,#baker_lab_301f_rhc-3m3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,301G/301H (RHC-3N3),Occupancy Sensor,BBI,BI:1,DEV:31615,occ1_1,#baker_lab_301g_301h_rhc-3n3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,302 (RHC-3I3),Occupancy Sensor,BBI,BI:1,DEV:31531,occ1_1,#new_equipment25/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,302A (RHC-3H3),Occupancy Sensor,BBI,BI:1,DEV:31533,occ1_1,#baker_lab_302a_rhc-3h3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,304 (RHC-3J3),Occupancy Sensor,BBI,BI:1,DEV:31532,occ1_1,#baker_lab_304_rhc-3j3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,305 (VAV-3F3),Occupancy Sensor,BBI,BI:1,DEV:31534,occ1_1,#baker_lab_305_vav-3f3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/AHU-17 Zones,310 (VAV-3K3),Occupancy Sensor,BBI,BI:1,DEV:31528,occ1_1,#baker_lab_310_vav-3k3/occ1
+/Cornell University/Biotech Server/Baker Lab/Third Floor/2016 Lab Renovation/346 Suite,346A (2SAV 3EAV 6FH),Occupancy Sensor,BBI,BI:7,DEV:31621,occ_sensor_1,#bakerlab_346a_2sav_3eav_6fh/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Third Floor/2016 Lab Renovation/350 Suite,350A (2SAV 3EAV 6FH),Occupancy Sensor,BBI,BI:7,DEV:31624,occ_sensor_1,#bakerlab_350a_2sav_3eav_6fh/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Third Floor/2016 Lab Renovation/352,352 (SAV 2EAV FH),Occupancy Sensor,BBI,BI:2,DEV:31627,occ_sensor_1,#bakerlab_352_sav_2eav_fh/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Third Floor/2016 Lab Renovation/355,355 (SAV EAV FH),Occupancy Sensor,BBI,BI:2,DEV:31629,occ_sensor_1,#bakerlab_355_sav_eav_fh/occ_sensor
+/Cornell University/Biotech Server/Baker Lab/Fourth Floor/Air Systems,AHU-9,Occupancy Sensor,BBI,BI:2,DEV:30206,occ1_1,#baker_ahu-9/occ1
