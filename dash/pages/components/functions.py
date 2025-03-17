@@ -27,7 +27,7 @@ def synthetic_query(targets, server, start, end, aggType):
     response = requests.post(url, json=data)
     # print(response)
     # if response.status_code != 200:
-         # print(response.json())
+    #      raise Exception("BAD")
     # print(len(response.json()))
 
     master = pd.json_normalize(response.json(), record_path="datapoints", meta=["target", "metric"]).rename(columns={0: "value", 1: "timestamp"}).set_index("target").rename_axis(None)
@@ -110,13 +110,20 @@ def lab_dictionary(id_list):
         
         lab_list = []
         lab_key_list = []
-        for i in range (0, len(floor_list)):
+        for i in range(len(floor_list)):
             lab_list.append([])
             lab_key_list.append([])
-            for j in range(0, len(id_list_split)):
-                if floor_list[i][-1] == id_list_split[j][1][-1]:
-                    lab_list[i].append(id_list_split[j][2].replace("_", " "))
-                    lab_key_list[i].append(floor_key_list[i] + "&" + id_list_split[j][2].lower().replace("_", "="))
+            for j in range(len(id_list_split)):
+                current_floor = id_list_split[j][1].replace("_", " ")
+                if floor_list[i] == current_floor:
+                    lab_title = id_list_split[j][2].replace("_", " ")
+                    # Only add if not already present
+                    if lab_title not in lab_list[i]:
+                        lab_list[i].append(lab_title)
+                        lab_key_list[i].append(
+                            floor_key_list[i] + "&" + id_list_split[j][2].lower().replace("_", "=")
+                        )
+
         building_list[building]["lab_list"] = lab_list
         building_list[building]["lab_key_list"] = lab_key_list
         
@@ -130,7 +137,7 @@ def treeview(id_list):
     for building, b_data in lab_dict.items():
         building_node = {
             "title": building,
-            "key": building.lower(),
+            "key": "?building="+building.lower(),
             "children": []
         }
         # Loop through each floor for this building
@@ -155,11 +162,11 @@ def treeview(id_list):
 
 def expanded_name(building=None, floor=None, lab=None):
     result = "?building="
-    if building != None:
+    if building is not None:
         result += building
-        if floor != None:
+        if floor is not  None:
             result += "&floor="+floor
-            if lab != None:
+            if lab is not None:
                 result += "&lab="+lab
     return result
 
@@ -169,7 +176,7 @@ def cascaderview(id_list):
     for building, b_data in lab_dict.items():
         # Create the building node (title remains the same)
         building_node = {
-            "value": building.lower(), 
+            "value": "?building="+building.lower(), 
             "label": building,
             "children": []
         }
@@ -192,3 +199,46 @@ def cascaderview(id_list):
             building_node["children"].append(floor_node)
         tree_data.append(building_node)
     return tree_data
+
+def get_fumehood_text(building, floor, lab):
+    if lab is not None:
+        return "fumehood(s) in this lab"
+    elif floor is not None:
+        return "fumehoods on this floor"
+    else:
+        return "fumehoods in this building"
+    
+def get_level_text(building, floor, lab):
+    if lab is not None:
+        return "lab"
+    elif floor is not None:
+        return "floor"
+    else:
+        return "building"
+    
+
+def format_building(building):
+    return "" if building is None else building.capitalize()
+
+
+def format_floor(floor):
+    return "" if floor is None else "Floor " + floor
+
+
+def format_lab(lab):
+    return "" if lab is None else "Lab " + lab
+
+# Format `time_closed` to show in days, hours and minutes
+def format_time(minutes):
+    if minutes > 1440:  # More than 24 hours (1440 minutes)
+        days = int(minutes // 1440)
+        remaining_minutes = minutes % 1440
+        hours = int(remaining_minutes // 60)
+        minutes_left = int(remaining_minutes % 60)
+        return f"{days}d {hours}h {minutes_left}m"
+    elif minutes > 60:  # More than 60 minutes
+        hours = int(minutes // 60)
+        remaining_minutes = int(minutes % 60)
+        return f"{hours}h {remaining_minutes}m"
+    else:  # 60 minutes or less
+        return f"{int(minutes)}m"
