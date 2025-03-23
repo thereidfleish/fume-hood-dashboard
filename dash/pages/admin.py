@@ -6,6 +6,10 @@ import boto3
 from dotenv import load_dotenv
 from dash import ctx
 import dash_ag_grid as dag
+import json
+
+# import dash_mantine_components as dmc
+# import dash_iconify
 
 dash.register_page(__name__)
 
@@ -53,6 +57,8 @@ def generate_grid(type):
     
     # print("<<<\n\n", res_df.to_dict('records', index=True))
 
+    col_building = ["baker", "bard", "biotech", "olin", "weill"]
+
     column_defs = [
         {
             "headerName": col,
@@ -61,10 +67,25 @@ def generate_grid(type):
             "sortable": True,
             "filter": True,
             "resizable": True,
-            "checkboxSelection": True if col == "id" else False
+            "wrapText": True if col == "lab_id" else False,
+            "autoHeight": True if col == "lab_id" else False,
+            "checkboxSelection": True if col == "id" else False,
+            # "cellEditor": "agSelectCellEditor" if col == "building" else ("agLargeTextCellEditor" if col == "lab_id" else "agTextCellEditor"),
+            "cellEditor": "agSelectCellEditor" if col == "building" else "agTextCellEditor",
+            "cellEditorParams": {
+            "values": col_building if col == "building" else None} 
         } 
         for col in res_df.columns
     ]
+
+    if type == "hoods":
+        column_defs = column_defs + [{
+        "headerName": "test",
+        "field": "test",
+        "editable": False,
+        "cellRenderer": "Button",
+        "cellRendererParams": {"className": "test-button"}
+    }]
 
     return html.Div([
         dag.AgGrid(
@@ -231,6 +252,12 @@ def update_grid(type, data):
     with table.batch_writer() as writer:
         writer.put_item(Item=item)
 
+@callback(
+    Output("button-value-changed", "children"),
+    Input("button-data", "cellRendererData"),
+)
+def run_test(data):
+    return json.dumps(data)
 
 @callback(
     Output({'type': 'output-message', 'index': MATCH, 'subtype': 'table'}, 'children'),
