@@ -1,0 +1,330 @@
+Location,Control Program,Name,Type,ObjectId,DeviceId,ObjectName,Path
+,,General Exhaust Air Valve Flow Feedback,BAI,AI:6,DEV:1018362,gex_flow_fbk_1,#lab_g49/gex_flow_fbk
+,,Hood Exhaust Air Valve Flow Feedback,BAI,AI:2,DEV:1018362,hev_flow_fbk_1,#lab_g49/hev_flow_fbk
+,,Supply Air Valve Flow Feedback,BAI,AI:4,DEV:1018362,sav_flow_fbk_1,#lab_g49/sav_flow_fbk
+,,Supply Air Valve Flow Feedback,BAI,AI:2,DEV:1018363,sav_flow_fbk_1,#equipment_rm_g49a/sav_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:1018358,sup_air_flow_flow_input_1,#biotech/biotech_ground_floor/ground_floor_non_fume_hood_lab_spaces/space_g53_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018364,flow_input_1,#biotech/biotech_ground_floor/ground_floor_non_fume_hood_lab_spaces/space_g53a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:1018359,sup_air_flow_flow_input_1,#biotech/biotech_ground_floor/ground_floor_non_fume_hood_lab_spaces/space_g55g55a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:1018357,sup_air_flow_flow_input_1,#biotech/biotech_ground_floor/ground_floor_non_fume_hood_lab_spaces/space_g56_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018421,flow_input_1,#vav/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018391,flow_input_1,#g01_vav_1/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018382,flow_input_1,#g10_vav-1/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018383,flow_input_1,#g10_vav-3/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018384,flow_input_1,#g10_vav-4/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018385,flow_input_1,#copy_of_g10_vav-2/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018386,flow_input_1,#biotech_g09_vav-ge/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018388,flow_input_1,#biotech_g0024_vav-gh/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018389,flow_input_1,#biotech_g0040n_vav-gi/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018390,flow_input_1,#biotech_g07_vav-gj/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018392,flow_input_1,#biotech_g00040s_vav-gl/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018393,flow_input_1,#biotech_g0023_vav-gm/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018394,flow_input_1,#biotech_g0040se_vav-gn/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018395,flow_input_1,#biotech_g0022_vav-go/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018302,flow_input_1,#biotech_corridor_g0020_g0021_and_g0047/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018304,supply_airflow_flow_input_1,#biotech_g40/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018305,flow_input_1,#biotech_g41/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018306,supply_airflow_flow_input_1,#biotech_g45/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018307,flow_input_1,#biotech_g50/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018308,flow_input_1,#biotech_g50b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018309,flow_input_1,#biotech_g50c/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018310,flow_input_1,#biotech_g50d/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018311,supply_airflow_flow_input_1,#biotech_g52/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018312,supply_airflow_flow_input_1,#biotech_g52b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018313,flow_input_1,#biotech_g54a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018315,supply_airflow_flow_input_1,#biotech_g59/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018316,supply_airflow_flow_input_1,#biotech_g63/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018317,supply_airflow_flow_input_1,#biotech_g65/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018318,supply_airflow_flow_input_1,#biotech_g67/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018319,supply_airflow_flow_input_1,#biotech_g68/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:1018320,supply_airflow_flow_input_1,#biotech_g68a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48759,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_140_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48760,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_140a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48761,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_140b_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48762,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_140c_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48763,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_140d_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48764,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_147a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48766,flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_149_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48769,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_150_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48767,flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_151_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48765,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_153a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48768,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_157_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48773,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_160a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48771,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_160b_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48776,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_169_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48775,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_169a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48774,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_169b_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48770,sup_air_flow_flow_input_1,#biotech/biotech_1st_floor/first_floor_non_fume_hood_lab_spaces/space_171_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48601,flow_input_1,#biotech_rm_107n/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48602,flow_input_1,#biotech_rm_107s/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48603,flow_input_1,#biotech_rm_107a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48604,flow_input_1,#biotech_rm_107b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48605,flow_input_1,#biotech_rm_107c/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48606,flow_input_1,#biotech_rm_107d/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48607,flow_input_1,#biotech_rm_105/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48608,flow_input_1,#biotech_rm_101/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48609,flow_input_1,#biotech_rm_101a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48610,flow_input_1,#biotech_rm_101b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48611,flow_input_1,#biotech_rm_101c/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48612,flow_input_1,#biotech_rm_10d/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48613,flow_input_1,#biotech_rm_10040n/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48614,flow_input_1,#biotech_rm_130/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48615,flow_input_1,#biotech_rm_130a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48616,flow_input_1,#biotech_rm_10040s/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48617,flow_input_1,#biotech_rm_130b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48618,flow_input_1,#biotech_rm_130c/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48619,flow_input_1,#biotech_rm_130d/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48620,flow_input_1,#biotech_rm_135/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48621,flow_input_1,#biotech_corridor/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48622,flow_input_1,#biotech_rm_131/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48623,flow_input_1,#biotech_rm_1005/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48624,flow_input_1,#biotech_rm_180/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48625,flow_input_1,#biotech_rm_175/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48805,flow_input_1,#biotech_139/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48626,flow_input_1,#biotech_158/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48627,flow_input_1,#biotech_159/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48628,flow_input_1,#biotech_167/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48802,supply_airflow_flow_input_1,#biotech_143a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48803,flow_input_1,#biotech_10045/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48804,supply_airflow_flow_input_1,#biotech_152/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48807,flow_input_1,#biotech_170/supply_airflow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48542,eav-1_flow_fbk_1,#biotech_lab_267a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48542,sav-1_flow_fbk_1,#biotech_lab_267a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48552,eav-1_flow_fbk_1,#biotech_lab_267_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48552,sav-1_flow_fbk_1,#biotech_lab_267_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48553,eav-1_flow_av_1,#biotech_lab_267b_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48553,fh-1_flow_fbk_1,#biotech_lab_267b_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:5,DEV:48553,sav-1_flow_fbk_1,#biotech_lab_267b_hvac/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48501,flow_input_1,#biotechnologybuilding_265/supply_airflow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48515,eav-1_flow_av_1,#biotech_209_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48515,fh-1_flow_fbk_1,#biotech_209_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48515,sav-1_flow_fbk_1,#biotech_209_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48518,eav-1_flow_fbk_1,#biotech_209a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:4,DEV:48518,sav-1_flow_fbk_1,#biotech_209a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48516,eav-1_flow_av_1,#biotech_209b_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48516,fh-1_flow_fbk_1,#biotech_209b_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48516,sav-1_flow_fbk_1,#biotech_209b_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48513,eav-1_flow_fbk_1,#biotech_203_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48513,sav-1_flow_fbk_1,#biotech_203_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48517,eav-1_flow_fbk_2,#biotech_203a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48517,sav-1_flow_fbk_2,#biotech_203a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48514,eav-1_flow_av_2,#biotech_lab_203b_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48514,fh-1_flow_fbk_2,#biotech_lab_203b_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48514,sav-1_flow_fbk_2,#biotech_lab_203b_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48444,eav-1_flow_av_2,#biotech_245_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48444,fh-1_flow_fbk_2,#biotech_245_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48444,sav-1_flow_fbk_2,#biotech_245_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48433,eav-1_flow_fbk_1,#biotech_245a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48433,sav-1_flow_fbk_1,#biotech_245a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:48445,eav-1_flow_av_1,#biotech_lab_245b_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:48445,fh-1_flow_fbk_1,#biotech_lab_245b_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:48445,sav-1_flow_fbk_1,#biotech_lab_245b_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48527,eav-1_flow_fbk_1,#biotech_lab_208_suite/biotech_lab_208_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48527,sav-1_flow_fbk_1,#biotech_lab_208_suite/biotech_lab_208_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48528,eav-1_flow_fbk_1,#biotech_lab_208_suite/biotech_lab_208a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:48528,sav-1_flow_fbk_1,#biotech_lab_208_suite/biotech_lab_208a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:48328,eav-1_flow_fbk_1,#biotech_224/space_224_control/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:4,DEV:48328,sav-1_flow_fbk_1,#biotech_224/space_224_control/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48503,flow_input_1,#biotech_room_207/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48538,flow_input_1,#biotech_room_201/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48434,flow_input_1,#biotech_room_249/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48311,supply_airflow_flow_input_1,#biotechrm_230/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48312,supply_airflow_flow_input_1,#biotech_rm230a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48313,supply_airflow_flow_input_1,#biotechrm_230b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48314,supply_airflow_flow_input_1,#biotechrm_240/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48316,supply_airflow_flow_input_1,#biotechrm_235/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48317,supply_airflow_flow_input_1,#biotechrm_212/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48318,supply_airflow_flow_input_1,#biotechrm_214/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48324,supply_airflow_flow_input_1,#biotechrm_216/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48325,supply_airflow_flow_input_1,#biotechrm_219/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48315,supply_airflow_flow_input_1,#biotechrm_236/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48333,supply_airflow_flow_input_1,#biotech_rm_236/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48334,supply_airflow_flow_input_1,#biotech_rm_236_vav2/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48335,flow_input_1,#biotech_corridor_20053/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48336,flow_input_1,#biotech_corridor_20044/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48337,flow_input_1,#biotech_corridor_20046/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48406,supply_airflow_flow_input_1,#biotech_20045/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48407,supply_airflow_flow_input_1,#biotech_268/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48401,supply_airflow_flow_input_1,#biotechrm_239/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48402,supply_airflow_flow_input_1,#biotechrm_258/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48403,supply_airflow_flow_input_1,#biotechrm_259/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48405,supply_airflow_flow_input_1,#biotech_20040/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48508,supply_airflow_flow_input_1,#biotech_269/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48506,supply_airflow_flow_input_1,#biotech_20050/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:48502,supply_airflow_flow_input_1,#biotech_rm210/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48504,flow_input_1,#biotech_corridor_20052/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48505,supply_airflow_flow_input_1,#biotech_corridor_20040/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48524,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_202_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48525,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_204_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48526,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_206_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48319,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_217a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48320,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_221a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48321,flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_223_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48322,flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_225_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48329,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_226_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48323,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_227a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48331,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_233a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48330,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_234_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48432,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_241a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48437,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_250_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48435,flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_251_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48438,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_252_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48436,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_253a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48539,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_254_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48440,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_257a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48441,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_260a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48543,sup_air_flow_flow_input_1,#biotech/biotech_2nd_floor/second_floor_non_fume_hood_lab_spaces/space_271_control/sup_air_flow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49032,eav-1_flow_fbk_1,#biotech_lab_345a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49032,sav-1_flow_fbk_1,#biotech_lab_345a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:49007,eav-1_flow_av_1,#biotech_lab_345_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:49007,fh-1_flow_fbk_1,#biotech_lab_345_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:5,DEV:49007,sav-1_flow_fbk_1,#biotech_lab_345_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49008,eav-1_flow_fbk_1,#biotech_lab_345b_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49008,sav-1_flow_fbk_1,#biotech_lab_345b_hvac/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49033,flow_input_1,#biotechnologybuilding_349/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48909,supply_airflow_flow_input_1,#biotech_311/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48907,supply_airflow_flow_input_1,#biotech_312/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48908,supply_airflow_flow_input_1,#biotech_314/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48902,supply_airflow_flow_input_1,#biotech_326/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48903,supply_airflow_flow_input_1,#biotech_330/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48904,supply_airflow_flow_input_1,#biotech_330a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48905,supply_airflow_flow_input_1,#biotech_330b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48906,flow_input_1,#biotech_335/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48912,flow_input_1,#biotech_316/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48914,supply_airflow_flow_input_1,#biotech_30053/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48915,supply_airflow_flow_input_1,#biotech_30044/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:48934,flow_input_1,#biotech_3046/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49020,supply_airflow_flow_input_1,#biotech_340/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49001,flow_input_1,#biotech_339/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49004,supply_airflow_flow_input_1,#biotech_352/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49003,flow_input_1,#biotech_358/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49015,supply_airflow_flow_input_1,#biotech_368/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49018,flow_input_1,#biotech_30045/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:49019,supply_airflow_flow_input_1,#biotech_30040-2/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49108,flow_input_1,#biotech_365/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49109,supply_airflow_flow_input_1,#biotech_369/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49110,supply_airflow_flow_input_1,#biotech_30040/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49111,flow_input_1,#biotech_301/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49112,flow_input_1,#biotech_307/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49113,flow_input_1,#biotech_30052/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49114,supply_airflow_flow_input_1,#biotech_30065/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49106,flow_input_1,#biotech_30050/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49149,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_302_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49139,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_303a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49150,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_304_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48941,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_308_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49104,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_309a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48926,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_317a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48927,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_321a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48928,flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_323_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48929,flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_325_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48940,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_327a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:48930,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_333a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:48942,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_334_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49031,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_341a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49045,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_350_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49038,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_360a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49137,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_367a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49047,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_370_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49148,sup_air_flow_flow_input_1,#biotech/biotech_3rd_floor/third_floor_non_fume_hood_lab_spaces/space_371_control/sup_air_flow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:47606,eav-1_flow_fbk_1,#biotech_336_hvac/eav-1_flow_fbk
+,,Fume Hood-1 Flow Feedback,BAI,AI:6,DEV:47606,fh-1_flow_fbk_1,#biotech_336_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:8,DEV:47606,sav-1_flow_fbk_1,#biotech_336_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:47607,eav-1_flow_fbk_1,#biotech_353_west_hvac/eav-1_flow_fbk
+,,EAV-2 Flow Feedback,BAI,AI:28,DEV:47607,eav-2_flow_fbk_1,#biotech_353_west_hvac/eav-2_flow_fbk
+,,Fume Hood 1 Flow Feedback,BAI,AI:3,DEV:47607,fh-1_flow_fbk_1,#biotech_353_west_hvac/fh-1_flow_fbk
+,,PEV-1 Flow Feedback,BAI,AI:6,DEV:47607,pev-1_flow_fbk_1,#biotech_353_west_hvac/pev-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:8,DEV:47607,sav-1_flow_fbk_1,#biotech_353_west_hvac/sav-1_flow_fbk
+,,SAV-2 Flow Feedback,BAI,AI:11,DEV:47607,sav-2_flow_fbk_1,#biotech_353_west_hvac/sav-2_flow_fbk
+,,EAV-3 Flow Feedback,BAI,AI:15,DEV:47607,eav-1_flow_fbk_3,#biotech_353_east_hvac/eav-1_flow_fbk
+,,EAV-4 Flow Feedback,BAI,AI:30,DEV:47607,eav-2_flow_fbk_3,#biotech_353_east_hvac/eav-2_flow_fbk
+,,Fume Hood 1 Flow Feedback,BAI,AI:16,DEV:47607,fh-1_flow_fbk_3,#biotech_353_east_hvac/fh-1_flow_fbk
+,,PEV-2 Flow Feedback,BAI,AI:19,DEV:47607,pev-1_flow_fbk_3,#biotech_353_east_hvac/pev-1_flow_fbk
+,,SAV-3 Flow Feedback,BAI,AI:21,DEV:47607,sav-1_flow_fbk_3,#biotech_353_east_hvac/sav-1_flow_fbk
+,,SAV-4 Flow Feedback,BAI,AI:24,DEV:47607,sav-2_flow_fbk_3,#biotech_353_east_hvac/sav-2_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:3,DEV:47608,eav-1_flow_fbk_1,#biotech_354_hvac/eav-1_flow_fbk
+,,PEV-1 Flow Feedback,BAI,AI:12,DEV:47608,pev-1_flow_fbk_1,#biotech_354_hvac/pev-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:6,DEV:47608,sav-1_flow_fbk_1,#biotech_354_hvac/sav-1_flow_fbk
+,,EAV-3 Flow Feedback,BAI,AI:1,DEV:47609,eav-1_flow_fbk_1,#biotech_354ab_hvac/eav-1_flow_fbk
+,,SAV-2 Flow Feedback,BAI,AI:4,DEV:47609,sav-1_flow_fbk_1,#biotech_354ab_hvac/sav-1_flow_fbk
+,,EAV-2 Flow Feedback,BAI,AI:1,DEV:49010,eav-1_flow_fbk_1,#biotech_354c_hvac/eav-1_flow_fbk
+,,SAV-3 Flow Feedback,BAI,AI:3,DEV:49010,sav-1_flow_fbk_1,#biotech_354c_hvac/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49021,flow_input_1,#biotech_351_hvac/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49024,flow_input_1,#biotech_355_hvac/supply_airflow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49012,eav-1_flow_fbk_1,#biotech_353a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49012,sav-1_flow_fbk_1,#biotech_353a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49026,eav-1_flow_fbk_1,#biotech_357a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49026,sav-1_flow_fbk_1,#biotech_357a_hvac/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49027,flow_input_1,#biotech_359_hvac/supply_airflow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49353,eav-1_flow_fbk_1,#biotech_lab_445a_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49353,sav-1_flow_fbk_1,#biotech_lab_445a_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:49312,eav-1_flow_av_1,#biotech_lab_445_hvac/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:49312,fh-1_flow_fbk_1,#biotech_lab_445_hvac/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:5,DEV:49312,sav-1_flow_fbk_1,#biotech_lab_445_hvac/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49313,eav-1_flow_fbk_1,#biotech_lab_445b_hvac/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49313,sav-1_flow_fbk_1,#biotech_lab_445b_hvac/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49355,flow_input_1,#biotechnologybuilding_449/supply_airflow/flow_input
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49318,eav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460_control/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49318,sav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460_control/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:49319,eav-1_flow_av_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460b_control/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:49319,fh-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460b_control/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:5,DEV:49319,sav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_460b_control/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:1,DEV:49424,eav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467_control/eav-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:3,DEV:49424,sav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467_control/sav-1_flow_fbk
+,,EAV-1 Flow Feedback,BAI,AI:2,DEV:49425,eav-1_flow_av_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467b_control/eav-1_flow_av
+,,Fume Hood-1 Flow Feedback,BAI,AI:3,DEV:49425,fh-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467b_control/fh-1_flow_fbk
+,,SAV-1 Flow Feedback,BAI,AI:5,DEV:49425,sav-1_flow_fbk_1,#biotech/biotech_4th_floor/fourth_floor_fume_hood_lab_spaces/lab_467b_control/sav-1_flow_fbk
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49430,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_402_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49431,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_403a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49434,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_404_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49432,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_409a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49233,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_417a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49247,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_421a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49245,flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_423_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49246,flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_425_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49249,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_427a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49248,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_428_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49250,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_433a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:49251,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_434_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49352,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_441a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:49357,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_450_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:49356,flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_451_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49354,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_453a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:3,DEV:49328,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_456_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49326,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_457a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49327,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_460a_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49444,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_471_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:4,DEV:49358,sup_air_flow_flow_input_1,#biotech/biotech_4th_floor/fourth_floor_non_fume_hood_lab_spaces/space_475_control/sup_air_flow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:2,DEV:49429,supply_airflow_flow_input_1,#biotech_space_467a_control/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49204,supply_airflow_flow_input_1,#biotech_406/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49202,supply_airflow_flow_input_1,#biotech_408/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49210,supply_airflow_flow_input_1,#biotech_412/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49211,supply_airflow_flow_input_1,#biotech_414/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49201,flow_input_1,#biotech_416/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49203,supply_airflow_flow_input_1,#biotech_424/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49205,supply_airflow_flow_input_1,#biotech_430/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49206,supply_airflow_flow_input_1,#biotech_430a/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49207,supply_airflow_flow_input_1,#biotech_430b/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49209,flow_input_1,#biotech_435/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49208,supply_airflow_flow_input_1,#biotech_440/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49214,flow_input_1,#biotech_40053/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49215,flow_input_1,#biotech_40044/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49216,flow_input_1,#biotech_40046/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49217,supply_airflow_flow_input_1,#biotech_436_sav1/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49218,flow_input_1,#biotech_436_sav2/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49219,supply_airflow_flow_input_1,#biotech_436_capture_hood/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49301,flow_input_1,#biotech_439/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49304,supply_airflow_flow_input_1,#biotech_454/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49303,flow_input_1,#biotech_458/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49302,flow_input_1,#biotech_459/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49305,supply_airflow_flow_input_1,#biotech_470/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49306,supply_airflow_flow_input_1,#biotech_473/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49308,flow_input_1,#biotech_40045/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49403,flow_input_1,#biotech_401/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49402,flow_input_1,#biotech_465/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49401,supply_airflow_flow_input_1,#biotech_469/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49404,supply_airflow_flow_input_1,#biotech_40040/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49405,flow_input_1,#biotech_40050/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49406,flow_input_1,#biotech_40047/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49407,supply_airflow_flow_input_1,#biotech_40067/supply_airflow/flow_input
+,,Supply Flow Control / Flow Input,BAI,AI:1,DEV:49408,flow_input_1,#biotech_407/supply_airflow/flow_input
