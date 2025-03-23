@@ -32,7 +32,7 @@ app.layout = dbc.Container(className="p-0", fluid=True, children=[
             label="Dashboard",
         ),
         dbc.NavItem(dbc.NavLink("About", href="404")),
-        dbc.NavItem(dbc.NavLink("Help", href="404")),
+        dbc.NavItem(dbc.NavLink("Help", href="help")),
         dbc.NavItem(dbc.NavLink("Admin", href="admin")),
         
     ],
