@@ -64,7 +64,7 @@ def generate_table(type):
             return ", ".join([list(item.values())[0] for item in x["L"]])
         return list(x.values())[0]
     
-    res_df = res_df.applymap(lambda x: process_item(x)).iloc[:, ::-1].reset_index()
+    res_df = res_df.apply(lambda col: col.map(lambda x: process_item(x))).iloc[:, ::-1].reset_index()
     
     # print("<<<\n\n", res_df.to_dict('records', index=True))
 
@@ -117,7 +117,7 @@ def update_dynamodb(type, data):
             return value.split(", ")  
         return value 
     
-    processed_data = df.applymap(process_value).to_dict("index")
+    processed_data = df.apply(lambda col: col.map(lambda x: process_value(x))).to_dict("index")
 
     item = {
         "id": type,

@@ -47,7 +47,7 @@ labs_df = pd.DataFrame.from_dict({(i, j): labs_dict[i][j]
 
 labs_df.index = labs_df.index.droplevel(1)
 
-labs_df = labs_df.applymap(lambda x: list(x.values())[0])
+labs_df = labs_df.apply(lambda col: col.map(lambda x: list(x.values())[0]))
 
 
 
@@ -220,7 +220,9 @@ def summary(start_date, end_date, value, location, url):
 
     # Process ranking queries
     def process_query(q):
-        df = q.groupby([q.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True)
+        # Reset index to include it as a grouping column
+        q = q.reset_index()
+        df = q.groupby(["index", "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True)
         df['time_closed'] = (date_diff_min - df['value']).clip(lower=0)
         return df.rename(columns={'value': 'time_opened'})
 
@@ -255,8 +257,9 @@ def summary(start_date, end_date, value, location, url):
             labels={"time_closed": "Time Closed when Unused", "lab": "Lab"},
         )
     else:
-        within_rankings_df = dag.AgGrid(id="within_ranking_table", style={'display': 'none'})
-        within_ranking_graph = dcc.Graph(id="within_ranking_graph", style={'display': 'none'})
+        # Return empty data for the table and a blank figure.
+        within_rankings_df = []  # hide table data
+        within_ranking_graph = {"data": [], "layout": {}}
 
     # --- Same level ranking ---
     if lab is None:
