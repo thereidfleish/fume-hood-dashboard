@@ -19,8 +19,8 @@ import boto3
 from dotenv import load_dotenv
 from dash import ctx
 
-from .components.functions import synthetic_query, raw_query, format_time
-from .components.components_getters import get_sidebar, get_titles, get_date_selector, get_live_fumehood_pane, get_stats_pane, get_comparison_selector, get_ranking_pane, get_comparison_graph_pane
+from .components.functions import synthetic_query, raw_query, format_time, get_level_text
+from .components.components_getters import get_sidebar, get_titles, get_date_selector, get_live_fumehood_pane, get_stats_pane, get_comparison_selector, get_ranking_pane, get_comparison_graph_pane, get_within_ranking_pane
 
 # app = Dash(__name__, meta_tags=[
 #         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
@@ -55,6 +55,7 @@ def layout(building=None, floor=None, lab=None):
     sidebar = get_sidebar(building, floor, lab, labs_dict)
     titles = get_titles(building, floor, lab)
     date_selector = get_date_selector()
+    within_pane = get_within_ranking_pane(building, floor, lab)
     stats_pane = get_stats_pane(building, floor, lab)
     ranking_pane = get_ranking_pane(building, floor, lab)
     comparison_graph_pane = get_comparison_graph_pane(building, floor, lab)
@@ -62,61 +63,52 @@ def layout(building=None, floor=None, lab=None):
     header_row = dbc.Row(children=[titles, date_selector])
 
     if (lab is None) and (floor is None):
-        overview = dbc.Row(className="mb-3", children=[html.H3("Overview"), stats_pane])
+        overview = dbc.Col(className="mb-3", children=[html.H3("Overview of your building"), stats_pane])
+        within = dbc.Col(className="mb-3", children=[html.H3("Labs within your building"), within_pane])
         comparisons = dbc.Row(
             [
-                html.H3("Comparisons"),
-                html.Div(
-                    className="d-flex align-items-center",
-                    children=[
-                        html.H5("How does your building compare to other buildings on campus", className="me-2 mb-2"),
-                        dcc.Dropdown(
-                            options=[{'label': 'Campus', 'value': 'cornell'}],
-                            value='cornell',
-                            id="location_selector",
-                            style={"display": "none"},
-                        )
-                    ]
+                html.H3("Your building compared to others"),
+                dcc.Dropdown(
+                    options=[{'label': 'Campus', 'value': 'cornell'}],
+                    value='cornell',
+                    id="location_selector",
+                    style={"display": "none"},
                 ),
                 ranking_pane,
                 comparison_graph_pane,
             ]
         )
-        main_section = dbc.Col(className="m-2", children=[header_row, overview, comparisons])
+        main_section = dbc.Col(className="m-2", children=[header_row, dbc.Row(className="mb-3", children=[overview, within]), comparisons])
     elif lab is None:
-        overview = dbc.Row(className="mb-3", children=[html.H3("Overview"), stats_pane])
+        overview = dbc.Col(className="mb-3", children=[html.H3("Overview of your floor"), stats_pane])
+        within = dbc.Col(className="mb-3", children=[html.H3("Labs within your building"), within_pane])
         comparisons = dbc.Row(
             [
-                html.H3("Comparisons"),
-                html.Div(
-                    className="d-flex align-items-center",
-                    children=[
-                        html.H5(f"How does your floor compare to other floors in {building}", className="me-2 mb-2"),
-                        dcc.Dropdown(
-                            options=[{'label': 'building', 'value': 'building'}],
-                            value="building",
-                            id="location_selector",
-                            style={"display": "none"},
-                        )
-                    ]
+                html.H3("Your floor compared to others"),
+                dcc.Dropdown(
+                    options=[{'label': 'Campus', 'value': 'cornell'}],
+                    value='cornell',
+                    id="location_selector",
+                    style={"display": "none"},
                 ),
                 ranking_pane,
                 comparison_graph_pane,
             ]
         )
-        main_section = dbc.Col(className="m-2", children=[header_row, overview, comparisons])
+        main_section = dbc.Col(className="m-2", children=[header_row, dbc.Row(children=[overview, within]), comparisons])
     else:
-        live_fumehood_pane = get_live_fumehood_pane()
-        overview = dbc.Row(className="mb-3", children=[html.H3("Overview"), live_fumehood_pane, stats_pane])
+        live = dbc.Col(className="mb-3", children=[html.H3("Live Status"), get_live_fumehood_pane()])
+        within = dbc.Col(within_pane, style={'display': 'none'})
+        overview = dbc.Col(className="mb-3", children=[html.H3("Overview of your lab"), stats_pane])
         comparisons = dbc.Row(
             [
-                html.H3("Comparisons"),
+                html.H3("Your lab compared to others"),
                 get_comparison_selector(building, floor, lab),
                 ranking_pane,
                 comparison_graph_pane,
             ]
         )
-        main_section = dbc.Col(className="m-2", children=[header_row, overview, comparisons])
+        main_section = dbc.Col(className="m-2", children=[header_row, within, dbc.Row(children=[overview, live]), comparisons])
 
     return html.Div(
         [
@@ -177,6 +169,8 @@ def update_date_range(start_date, end_date, selected_range):
     Output("ranking_table", "dashGridOptions"),
     Output("ranking_table", "getRowStyle"),
     Output("ranking_graph", "figure"),
+    Output("within_ranking_table", "rowData"),
+    Output("within_ranking_graph", "figure"),
     Output("sash_graph", "figure"),
     Output("sash_graph_average", "children"),
     Output("sash_graph_average_change", "children"),
@@ -186,8 +180,10 @@ def update_date_range(start_date, end_date, selected_range):
     Input("location_selector", "value"),
     Input("url", "search")
 )
-def comparison(start_date, end_date, value, location, url):
-    # --- Common Preprocessing ---
+def summary(start_date, end_date, value, location, url):
+    # --- ----------------- ---
+    # --- COMMON PROCESSING ---
+    # --- ----------------- ---
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
     week_prior_start_date = start_date - timedelta(weeks=1)
@@ -198,9 +194,8 @@ def comparison(start_date, end_date, value, location, url):
     lab = params.get("lab", [None])[0]
     floor = params.get("floor", [None])[0]
     building = params.get("building", [None])[0]
-
-    # --- RANKING TABLE & GRAPH ---
-    # Filter labs_df based on location selection (for ranking)
+    
+    # Define labs_df_filtered early to avoid UnboundLocalError
     if location == "floor" and floor:
         labs_df_filtered = labs_df.filter(like=f"{building.capitalize()}.Floor_{floor}", axis=0)
     elif location == "building":
@@ -208,9 +203,12 @@ def comparison(start_date, end_date, value, location, url):
     else:
         labs_df_filtered = labs_df
 
-    targets_ranking = labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc"
+    # --- -------- ---
+    # --- RANKINGS ---
+    # --- -------- ---
 
     # Query current and last-week ranking data
+    targets_ranking = labs_df_filtered.index + ".Hood_1.sashOpenTime.unocc"
     query_ranking = synthetic_query(
         targets=targets_ranking, server="biotech_main",
         start=str(start_date), end=str(end_date), aggType="aggD"
@@ -220,7 +218,7 @@ def comparison(start_date, end_date, value, location, url):
         start=str(week_prior_start_date), end=str(start_date), aggType="aggD"
     )
 
-    # Helper function to process ranking queries
+    # Process ranking queries
     def process_query(q):
         df = q.groupby([q.index, "building", "floor", "lab", "hood"], as_index=False).sum(numeric_only=True)
         df['time_closed'] = (date_diff_min - df['value']).clip(lower=0)
@@ -229,29 +227,50 @@ def comparison(start_date, end_date, value, location, url):
     rankings_df = process_query(query_ranking)
     last_week_df = process_query(last_week_query_ranking)
 
-    # Group/aggregate based on whether a specific lab is specified
+    # Helper function to compute rankings and differences
+    def compute_rankings(current_df, last_df, merging_keys):
+        current_df = current_df.sort_values(by="time_closed", ascending=False)
+        current_df["Ranking"] = current_df['time_closed'].rank(method='min', ascending=False).astype(int)
+        last_df = last_df.sort_values(by="time_closed", ascending=False)
+        last_df["Last_Week_Ranking"] = last_df['time_closed'].rank(method='min', ascending=False).astype(int)
+        merged_df = current_df.merge(last_df[merging_keys + ["Last_Week_Ranking"]], on=merging_keys)
+        merged_df['change'] = merged_df['Last_Week_Ranking'] - merged_df['Ranking']
+        merged_df['change_display_string'] = merged_df['change'].apply(
+            lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-"
+        )
+        merged_df["percent_time_closed"] = (merged_df['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
+        merged_df['time_closed_hrmin'] = merged_df['time_closed'].apply(format_time)
+        return merged_df
+
+    # --- Within level ranking ---
+    if lab is None:
+        within_merging_keys = ['lab']
+        within_rankings_df = compute_rankings(rankings_df.copy(), last_week_df.copy(), within_merging_keys)
+        within_rankings_df = within_rankings_df.to_dict("records")
+        # Create the ranking bar graph for within level
+        within_ranking_graph = px.bar(
+            within_rankings_df,
+            x="lab",
+            y="time_closed",
+            labels={"time_closed": "Time Closed when Unused", "lab": "Lab"},
+        )
+    else:
+        within_rankings_df = dag.AgGrid(id="within_ranking_table", style={'display': 'none'})
+        within_ranking_graph = dcc.Graph(id="within_ranking_graph", style={'display': 'none'})
+
+    # --- Same level ranking ---
     if lab is None:
         if floor is None:
             level, level_data, merging_keys = "building", building, ["building"]
         else:
             level, level_data, merging_keys = "floor", floor, ["building", "floor"]
+        # Aggregate data to the required level
         rankings_df = rankings_df.groupby(merging_keys)[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
         last_week_df = last_week_df.groupby(merging_keys)[['time_opened', 'time_closed']].mean(numeric_only=True).reset_index()
     else:
         level, level_data, merging_keys = "lab", lab, ["building", "floor", "lab", "hood"]
 
-    # Calculate rankings and differences
-    rankings_df = rankings_df.sort_values(by="time_closed", ascending=False)
-    rankings_df["Ranking"] = rankings_df['time_closed'].rank(method='min', ascending=False).astype(int)
-    last_week_df = last_week_df.sort_values(by="time_closed", ascending=False)
-    last_week_df["Last_Week_Ranking"] = last_week_df['time_closed'].rank(method='min', ascending=False).astype(int)
-    rankings_df = rankings_df.merge(last_week_df[merging_keys + ["Last_Week_Ranking"]], on=merging_keys)
-    rankings_df['change'] = rankings_df['Last_Week_Ranking'] - rankings_df['Ranking']
-    rankings_df['change_display_string'] = rankings_df['change'].apply(
-        lambda x: f"↑{x}" if x > 0 else f"↓{abs(x)}" if x < 0 else "-"
-    )
-    rankings_df["percent_time_closed"] = (rankings_df['time_closed'] / date_diff_min * 100).round(0).astype(int).astype(str) + '%'
-    rankings_df['time_closed_hrmin'] = rankings_df['time_closed'].apply(format_time)
+    rankings_df = compute_rankings(rankings_df, last_week_df, merging_keys)
 
     # Prepare grid options and row styling for the ranking table
     pinnedTopRowData = rankings_df.loc[rankings_df[level] == level_data].to_dict('records')
@@ -265,7 +284,7 @@ def comparison(start_date, end_date, value, location, url):
         ]
     }
 
-    # Create the ranking bar graph
+    # Create the ranking bar graph for same level
     ranking_graph = px.bar(
         rankings_df,
         x=level,
@@ -276,7 +295,9 @@ def comparison(start_date, end_date, value, location, url):
         "red" if c == lab else "blue" for c in ranking_graph["data"][0]["x"]
     ]
 
+    # --- ---------- ---
     # --- SASH GRAPH ---
+    # --- ---------- ---
     # Determine main query targets based on the page for sash graph
     if lab is not None:
         target = f"{building.capitalize()}.Floor_{floor}.Lab_{lab}.Hood_1.sashOpenTime.unocc"
@@ -368,6 +389,8 @@ def comparison(start_date, end_date, value, location, url):
             dashGridOptions,
             getRowStyle,
             ranking_graph,
+            within_rankings_df,
+            within_ranking_graph,
             sash_fig,
             sash_graph_average_string,
             sash_graph_average_change_string)

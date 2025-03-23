@@ -146,43 +146,124 @@ def get_live_fumehood_pane():
         ]
     )
 
-def get_stats_pane(building, floor, lab):
+def get_common_ranking_tabs(table_id, graph_id, columnDefs, graph_style=None):
+    return dbc.Tabs(
+        [
+            dbc.Tab(
+                dbc.Col(
+                    dcc.Loading(
+                        id="is-loading",
+                        children=[
+                            dag.AgGrid(
+                                id=table_id,
+                                columnDefs=columnDefs,
+                                defaultColDef={
+                                    "editable": False,
+                                    "cellStyle": {"fontSize": "15px", "height": "50px"}
+                                },
+                                columnSize="sizeToFit",
+                                dashGridOptions={'tooltipMouseTrack': True, 'tooltipShowDelay': 0, 'tooltipHideDelay': 10000}
+                            )
+                        ]
+                    )
+                ),
+                label="Table"
+            ),
+            dbc.Tab(
+                dbc.Col(
+                    dcc.Loading(
+                        id="is-loading",
+                        children=[
+                            dcc.Graph(
+                                id=graph_id,
+                                style=graph_style if graph_style else {'border-radius': '5px',
+                                    'background-color': '#f3f3f3',
+                                    "margin-bottom": "10px", 'max-width': "500px"}
+                            )
+                        ]
+                    )
+                ),
+                label="Graph"
+            )
+        ]
+    )
+
+def get_within_ranking_pane(building, floor, lab):
+    columnDefs = [
+        {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
+        {"headerName": "Lab", "field": "lab"},
+        {"headerName": "% Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
+        {"headerName": "Change", "field": "change_display_string"}
+    ]
+    
     return dbc.Col(
         className="card mx-1",
         children=[
-            html.H4(
-                f"Energy wasted by {get_fumehood_text(building, floor, lab)} is equivalent to",
-                className="section-title"
-            ),
-            dbc.Card(
-                [
-                    html.Span("💰", className="metric-emoji"),
-                    html.Span("$100", className="metric-text")
-                ],
-                className="metric-card energy-cost"
-            ),
-            dbc.Card(
-                [
-                    html.Span("🏠", className="metric-emoji"),
-                    html.Span("5 homes' energy", className="metric-text")
-                ],
-                className="metric-card energy-homes"
-            ),
-            dbc.Card(
-                [
-                    html.Span("🏭", className="metric-emoji"),
-                    html.Span("200kg CO₂ and xx trees absorb in a day", className="metric-text")
-                ],
-                className="metric-card energy-co2"
-            ),
+            dcc.Loading(
+                id="is-loading",
+                children=[
+                    get_common_ranking_tabs(
+                        "within_ranking_table", "within_ranking_graph", columnDefs
+                    )
+                ]
+            )
         ]
     )
+
+def get_stats_pane(building, floor, lab):
+    return dbc.Col(children=[
+        dbc.Row(
+            className="card mx-1 mb-3",
+            children=[
+                html.H4(
+                    f"Total energy wasted by {get_fumehood_text(building, floor, lab)}",
+                    className="section-title"
+                ),
+                dbc.Card(
+                    [
+                        html.Span("1000 kWh", className="metric-text")
+                    ],
+                    className="metric-card"
+                )
+            ]
+        ),
+        dbc.Row(
+            className="card mx-1",
+            children=[
+                html.H4(
+                    f"Energy wasted by {get_fumehood_text(building, floor, lab)} is equivalent to",
+                    className="section-title"
+                ),
+                dbc.Card(
+                    [
+                        html.Span("💰", className="metric-emoji"),
+                        html.Span("$100", className="metric-text")
+                    ],
+                    className="metric-card energy-cost"
+                ),
+                dbc.Card(
+                    [
+                        html.Span("🏠", className="metric-emoji"),
+                        html.Span("5 homes' energy", className="metric-text")
+                    ],
+                    className="metric-card energy-homes"
+                ),
+                dbc.Card(
+                    [
+                        html.Span("🏭", className="metric-emoji"),
+                        html.Span("200kg CO₂ and xx trees absorb in a day", className="metric-text")
+                    ],
+                    className="metric-card energy-co2"
+                ),
+            ]
+        )
+    ])
 
 def get_comparison_selector(building, floor, lab):
     return html.Div(
         className="d-flex align-items-center",
         children=[
-            html.H5("How does your lab compare to labs in ", className="me-2 mb-2"),
+            html.H5("Compare to labs in ", className="me-2 mb-2"),
             html.Div(
                 children=[
                     dcc.Dropdown(
@@ -203,18 +284,18 @@ def get_comparison_selector(building, floor, lab):
     )
 
 def get_ranking_pane(building, floor, lab):
-    if (lab is None):
-        columnDefs=[
+    if lab is None:
+        columnDefs = [
             {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
             {"headerName": "Average % Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
             {"headerName": "Change", "field": "change_display_string"}
         ]
-        if (floor is None):
+        if floor is None:
             columnDefs.insert(1, {"headerName": "Building", "field": "building"})
         else:
             columnDefs.insert(1, {"headerName": "Floor", "field": "floor"})
     else:
-        columnDefs=[
+        columnDefs = [
             {"headerName": "Ranking", "field": "Ranking", "cellStyle": {"fontSize": "25px", "height": "50px"}},
             {"headerName": "Lab", "field": "lab"},
             {"headerName": "% Time Closed", "field": "percent_time_closed", "tooltipField": "time_closed_hrmin"},
@@ -227,50 +308,8 @@ def get_ranking_pane(building, floor, lab):
             dcc.Loading(
                 id="is-loading",
                 children=[
-                    html.H4(f"What is the ranking of your {get_level_text(building, floor, lab)}?"),
-                    dbc.Tabs(
-                        [
-                            dbc.Tab(
-                                dbc.Col(
-                                    dcc.Loading(
-                                        id="is-loading",
-                                        children=[
-                                            dag.AgGrid(
-                                                id="ranking_table",
-                                                columnDefs=columnDefs,
-                                                defaultColDef={
-                                                    "editable": False,
-                                                    'cellRendererSelector': {"function": "rowPinningTop(params)"},
-                                                    "cellStyle": {"fontSize": "15px", "height": "50px"}
-                                                },
-                                                columnSize="sizeToFit",
-                                                dashGridOptions={'tooltipMouseTrack': True, 'tooltipShowDelay': 0, 'tooltipHideDelay': 10000}
-                                            )
-                                        ]
-                                    )
-                                ),
-                                label="Table"
-                            ),
-                            dbc.Tab(
-                                dbc.Col(
-                                    dcc.Loading(
-                                        id="is-loading",
-                                        children=[
-                                            dcc.Graph(
-                                                id="ranking_graph",
-                                                style={
-                                                    'border-radius': '5px',
-                                                    'background-color': '#f3f3f3',
-                                                    "margin-bottom": "10px"
-                                                }
-                                            )
-                                        ]
-                                    )
-                                ),
-                                label="Graph"
-                            )
-                        ]
-                    ),
+                    html.H4("Time closed over entire period"),
+                    get_common_ranking_tabs("ranking_table", "ranking_graph", columnDefs)
                 ]
             )
         ]
@@ -283,7 +322,7 @@ def get_comparison_graph_pane(building, floor, lab):
             dcc.Loading(
                 id="is-loading",
                 children=[
-                    html.H4("When and how much is your fume hood sash closed?"),
+                    html.H4("Time closed per day"),
                     html.P("Daily Average:"),
                     html.Div(id='sash_graph_average'),
                     html.Div(id='sash_graph_average_change'),

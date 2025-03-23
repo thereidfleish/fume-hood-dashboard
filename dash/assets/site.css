@@ -53,7 +53,7 @@ h1 {
 }
 
 .section-title {
-    font-weight: bold;
+    /* font-weight: bold; */
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
@@ -77,12 +77,12 @@ h1 {
     height: 2.5rem ;
     color: #000;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.3rem;
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
-.energy-cost {
+/* .energy-cost {
     background: linear-gradient(180deg, #D8F7D3 0%, #C5F4CF 100%);
 }
 
@@ -92,7 +92,7 @@ h1 {
 
 .energy-co2 {
     background: linear-gradient(180deg, #C8C8C8 0%, #939393 100%);
-}
+} */
 
 .metric-emoji {
     font-size: 1.5rem;

@@ -13,7 +13,7 @@ from datetime import datetime, timezone, timedelta
 import requests
 import json
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
+app = dash.Dash(__name__, use_pages=True, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
     ])
 
