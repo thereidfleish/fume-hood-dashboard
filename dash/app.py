@@ -2,16 +2,8 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 import dash
-from dash import Dash, html, dcc, Input, Output
+from dash import html
 import dash_bootstrap_components as dbc
-import dash_svg
-from dash_svg import Svg, G, Path, Circle
-import plotly.express as px
-import pandas as pd
-import numpy as np
-from datetime import datetime, timezone, timedelta
-import requests
-import json
 
 app = dash.Dash(__name__, use_pages=True, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.BOOTSTRAP], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"},

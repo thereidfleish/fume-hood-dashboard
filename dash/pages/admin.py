@@ -1,25 +1,10 @@
 import dash
-from dash import Dash, html, dcc, Input, Output, callback, clientside_callback, dash_table, State, MATCH
-import dash_ag_grid as dag
+from dash import html, Input, Output, callback, dash_table, State, MATCH
 import dash_bootstrap_components as dbc
-import feffery_antd_components as fac
-import dash_svg as svg
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta, date
-from dateutil import tz
-import requests
-import json
-from urllib.parse import urlparse
-from urllib.parse import parse_qs
-import os
 import boto3
 from dotenv import load_dotenv
 from dash import ctx
-
-from .components.functions import synthetic_query, treeview, expanded_name, raw_query
 
 dash.register_page(__name__)
 

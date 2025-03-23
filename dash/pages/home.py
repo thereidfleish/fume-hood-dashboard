@@ -1,12 +1,7 @@
 import dash
-from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
+from dash import html
 import dash_bootstrap_components as dbc
 import feffery_antd_components as fac
-import plotly.express as px
-import pandas as pd
-from datetime import datetime, timezone, timedelta
-import requests
-import numpy as np
 from .components.functions import cascaderview, expanded_name
 
 # Make a homepage of dashboard that gives an overview of the 
