@@ -24,7 +24,7 @@ def generate_grid(type):
         TableName=TABLE_NAME, Key={"id": {"S": type}}
     )
     
-    print("<<<")
+    # print("<<<")
     # print(json.dumps(res, indent=4))
     # print(res)
     
@@ -85,10 +85,9 @@ def generate_grid(type):
             dashGridOptions={
                 "rowSelection": "multiple",
                 "animateRows": True,
-                "domLayout": "autoHeight",
+                # "domLayout": "autoHeight",
             },
-            # style={'height': '400px', 'width': '100%'},
-            style = {"height": None, "width": "100%"},
+            style = {"height": '300px', "width": "100%"},
             className="ag-theme-alpine"
         ),
         html.Div(className="d-flex justify-content-between", children=[
@@ -118,7 +117,7 @@ def generate_table(type):
         TableName=TABLE_NAME, Key={"id": {"S": type}}
     )
     
-    print("<<<")
+    # print("<<<")
     # print(json.dumps(res, indent=4))
     # print(res)
     
