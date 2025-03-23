@@ -2,7 +2,6 @@ import dash
 from dash import Dash, html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
 import feffery_antd_components as fac
-import dash_treeview_antd
 import plotly.express as px
 import pandas as pd
 from datetime import datetime, timezone, timedelta

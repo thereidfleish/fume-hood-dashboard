@@ -4,7 +4,6 @@
 import dash
 from dash import Dash, html, dcc, Input, Output
 import dash_bootstrap_components as dbc
-import dash_treeview_antd
 import dash_svg
 from dash_svg import Svg, G, Path, Circle
 import plotly.express as px
@@ -47,4 +46,4 @@ app.layout = dbc.Container(className="p-0", fluid=True, children=[
 ])
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8055)
+    app.run(debug=True, host='0.0.0.0', port=8055)
