@@ -1,17 +1,19 @@
 var dagcomponentfuncs = window.dashAgGridComponentFunctions = window.dashAgGridComponentFunctions || {};
 
 dagcomponentfuncs.Button = function (props) {
-    const {setData, data} = props;
+    const { setData, data } = props;
 
     function onClick() {
-        setData();
+        setData(data); 
+        console.log("Button clicked in row:", data);  
     }
+
     return React.createElement(
         'button',
         {
             onClick: onClick,
-            className: props.className,
+            className: props.className || "test-button"
         },
-        props.value
+        props.value || "run"
     );
 };

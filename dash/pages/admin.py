@@ -107,10 +107,13 @@ def generate_grid(type):
                 "rowSelection": "multiple",
                 "animateRows": True,
                 # "domLayout": "autoHeight",
+                "components": {"Button": "Button"},
+                "cellRendererData": {"type": "button-data", "index": type},
             },
             style = {"height": '300px', "width": "100%"},
             className="ag-theme-alpine"
         ),
+        html.Div(id="hoods-button-output", style={"marginTop": "10px", "color": "green"}),
         html.Div(className="d-flex justify-content-between", children=[
             dbc.Button("Add Row", id={
                 'type': 'add-row-grid',
@@ -253,11 +256,14 @@ def update_grid(type, data):
         writer.put_item(Item=item)
 
 @callback(
-    Output("button-value-changed", "children"),
-    Input("button-data", "cellRendererData"),
+    Output("hoods-button-output", "children"),  
+    Input({"type": "button-data", "index": "hoods"}, "cellRendererData"),
 )
 def run_test(data):
-    return json.dumps(data)
+    if data:
+        return f"Button clicked in row: {json.dumps(data)}"
+    return "No data received."
+
 
 @callback(
     Output({'type': 'output-message', 'index': MATCH, 'subtype': 'table'}, 'children'),
@@ -266,7 +272,7 @@ def run_test(data):
     prevent_initial_call=True
 )
 def save_datatable_changes(n_clicks, data):
-    if n_clicks:
+    if n_clicks > 0:
         try:
             update_table(ctx.triggered_id["index"], data)
             return "Changes saved successfully!"
@@ -280,7 +286,7 @@ def save_datatable_changes(n_clicks, data):
     prevent_initial_call=True
 )
 def save_aggrid_changes(n_clicks, data):
-    if n_clicks:
+    if n_clicks > 0:
         try:
             update_grid(ctx.triggered_id["index"], data)
             return "Changes saved successfully!"

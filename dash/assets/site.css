@@ -128,3 +128,24 @@ h1 {
     z-index: 999999 !important;
     overflow: visible;
 }
+
+/* Admin Test Buttons */
+
+.test-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffd000;
+    color: white;
+    border: none;
+    padding: 4px 12px; 
+    border-radius: 4px;
+    font-size: 12px;        
+    height: 30px;   
+    cursor: pointer;   
+}
+
+.test-button:hover {
+    background-color: #f1a100;
+}
+
