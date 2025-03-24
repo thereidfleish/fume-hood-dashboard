@@ -3,7 +3,8 @@ from dash import html
 import dash_bootstrap_components as dbc
 import feffery_antd_components as fac
 from .components.functions import cascaderview, expanded_name
-
+from dash import html, dcc, Input, Output, callback, clientside_callback
+import urllib.parse
 # Make a homepage of dashboard that gives an overview of the 
 # project, source of data, and what each metric indicates. 
 
@@ -22,27 +23,34 @@ labs_dict = labs_response['Item']["map"]["M"]
 
 # print(cascaderview(list(labs_dict.keys())))
 
+
 dash.register_page(__name__, path='/')
 
 
 def layout(building=None, floor=None, **other_unknown_query_strings):
-    return html.Div([  # Switch to Div for better flow control
-        html.Div([  # This div wraps the title and cascader for centralized styling
+    return html.Div([
+
+        dcc.Location(id='url'), 
+        html.Div([
             html.H1("Cornell Fume Hood Dashboard", style={'textAlign': 'center'}),
-            fac.AntdCascader(
-                placeholder='Select a building, floor or lab',
-                options=cascaderview(list(labs_dict.keys())),
-                changeOnSelect=True,
-                popupContainer='parent',
-                popupClassName='cascaderPopup',
-                locale='en-us',
-                size='large',
-                style={'width': '800px', 'display': 'block', 'margin': 'auto'}
-            )
-        ], style={
-            'text-align': 'left',
-            'padding': '20px'
-        }),
+            dbc.Row([  # Row for the cascader and button
+                dbc.Col([  # Column containing both the cascader and the button
+                    fac.AntdCascader(
+                        id='building-cascader',
+                        placeholder='Select a building, floor or lab',
+                        options=cascaderview(list(labs_dict.keys())),
+                        changeOnSelect=True,
+                        popupContainer='parent',
+                        popupClassName='cascaderPopup',
+                        locale='en-us',
+                        size='large',
+                        style={'width': '70%', 'display': 'inline-block'},
+                    ),
+                    dbc.Button("Search", id="search-button", n_clicks=0, style={'margin-left': '10px'})
+                ], width=12)
+            ], justify="center", style={'margin-left': '20%','padding': '20px', 'display': 'flex', 'align-items': 'center'})
+        ], style={'text-align': 'left'}),
+
         dbc.Row([  # Row for images
             dbc.Col(html.Img(src="/assets/campus.png", style={'width': '100%', 'height': 'auto'}), md=1)
             # dbc.Col(html.Img(src="/assets/building.png", style={'width': '70%', 'height': 'auto'}), md=1),
@@ -72,4 +80,16 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
             )]), md=1)
     ], justify="center", style={'margin-top':'20px'})],
     style={'margin-top':'150px'})
+    
 
+@callback(
+    Output('url', 'pathname'),
+    Input('search-button', 'n_clicks'),
+    [dash.dependencies.State('building-cascader', 'value')]
+)
+def update_output(n_clicks, cascader_value):
+    if n_clicks > 0 and cascader_value:
+        print(cascader_value)
+        print(f"/dashboard{cascader_value[-1]}")
+        return f"/dashboard{cascader_value[-1]}"
+    return "/"
