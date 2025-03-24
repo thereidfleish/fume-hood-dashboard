@@ -135,17 +135,23 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: translate(5px, 10px);
     background-color: #ffd000;
-    color: white;
     border: none;
-    padding: 4px 12px; 
-    border-radius: 4px;
-    font-size: 12px;        
-    height: 30px;   
+    padding: 10px 10px; 
+    border-radius: 20px;
     cursor: pointer;   
 }
 
 .test-button:hover {
     background-color: #f1a100;
+}
+
+.test-succeeds {
+    background-color: #00cb25;
+}
+
+.test-fails {
+    background-color: #cb0000;
 }
 

@@ -1,5 +1,5 @@
 import dash
-from dash import html, Input, Output, callback, dash_table, State, MATCH
+from dash import html, Input, Output, callback, dash_table, State, MATCH, callback_context
 import dash_bootstrap_components as dbc
 import pandas as pd
 import boto3
@@ -70,7 +70,6 @@ def generate_grid(type):
             "wrapText": True if col == "lab_id" else False,
             "autoHeight": True if col == "lab_id" else False,
             "checkboxSelection": True if col == "id" else False,
-            # "cellEditor": "agSelectCellEditor" if col == "building" else ("agLargeTextCellEditor" if col == "lab_id" else "agTextCellEditor"),
             "cellEditor": "agSelectCellEditor" if col == "building" else "agTextCellEditor",
             "cellEditorParams": {
             "values": col_building if col == "building" else None} 
@@ -79,14 +78,26 @@ def generate_grid(type):
     ]
 
     if type == "hoods":
-        column_defs = column_defs + [{
-        "headerName": "test",
+        column_defs = column_defs + [
+        {"headerName": "test",
         "field": "test",
         "editable": False,
-        "cellRenderer": "Button",
-        "cellRendererParams": {"className": "test-button"}
-    }]
-
+        "cellRenderer": "button",
+        "cellRendererParams": {"className": "test-button"}}
+    ]
+        
+    dash_grid_options = {
+            "rowSelection": "multiple",
+            "animateRows": True
+        }
+    
+    if type == "hoods":
+        dash_grid_options.update({
+            "components": {'button': 'button'},
+            "cellRendererData": {'id': {'type': 'test-button-output', 'index': type}}
+        })
+        
+    
     return html.Div([
         dag.AgGrid(
             id={
@@ -96,24 +107,16 @@ def generate_grid(type):
             columnDefs=column_defs,
             columnSize="responsiveSizeToFit",
             rowData=res_df.to_dict('records'),
-            # rowData = row_defs,
             defaultColDef={
                 "sortable": True,
                 "filter": True,
                 "editable": True,
                 "resizable": True
             },
-            dashGridOptions={
-                "rowSelection": "multiple",
-                "animateRows": True,
-                # "domLayout": "autoHeight",
-                "components": {"Button": "Button"},
-                "cellRendererData": {"type": "button-data", "index": type},
-            },
+            dashGridOptions=dash_grid_options,
             style = {"height": '300px', "width": "100%"},
             className="ag-theme-alpine"
         ),
-        html.Div(id="hoods-button-output", style={"marginTop": "10px", "color": "green"}),
         html.Div(className="d-flex justify-content-between", children=[
             dbc.Button("Add Row", id={
                 'type': 'add-row-grid',
@@ -130,7 +133,8 @@ def generate_grid(type):
                 'index': type
             }, color="primary", className="m-1", n_clicks=0),
         ]),
-        html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'grid'}, style={'margin-top': '10px', 'color': 'green'}),
+        html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
+        html.Div(id={'type': 'test-button-output', 'index': type}, style={'marginTop': '10px', 'color': 'green'}),
     ])
 
 
@@ -207,7 +211,7 @@ def generate_table(type):
                         'index': type
                     }, color="primary", className="m-1", n_clicks=0),
         ]),
-        html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'table'}, style={'margin-top': '10px', 'color': 'green'}),
+        html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'table'}, style={'marginTop': '10px', 'color': 'green'}),
     ])
 
 # Update DynamoDB for Dash Table
@@ -255,14 +259,26 @@ def update_grid(type, data):
     with table.batch_writer() as writer:
         writer.put_item(Item=item)
 
+
 @callback(
-    Output("hoods-button-output", "children"),  
-    Input({"type": "button-data", "index": "hoods"}, "cellRendererData"),
+    Output({'type': 'test-button-output', 'index': "hoods"}, 'children'),
+    Input({'type': 'db-grid', 'index': "hoods"}, 'cellRendererData') 
 )
 def run_test(data):
     if data:
         return f"Button clicked in row: {json.dumps(data)}"
     return "No data received."
+
+
+# @callback(
+#     Output({'type': 'test-button-output', 'index': "hoods"}, 'children'),
+#     Input({'type': 'test-button-output', 'index': "hoods"}, 'cellRendererData')
+# )
+# def run_test(data):
+#     ctx = callback_context
+#     if ctx.triggered or data:
+#         return f"Button clicked in row: {json.dumps(data)}"
+#     return "No data received."
 
 
 @callback(

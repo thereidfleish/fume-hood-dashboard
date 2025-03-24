@@ -1,19 +1,45 @@
-var dagcomponentfuncs = window.dashAgGridComponentFunctions = window.dashAgGridComponentFunctions || {};
+// import isPropValid from '@emotion/is-prop-valid';
 
-dagcomponentfuncs.Button = function (props) {
-    const { setData, data } = props;
+// function shouldForwardProp(propName, target) {
+//     if (typeof target === "string") {
+//         return isPropValid(propName);
+//     }
+//     return true;
+// }
 
-    function onClick() {
-        setData(data); 
-        console.log("Button clicked in row:", data);  
+
+console.log("dashAgGridComponentFunctions.js loaded");
+window.dashAgGridComponentFunctions = window.dashAgGridComponentFunctions || {};
+var dagcomponentfuncs = window.dashAgGridComponentFunctions;
+console.log("dagcomponentfuncs object:", dagcomponentfuncs);
+console.log("Custom renderer registered:", dagcomponentfuncs.button);
+
+
+
+dagcomponentfuncs.button = function (props) {
+    console.log("Button props:", props);
+
+    const { data, setData, value, className } = props;
+
+    function onClick(event) {
+        if (data) {
+            setData(data);
+            console.log("Button clicked in row:", data);
+            event.target.classList.add("test-succeeds");
+            event.target.classList.remove("test-fails");
+        } else {
+            console.log("No data returned.");
+            event.target.classList.add("test-fails");
+            event.target.classList.remove("test-succeeds");
+        }
     }
 
     return React.createElement(
-        'button',
+        "button",
         {
             onClick: onClick,
-            className: props.className || "test-button"
+            className: className || "test-button"
         },
-        props.value || "run"
+        value 
     );
 };
