@@ -1,6 +1,9 @@
 import pandas as pd
 from dateutil import tz
 import requests
+from requests.auth import HTTPBasicAuth
+import html
+import os
 
 ### SYNTHETIC QUERY ###
 def synthetic_query(targets, server, start, end, aggType):
@@ -74,8 +77,19 @@ def raw_query(target, server, start, end, aggType):
 
     return master
 
-### TREEVIEW ###
+### LIVE LAB STATUS ###
+# Docs: https://bacapi.emcs.cornell.edu/docs
+def live_lab_query(device_instance, object_identifier):
+    url = f"https://bacapi.emcs.cornell.edu/{html.escape(device_instance)}/{html.escape(object_identifier)}"
+    headers = {'accept': 'application/json'}
+    auth = HTTPBasicAuth(os.environ.get("LIVE_LAB_STATUS_USERNAME"), os.environ.get("LIVE_LAB_STATUS_PW"))
 
+    response = requests.get(url, headers=headers, auth=auth)
+
+    print(response.status_code)
+    print(response.json())
+
+### TREEVIEW ###
 # deconstructs hood IDs into building, floor and lab. 
 # stores all information in a dictionary with building keys and dictionary values.
 # the inner dictionary has keys which correspond to floors, floor keys, labs, and lab keys. 
