@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from dash import ctx
 import dash_ag_grid as dag
 import json
+from .components import functions
+from datetime import datetime
 
 # import dash_mantine_components as dmc
 # import dash_iconify
@@ -132,9 +134,14 @@ def generate_grid(type):
                 'type': 'save-db-button-grid',
                 'index': type
             }, color="primary", className="m-1", n_clicks=0),
+
+            dbc.Button("Test Points", id={
+                'type': 'test-points-button',
+                'index': type
+            }, color="primary", className="m-1", n_clicks=0),
         ]),
         html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
-        html.Div(id={'type': 'test-button-output', 'index': type}, style={'marginTop': '10px', 'color': 'green'}),
+        html.Div(id={'type': 'test-button-output', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
     ])
 
 
@@ -348,7 +355,60 @@ def save_aggrid_changes(n_clicks, data):
 #     "message": {{error message from try/catch}}
 #     }
 # ]
+def test_point(id, building, is_synthetic):
+   if is_synthetic is True:
+       try:
+           functions.synthetic_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
+           return "success"
+       except Exception as e:
+           return {str(e)}
+   else:
+       try:
+           functions.raw_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
+           return "success"
+       except Exception as e:
+           return {str(e)}
 
+def test_all_points(arr_points):
+  tested_points = []
+  for point in arr_points:
+      message = test_point(point["id"], point["building"], point["is_synthetic"])
+      if (message == "success"):
+          tempDict = {"id": point["id"], "status": True, "message": message}
+          tested_points.append(tempDict)
+      else:
+          tempDict = {"id": point["id"], "status": False, "message": message}
+          tested_points.append(tempDict)
+  return tested_points
+
+@callback(
+   Output({'type': 'test-button-output', 'index': MATCH, 'subtype': 'grid'}, 'children'),
+   Input({'type': 'test-points-button', 'index': MATCH}, 'n_clicks'),
+   State({'type': 'db-grid', 'index': MATCH}, 'rowData'),
+   prevent_initial_call=True
+)
+def get_points(n_clicks, data):
+    if n_clicks > 0:
+       print("button clicked")
+       points_to_test = []
+       for obj in data:
+           base_id = obj["id"]
+           building = obj["building"]
+
+           # Synthetic version
+           points_to_test.append({
+               "id": base_id + ".sashOpenTime.unocc",
+               "building": building,
+               "is_synthetic": True
+           })
+
+           # Raw version
+           points_to_test.append({
+               "id": base_id,
+               "building": building,
+               "is_synthetic": False
+           })
+    return str(test_all_points(points_to_test))
 
 @callback(
     Output({'type': 'db-table', 'index': MATCH}, 'data'),
