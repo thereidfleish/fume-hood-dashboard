@@ -35,9 +35,6 @@ def generate_grid(type):
     res_dict = res['Item']["map"]["M"]
     # print(json.dumps(res_dict, indent=4))
     
-    all_ids = [key + ".sashOpenTime.unocc" for key in res_dict.keys()]
-    # print(all_ids)
-    
     res_df = pd.DataFrame.from_dict({(i, j): res_dict[i][j]
                                   for i in res_dict.keys()
                                   for j in res_dict[i].keys()},
@@ -137,103 +134,6 @@ def generate_grid(type):
         html.Div(id={'type': 'test-button-output', 'index': type}, style={'marginTop': '10px', 'color': 'green'}),
     ])
 
-
-# PARAMS:
-# type (string): One of "buildings", "labs", or "hoods"
-def generate_table(type):
-    res = dynamodb_client.get_item(
-        TableName=TABLE_NAME, Key={"id": {"S": type}}
-    )
-    
-    # print("<<<")
-    # print(json.dumps(res, indent=4))
-    # print(res)
-    
-    res_dict = res['Item']["map"]["M"]
-    # print(json.dumps(res_dict, indent=4))
-    
-    all_ids = [key + ".sashOpenTime.unocc" for key in res_dict.keys()]
-    # print(all_ids)
-    
-    res_df = pd.DataFrame.from_dict({(i, j): res_dict[i][j]
-                                  for i in res_dict.keys()
-                                  for j in res_dict[i].keys()},
-                                 orient='index')
-    
-    res_df.index = res_df.index.droplevel(1)
-    res_df.index.name = "id"
-    
-    def process_item(x):
-        if "NULL" in x.keys():
-            return None
-        elif "L" in x: 
-            return ", ".join([list(item.values())[0] for item in x["L"]])
-        return list(x.values())[0]
-    
-    res_df = res_df.apply(lambda col: col.map(lambda x: process_item(x))).iloc[:, ::-1].reset_index()
-    
-    # print("<<<\n\n", res_df.to_dict('records', index=True))
-
-    return html.Div([
-        dash_table.DataTable(
-            id={
-                'type': 'db-table',
-                'index': type
-            },
-            columns=[{'name': col, 'id': col, 'editable': True, "type": "text"} for col in res_df.columns],
-            data=res_df.to_dict('records'),
-            editable=True,
-            row_deletable=True,
-            # fixed_rows={'headers': True},
-            sort_action='native',
-            # style_header={"overflow": "hidden"},
-            style_table={'overflowX': 'auto', 'maxHeight': '400px'},
-            style_cell={'textAlign': 'left'},
-            style_data_conditional=[
-                {
-                    'if': {
-                        'filter_query': '{{{}}} is blank'.format(col),
-                        'column_id': col
-                    },
-                    'backgroundColor': 'tomato',
-                    'color': 'white'
-                } for col in res_df.columns
-            ]
-        ),
-        html.Div(className="d-flex justify-content-between", children=[
-                    dbc.Button("Add Row", id={
-                        'type': 'add-row-table',
-                        'index': type
-                        }, color="link", n_clicks=0),
-                    
-                    dbc.Button("Save Changes", id={
-                        'type': 'save-db-button-table',
-                        'index': type
-                    }, color="primary", className="m-1", n_clicks=0),
-        ]),
-        html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'table'}, style={'marginTop': '10px', 'color': 'green'}),
-    ])
-
-# Update DynamoDB for Dash Table
-def update_table(type, data):
-    # print(">>> update_table() called")
-    df = pd.DataFrame.from_dict(data).set_index("id")
-    
-    def process_value(value):
-        if isinstance(value, str) and ", " in value:  
-            return value.split(", ")  
-        return value 
-    
-    processed_data = df.apply(lambda col: col.map(lambda x: process_value(x))).to_dict("index")
-
-    item = {
-        "id": type,
-        "map": processed_data
-    }
-
-    with table.batch_writer() as writer:
-        writer.put_item(Item=item)
-
 # Update DynamoDB for AgGrid
 def update_grid(type, data):
     # print(">>> update_grid() called")
@@ -279,21 +179,6 @@ def run_test(data):
 #     if ctx.triggered or data:
 #         return f"Button clicked in row: {json.dumps(data)}"
 #     return "No data received."
-
-
-@callback(
-    Output({'type': 'output-message', 'index': MATCH, 'subtype': 'table'}, 'children'),
-    Input({'type': 'save-db-button-table', 'index': MATCH}, 'n_clicks'),
-    State({'type': 'db-table', 'index': MATCH}, 'data'),
-    prevent_initial_call=True
-)
-def save_datatable_changes(n_clicks, data):
-    if n_clicks > 0:
-        try:
-            update_table(ctx.triggered_id["index"], data)
-            return "Changes saved successfully!"
-        except Exception as e:
-            return f"Error updating database: {str(e)}"
         
 @callback(
     Output({'type': 'output-message', 'index': MATCH, 'subtype': 'grid'}, 'children'),
@@ -308,7 +193,6 @@ def save_aggrid_changes(n_clicks, data):
             return "Changes saved successfully!"
         except Exception as e:
             return f"Error updating database: {str(e)}"
-
 
 
 # 1. Create callback similar to above that takes in a button push and the state of the table
@@ -349,17 +233,6 @@ def save_aggrid_changes(n_clicks, data):
 #     }
 # ]
 
-
-@callback(
-    Output({'type': 'db-table', 'index': MATCH}, 'data'),
-    Input({'type': 'add-row-table', 'index': MATCH}, 'n_clicks'),
-    State({'type': 'db-table', 'index': MATCH}, 'data'),
-    State({'type': 'db-table', 'index': MATCH}, 'columns'))
-def add_row(n_clicks, rows, columns):
-    if n_clicks > 0:
-        rows.append({c['id']: '' for c in columns})
-    return rows
-
 @callback(
     Output({'type': 'db-grid', 'index': MATCH}, 'rowData'),
     Input({'type': 'add-row-grid', 'index': MATCH}, 'n_clicks'),
@@ -374,41 +247,16 @@ def add_row_grid(n_clicks, rows, columns):
     return rows
 
 @callback(
-    # Output({'type': 'db-grid', 'index': MATCH}, 'rowData'),
     Output({'type': 'db-grid', 'index': MATCH}, 'deleteSelectedRows'),
     Input({'type': 'delete-row-grid', 'index': MATCH}, 'n_clicks')
-    # State({'type': 'db-grid', 'index': MATCH}, 'rowData'),
-    # State({'type': 'db-grid', 'index': MATCH}, 'selectedRows')
     )
 def delete_row_grid(_):
-    # if n_clicks > 0 and selected_rows:
-    #     selected_ids = [row['id'] for row in selected_rows]
-    #     updated_data = [row for row in rows if row['id'] not in selected_ids]
-    #     try:
-    #         update_grid(ctx.triggered_id['index'], updated_data) 
-    #         return updated_data, "Selected rows deleted successfully!"
-    #     except Exception as e:
-    #         return rows, f"Error deleting rows: {str(e)}"
-    # return rows
     return True
 
 
 def layout(**other_unknown_query_strings):
     return html.Main(className="p-2", children=[
-        
         html.H1("Admin Dashboard"),
-
-        # html.H3("Occupants"),
-        # generate_table("occupants"),
-
-        # html.H3("Buildings"),
-        # generate_table("buildings"),
-        
-        # html.H3("Labs"),
-        # generate_table("labs"),
-        
-        # html.H3("Hoods"),
-        # generate_table("hoods"),
 
         html.H3("Occupants"),
         generate_grid("occupants"),
@@ -423,6 +271,3 @@ def layout(**other_unknown_query_strings):
         generate_grid("hoods"),
 
     ])
-
-
-
