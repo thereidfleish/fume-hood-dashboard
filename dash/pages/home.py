@@ -30,7 +30,7 @@ dash.register_page(__name__, path='/')
 def layout(building=None, floor=None, **other_unknown_query_strings):
     return html.Div([
 
-        dcc.Location(id='url'), 
+        # dcc.Location(id='url'), 
         html.Div([
             html.H1("Cornell Fume Hood Dashboard", style={'textAlign': 'center'}),
             dbc.Row([  # Row for the cascader and button
@@ -83,13 +83,12 @@ def layout(building=None, floor=None, **other_unknown_query_strings):
     
 
 @callback(
-    Output('url', 'pathname'),
-    Input('search-button', 'n_clicks'),
-    [dash.dependencies.State('building-cascader', 'value')]
+    Output('search-button', 'href'),
+    Output('search-button', 'disabled'),
+    Input('building-cascader', 'value')
 )
-def update_output(n_clicks, cascader_value):
-    if n_clicks > 0 and cascader_value:
-        print(cascader_value)
-        print(f"/dashboard{cascader_value[-1]}")
-        return f"/dashboard{cascader_value[-1]}"
-    return "/"
+def update_output(cascader_value):
+    if cascader_value is None:
+        return "", True
+    return f"/dashboard{cascader_value[-1]}", False
+
