@@ -4,6 +4,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 import html
 import os
+import json
 
 ### SYNTHETIC QUERY ###
 def synthetic_query(targets, server, start, end, aggType):
@@ -88,6 +89,7 @@ def live_lab_query(device_instance, object_identifier):
 
     print(response.status_code)
     print(response.json())
+    return response.json()
 
 ### TREEVIEW ###
 # deconstructs hood IDs into building, floor and lab. 
