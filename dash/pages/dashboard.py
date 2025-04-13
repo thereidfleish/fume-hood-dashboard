@@ -430,7 +430,10 @@ def ssh_height(url, hood):
     object_identifier = "AI:4"
     result = live_lab_query(device_instance, object_identifier)
     sash_height = result['present-value']
-    timestamp = pd.to_datetime(result['timestamp']).tz_localize(tz="America/New_York")
+    timestamp = pd.to_datetime(result['timestamp'], unit="s").tz_localize(tz="America/New_York") - pd.Timedelta(hours=4)
+    
+    print(now)
+    print(timestamp)
 
     
     minutes_from_update = round((now - timestamp).total_seconds() / 60)
