@@ -41,6 +41,20 @@ labs_df.index = labs_df.index.droplevel(1)
 
 labs_df = labs_df.apply(lambda col: col.map(lambda x: list(x.values())[0]))
 
+hoods_response = dynamodb_client.get_item(
+    TableName=TABLE_NAME, Key={"id": {"S": "hoods"}}
+)
+
+hoods_dict = hoods_response['Item']["map"]["M"]
+
+hoods_df = pd.DataFrame.from_dict({(i, j): hoods_dict[i][j]
+                                  for i in hoods_dict.keys()
+                                  for j in hoods_dict[i].keys()},
+                                 orient='index')
+
+hoods_df.index = hoods_df.index.droplevel(1)
+
+hoods_df = hoods_df.apply(lambda col: col.map(lambda x: list(x.values())[0]))
 
 
 def layout(building=None, floor=None, lab=None):
