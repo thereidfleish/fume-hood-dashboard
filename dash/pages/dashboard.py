@@ -12,7 +12,7 @@ import boto3
 from dotenv import load_dotenv
 from dash import ctx
 
-from .components.functions import synthetic_query, raw_query, format_time, get_level_text
+from .components.functions import synthetic_query, raw_query, format_time, get_level_text, live_lab_query
 from .components.components_getters import get_sidebar, get_titles, get_date_selector, get_live_fumehood_pane, get_stats_pane, get_comparison_selector, get_ranking_pane, get_comparison_graph_pane, get_within_ranking_pane
 
 # app = Dash(__name__, meta_tags=[
@@ -430,7 +430,7 @@ def ssh_height(url, hood):
     building = url_query_params_parse["building"][0]
     floor = url_query_params_parse["floor"][0]
     lab = url_query_params_parse["lab"][0]
-    
+
     
     lab_full_string = f'{building.capitalize()}.Floor_{floor}.Lab_{lab}'
     
@@ -450,21 +450,20 @@ def ssh_height(url, hood):
     hood_point_name = hood_dict_inside['M']['sash_position_sensor']['S']
     
     now = pd.Timestamp.now().tz_localize(tz="America/New_York")
-    one_day_ago = now - timedelta(days=1)
+    device_instance = "49317"
+    object_identifier = "AI:4"
+    result = live_lab_query(device_instance, object_identifier)
+    sash_height = result['present-value']
+    timestamp = pd.to_datetime(result['timestamp'], unit="s").tz_localize(tz="America/New_York") - pd.Timedelta(hours=4)
+    
+    print(now)
+    print(timestamp)
 
-    sash_query = raw_query(target=hood_point_name, server="biotech_main",
-                        start=str(one_day_ago),
-                        end=str(now),
-                        aggType="aggD")
     
-    last_sash_height = sash_query['value'].iloc[-1]
-    last_timestamp = pd.to_datetime(sash_query['timestamp'].iloc[-1]).round('min')
-    
-    minutes_from_update = round((now - last_timestamp).total_seconds() / 60)
+    minutes_from_update = round((now - timestamp).total_seconds() / 60)
     
     sash_complete_height = 18
-    sash_height_data = last_sash_height
-    sash_height_pixel = (sash_complete_height - sash_height_data) / sash_complete_height * 200
+    sash_height_pixel = (sash_complete_height - sash_height) / sash_complete_height * 200
     
     last_update_string = f"Last updated {format_time(minutes_from_update)} ago"
     
@@ -472,7 +471,7 @@ def ssh_height(url, hood):
     for i in range(1, hood_count+1):
         fumehood_selector_options.append({'label': f"Fumehood {i}", 'value': f"{i}"})
     
-    sash_height_label = f"←{sash_height_data} inches opened"
+    sash_height_label = f"←{sash_height} inches opened"
 
     
     return sash_height_pixel, last_update_string, fumehood_selector_options, sash_height_label, sash_height_pixel+10
