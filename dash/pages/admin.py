@@ -1,5 +1,5 @@
 import dash
-from dash import html, Input, Output, callback, dash_table, State, MATCH, callback_context
+from dash import html, Input, Output, callback, dash_table, State, MATCH, callback_context, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
 import boto3
@@ -391,6 +391,7 @@ def test_all_points(arr_points):
 
 @callback(
    Output({'type': 'test-button-output', 'index': MATCH, 'subtype': 'grid'}, 'children'),
+   Output({'type': 'download-csv', 'index': MATCH}, 'data'),
    Input({'type': 'test-points-button', 'index': MATCH}, 'n_clicks'),
    State({'type': 'db-grid', 'index': MATCH}, 'rowData'),
    prevent_initial_call=True
@@ -417,7 +418,8 @@ def get_points(n_clicks, data):
                "is_synthetic": False
            })
        results = test_all_points(points_to_test)
-       return json.dumps(results)
+       results_df = pd.DataFrame(results, columns=["id", "message"])
+       return json.dumps(results), dcc.send_data_frame(results_df.to_csv, "test_results.csv")
 
 @callback(
     Output({'type': 'db-table', 'index': MATCH}, 'data'),
@@ -490,7 +492,8 @@ def layout(**other_unknown_query_strings):
         
         html.H3("Hoods"),
         generate_grid("hoods"),
-
+        
+        dcc.Download(id={'type': 'download-csv', 'index': 'hoods'})
     ])
 
 
