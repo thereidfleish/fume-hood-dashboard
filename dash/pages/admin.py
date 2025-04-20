@@ -81,12 +81,14 @@ def generate_grid(type):
 
     if type == "hoods":
         column_defs = column_defs + [
-        {"headerName": "test",
-        "field": "test",
-        "editable": False,
-        "cellRenderer": "button",
-        "cellRendererParams": {"className": "test-button"}}
-    ]
+            {"headerName": "test",
+            "field": "id",
+            "editable": False,
+            "cellRenderer": "button",
+            "cellRendererParams": {
+                "className": "test-button"
+            }}
+        ]
         
     dash_grid_options = {
             "rowSelection": "multiple",
@@ -361,23 +363,29 @@ def test_point(id, building, is_synthetic):
            functions.synthetic_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
            return "success"
        except Exception as e:
-           return {str(e)}
+           return str(e)
    else:
        try:
            functions.raw_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
            return "success"
        except Exception as e:
-           return {str(e)}
+           return str(e)
 
 def test_all_points(arr_points):
   tested_points = []
   for point in arr_points:
       message = test_point(point["id"], point["building"], point["is_synthetic"])
       if (message == "success"):
-          tempDict = {"id": point["id"], "status": True, "message": message}
+          tempDict = {
+              "id": point["id"], 
+              "message": message
+          }
           tested_points.append(tempDict)
       else:
-          tempDict = {"id": point["id"], "status": False, "message": message}
+          tempDict = {
+              "id": point["id"], 
+              "message": message
+          }
           tested_points.append(tempDict)
   return tested_points
 
@@ -408,7 +416,8 @@ def get_points(n_clicks, data):
                "building": building,
                "is_synthetic": False
            })
-    return str(test_all_points(points_to_test))
+       results = test_all_points(points_to_test)
+       return json.dumps(results)
 
 @callback(
     Output({'type': 'db-table', 'index': MATCH}, 'data'),
