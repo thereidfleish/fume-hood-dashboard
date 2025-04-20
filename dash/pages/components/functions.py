@@ -219,7 +219,7 @@ def get_fumehood_text(building, floor, lab):
         return "fumehood(s) in this lab"
     elif floor is not None:
         return "fumehoods on this floor"
-    elif building is not None:
+    elif building != "campus":
         return "fumehoods in this building"
     else:
         return "fumehoods at Cornell"

@@ -15,7 +15,7 @@ app.layout = dbc.Container(className="p-0", fluid=True, children=[
         dbc.NavItem(dbc.NavLink("Home", href="..")),
         dbc.DropdownMenu(
             children=[
-                dbc.DropdownMenuItem("Cornell", href="dashboard?cornell"),
+                dbc.DropdownMenuItem("Cornell", href="dashboard?building=campus"),
                 dbc.DropdownMenuItem("Buildings", header=True),
                 dbc.DropdownMenuItem("Biotech Shortcut", href="dashboard?building=biotech&floor=4&lab=441"),
                 dbc.DropdownMenuItem("Baker", href="dashboard"),

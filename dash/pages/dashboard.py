@@ -1,6 +1,7 @@
 import dash
 from dash import html, dcc, Input, Output, callback, clientside_callback
 import dash_bootstrap_components as dbc
+import dash_ag_grid as dag
 import plotly.express as px
 import pandas as pd
 import numpy as np
@@ -54,7 +55,7 @@ def layout(building=None, floor=None, lab=None):
     
     header_row = dbc.Row(children=[titles, date_selector])
     
-    if (lab is None) and (floor is None) and (building is None):
+    if (lab is None) and (floor is None) and (building == "campus"):
         overview = dbc.Col(className="mb-3", children=[html.H3("Overview of Cornell"), stats_pane])
         within = dbc.Col(className="mb-3", children=[html.H3("Ranking"), within_pane])
         comparisons = dbc.Row(
@@ -66,7 +67,9 @@ def layout(building=None, floor=None, lab=None):
                     id="location_selector",
                     style={"display": "none"},
                 ),
-                # ranking_pane,
+                dbc.Tabs([dbc.Tab(dag.AgGrid(id="ranking_table", style={"display": "none"}), style={"display": "none"}),
+                          dbc.Tab(dcc.Graph(id="ranking_graph", style={"display": "none"}), style={"display": "none"})
+                          ], style={"display": "none"}),
                 comparison_graph_pane,
             ]
         )
@@ -204,7 +207,6 @@ def summary(start_date, end_date, value, location, url):
     floor = params.get("floor", [None])[0]
     building = params.get("building", [None])[0]
     
-    # Define labs_df_filtered early to avoid UnboundLocalError
     if location == "floor" and floor:
         labs_df_filtered = labs_df.filter(like=f"{building.capitalize()}.Floor_{floor}", axis=0)
     elif location == "building":
@@ -313,15 +315,19 @@ def summary(start_date, end_date, value, location, url):
     # --- ---------- ---
     # Determine main query targets based on the page for sash graph
     if lab is not None:
+        # If a specific lab is selected, filter by that lab
         target = f"{building.capitalize()}.Floor_{floor}.Lab_{lab}.Hood_1.sashOpenTime.unocc"
         main_targets = [target]
     elif floor is not None:
+        # If a specific floor is selected, filter by that floor
         location_string = f"{building.capitalize()}.Floor_{floor}"
         main_targets = labs_df.filter(like=location_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
-    elif building is not None:
+    elif building != "campus" and building is not None:
+        # If a specific building is selected, filter by that building
         location_string = building.capitalize()
         main_targets = labs_df.filter(like=location_string, axis=0).index + ".Hood_1.sashOpenTime.unocc"
     else:
+        # If no specific building or floor is selected, use all labs (Campus page)
         main_targets = labs_df.index + ".Hood_1.sashOpenTime.unocc"
 
     # Query current sash graph data
