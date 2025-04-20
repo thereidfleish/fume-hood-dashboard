@@ -41,7 +41,7 @@ def get_titles(building, floor, lab):
     return dbc.Col([
         html.H1(title_text),
         html.H6(
-            f'This week, the amount of time {get_fumehood_text(building, floor, lab)} was left closed overnight is 1 hr and 3 mins'
+            f'The amount of time {get_fumehood_text(building, floor, lab)} was left closed overnight is 1 hr and 3 mins'
         ),
     ])
 

@@ -219,8 +219,10 @@ def get_fumehood_text(building, floor, lab):
         return "fumehood(s) in this lab"
     elif floor is not None:
         return "fumehoods on this floor"
-    else:
+    elif building is not None:
         return "fumehoods in this building"
+    else:
+        return "fumehoods at Cornell"
     
 def get_level_text(building, floor, lab):
     if lab is not None:

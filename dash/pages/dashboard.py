@@ -53,8 +53,25 @@ def layout(building=None, floor=None, lab=None):
     comparison_graph_pane = get_comparison_graph_pane(building, floor, lab)
     
     header_row = dbc.Row(children=[titles, date_selector])
-
-    if (lab is None) and (floor is None):
+    
+    if (lab is None) and (floor is None) and (building is None):
+        overview = dbc.Col(className="mb-3", children=[html.H3("Overview of Cornell"), stats_pane])
+        within = dbc.Col(className="mb-3", children=[html.H3("Ranking"), within_pane])
+        comparisons = dbc.Row(
+            [
+                html.H3("Trends Over Time"),
+                dcc.Dropdown(
+                    options=[{'label': 'Campus', 'value': 'cornell'}],
+                    value='cornell',
+                    id="location_selector",
+                    style={"display": "none"},
+                ),
+                # ranking_pane,
+                comparison_graph_pane,
+            ]
+        )
+        main_section = dbc.Col(className="m-2", children=[header_row, dbc.Row(className="mb-3", children=[overview, within]), comparisons])
+    elif (lab is None) and (floor is None):
         overview = dbc.Col(className="mb-3", children=[html.H3("Overview of your building"), stats_pane])
         within = dbc.Col(className="mb-3", children=[html.H3("Labs within your building"), within_pane])
         comparisons = dbc.Row(
@@ -194,6 +211,7 @@ def summary(start_date, end_date, value, location, url):
         labs_df_filtered = labs_df.filter(like=building.capitalize(), axis=0)
     else:
         labs_df_filtered = labs_df
+
 
     # --- -------- ---
     # --- RANKINGS ---
