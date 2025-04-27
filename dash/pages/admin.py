@@ -79,16 +79,16 @@ def generate_grid(type):
         for col in res_df.columns
     ]
 
-    if type == "hoods":
-        column_defs = column_defs + [
-            {"headerName": "test",
-            "field": "id",
-            "editable": False,
-            "cellRenderer": "button",
-            "cellRendererParams": {
-                "className": "test-button"
-            }}
-        ]
+    # if type == "hoods":
+    #     column_defs = column_defs + [
+    #         {"headerName": "test",
+    #         "field": "id",
+    #         "editable": False,
+    #         "cellRenderer": "button",
+    #         "cellRendererParams": {
+    #             "className": "test-button"
+    #         }}
+    #     ]
         
     dash_grid_options = {
             "rowSelection": "multiple",
