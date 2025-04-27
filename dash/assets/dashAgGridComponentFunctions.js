@@ -18,6 +18,7 @@ console.log("Custom renderer registered:", dagcomponentfuncs.button);
 
 dagcomponentfuncs.button = function (props) {
     console.log("Button props:", props);
+    console.log("=== Button Component ===");
 
     const { data, setData, value, className } = props;
 
@@ -25,8 +26,12 @@ dagcomponentfuncs.button = function (props) {
         if (data) {
             setData(data);
             console.log("Button clicked in row:", data);
-            event.target.classList.add("test-succeeds");
-            event.target.classList.remove("test-fails");
+            if (data.message == "success") {
+                event.target.classList.add("test-succeeds");
+            }
+            else {
+                event.target.classList.remove("test-fails");
+            }
         } else {
             console.log("No data returned.");
             event.target.classList.add("test-fails");
@@ -40,6 +45,6 @@ dagcomponentfuncs.button = function (props) {
             onClick: onClick,
             className: className || "test-button"
         },
-        value 
+        value
     );
 };

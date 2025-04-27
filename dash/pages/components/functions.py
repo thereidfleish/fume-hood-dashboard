@@ -8,6 +8,7 @@ import json
 
 ### SYNTHETIC QUERY ###
 def synthetic_query(targets, server, start, end, aggType):
+    # print (targets)
     targets_req = []
     # print(targets)
 
@@ -29,6 +30,7 @@ def synthetic_query(targets, server, start, end, aggType):
 
     }
     response = requests.post(url, json=data)
+    print (response)
     # print(response)
     # if response.status_code != 200:
     #      raise Exception("BAD")
@@ -43,7 +45,7 @@ def synthetic_query(targets, server, start, end, aggType):
     master[["floor", "lab", "hood"]] = master[["floor", "lab", "hood"]].replace(r'^.*?_', '', regex=True)
     
     # display(master)
-
+    print (master)
     return master
 
 ### RAW QUERY ###

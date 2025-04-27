@@ -1,5 +1,5 @@
 import dash
-from dash import html, Input, Output, callback, dash_table, State, MATCH, callback_context
+from dash import html, Input, Output, callback, dash_table, State, MATCH, callback_context, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
 import boto3
@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from dash import ctx
 import dash_ag_grid as dag
 import json
+from .components import functions
+from datetime import datetime
 
 # import dash_mantine_components as dmc
 # import dash_iconify
@@ -74,14 +76,16 @@ def generate_grid(type):
         for col in res_df.columns
     ]
 
-    if type == "hoods":
-        column_defs = column_defs + [
-        {"headerName": "test",
-        "field": "test",
-        "editable": False,
-        "cellRenderer": "button",
-        "cellRendererParams": {"className": "test-button"}}
-    ]
+    # if type == "hoods":
+    #     column_defs = column_defs + [
+    #         {"headerName": "test",
+    #         "field": "id",
+    #         "editable": False,
+    #         "cellRenderer": "button",
+    #         "cellRendererParams": {
+    #             "className": "test-button"
+    #         }}
+    #     ]
         
     dash_grid_options = {
             "rowSelection": "multiple",
@@ -129,9 +133,14 @@ def generate_grid(type):
                 'type': 'save-db-button-grid',
                 'index': type
             }, color="primary", className="m-1", n_clicks=0),
+
+            dbc.Button("Test Points", id={
+                'type': 'test-points-button',
+                'index': type
+            }, color="primary", className="m-1", n_clicks=0) if type == "hoods" else None,
         ]),
         html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
-        html.Div(id={'type': 'test-button-output', 'index': type}, style={'marginTop': '10px', 'color': 'green'}),
+        html.Div(id={'type': 'test-button-output', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
     ])
 
 # Update DynamoDB for AgGrid
@@ -232,6 +241,101 @@ def save_aggrid_changes(n_clicks, data):
 #     "message": {{error message from try/catch}}
 #     }
 # ]
+def test_point(id, building, is_synthetic):
+   if is_synthetic is True:
+       try:
+           functions.synthetic_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
+           return "success"
+       except Exception as e:
+           return str(e)
+   else:
+       try:
+           functions.raw_query([id], building+"_main", str(datetime(2024, 10, 10)), str(datetime(2024, 10, 20)), "aggD")
+           return "success"
+       except Exception as e:
+           return str(e)
+
+def test_all_points(arr_points):
+  tested_points = []
+  for point in arr_points:
+      message = test_point(point["id"], point["building"], point["is_synthetic"])
+      if (message == "success"):
+          tempDict = {
+              "id": point["id"], 
+              "message": message
+          }
+          tested_points.append(tempDict)
+      else:
+          tempDict = {
+              "id": point["id"], 
+              "message": message
+          }
+          tested_points.append(tempDict)
+  return tested_points
+
+@callback(
+   Output({'type': 'test-button-output', 'index': MATCH, 'subtype': 'grid'}, 'children'),
+   Output({'type': 'download-csv', 'index': MATCH}, 'data'),
+   Input({'type': 'test-points-button', 'index': MATCH}, 'n_clicks'),
+   State({'type': 'db-grid', 'index': MATCH}, 'rowData'),
+   State({'type': 'db-grid', 'index': MATCH}, 'selectedRows'),
+   prevent_initial_call=True
+)
+def get_points(n_clicks, data, selected_rows):
+    if n_clicks > 0:
+       print("button clicked")
+       points_to_test = []
+       selected_points = []
+       if selected_rows:
+           for obj in selected_rows:
+               base_id = obj["id"]
+               building = obj["building"]
+                # Synthetic version
+               selected_points.append({
+                    "id": base_id + ".sashOpenTime.unocc",
+                    "building": building,
+                    "is_synthetic": True
+                })
+
+                # Raw version
+               selected_points.append({
+                    "id": base_id,
+                    "building": building,
+                    "is_synthetic": False
+               })
+       else:
+            for obj in data:
+               base_id = obj["id"]
+               building = obj["building"]
+                # Synthetic version
+               points_to_test.append({
+                    "id": base_id + ".sashOpenTime.unocc",
+                    "building": building,
+                    "is_synthetic": True
+                })
+
+                # Raw version
+               points_to_test.append({
+                    "id": base_id,
+                    "building": building,
+                    "is_synthetic": False
+               })
+       if selected_points == []:
+           results = test_all_points(points_to_test)
+       else:
+           results = test_all_points(selected_points)
+       results_df = pd.DataFrame(results, columns=["id", "message"])
+       return json.dumps(results), dcc.send_data_frame(results_df.to_csv, "test_results.csv")
+
+@callback(
+    Output({'type': 'db-table', 'index': MATCH}, 'data'),
+    Input({'type': 'add-row-table', 'index': MATCH}, 'n_clicks'),
+    State({'type': 'db-table', 'index': MATCH}, 'data'),
+    State({'type': 'db-table', 'index': MATCH}, 'columns'))
+def add_row(n_clicks, rows, columns):
+    if n_clicks > 0:
+        rows.append({c['id']: '' for c in columns})
+    return rows
 
 @callback(
     Output({'type': 'db-grid', 'index': MATCH}, 'rowData'),
@@ -269,5 +373,7 @@ def layout(**other_unknown_query_strings):
         
         html.H3("Hoods"),
         generate_grid("hoods"),
-
+        
+        dcc.Download(id={'type': 'download-csv', 'index': 'hoods'})
     ])
+
