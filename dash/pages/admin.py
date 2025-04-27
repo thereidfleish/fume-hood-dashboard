@@ -140,7 +140,7 @@ def generate_grid(type):
             dbc.Button("Test Points", id={
                 'type': 'test-points-button',
                 'index': type
-            }, color="primary", className="m-1", n_clicks=0),
+            }, color="primary", className="m-1", n_clicks=0) if type == "hoods" else None,
         ]),
         html.Div(id={'type': 'output-message', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
         html.Div(id={'type': 'test-button-output', 'index': type, 'subtype': 'grid'}, style={'marginTop': '10px', 'color': 'green'}),
