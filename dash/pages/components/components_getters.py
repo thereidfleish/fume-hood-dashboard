@@ -237,7 +237,7 @@ def get_stats_pane(building, floor, lab):
                 dbc.Card(
                     [
                         html.Span("💰", className="metric-emoji"),
-                        html.Span("$100", className="metric-text")
+                        html.Span("$", className="metric-text", id= 'money')
                     ],
                     className="metric-card energy-cost"
                 ),

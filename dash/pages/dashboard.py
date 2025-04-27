@@ -149,6 +149,41 @@ clientside_callback(
     prevent_initial_call=True
 )
 
+## THIS IS THE CALLBACK FOR ENERGY CONVERSION CARDS
+@callback(
+    Output(component_id='money', component_property='children'),
+    Input(component_id='url', component_property='search'),
+    Input(component_id='date-picker-range', component_property='start_date'),
+    Input(component_id='date-picker-range', component_property='end_date')
+)
+
+def energy_to_money(url, start_date, end_date): 
+    """This function uses a raw query to get data points on minutes per cubic foot and turns that into the cost of energy from the fumehood every 15 minutes"""
+    params = parse_qs(urlparse(url).query)
+    lab = params.get("lab", [None])[0]
+    floor = params.get("floor", [None])[0]
+    building = params.get("building", [None])[0]
+    hood = params.get("hood", [None])[0]
+    path = f"{building.capitalize()}.Floor_{floor}.Lab_{lab}.Hood_1" #WHAT ABOUT THE HOODS
+    # sample path  = Biotech.Floor_4.Lab_433.Hood_1 flow_sensor 
+    print(f"Path: {path}")
+    money_cost = 0 #fallback?
+    if path in hoods_df.iloc[:, 0]:
+        start_datetime = pd.to_datetime(start_date)
+        end_datetime = pd.to_datetime(end_date)
+        time = end_datetime - start_datetime
+        time = time.total_seconds() / 60
+
+        row = hoods_df.loc[[path]]
+        # print('LALALAAL',row)
+        target = row.iloc[0,2]
+        # print('TARGET IS',target)
+        cfm_df = raw_query(target=target, server="biotech_main", start=str(start_datetime), end=str(end_datetime), aggType="mean")
+        # print('CDM DF IS ',cfm_df)
+        cfm_value = cfm_df["value"].mean()
+        money_cost = cfm_value * time * 0.0000057 
+    return f"${round(money_cost,2)}"
+
 @callback(
     Output(component_id='date-picker-range', component_property='start_date'),
     Output(component_id='date-picker-range', component_property='end_date'),
@@ -446,8 +481,8 @@ def ssh_height(url, hood):
     sash_height = result['present-value']
     timestamp = pd.to_datetime(result['timestamp'], unit="s").tz_localize(tz="America/New_York") - pd.Timedelta(hours=4)
     
-    print(now)
-    print(timestamp)
+    # print(now)
+    # print(timestamp)
 
     
     minutes_from_update = round((now - timestamp).total_seconds() / 60)
@@ -461,7 +496,7 @@ def ssh_height(url, hood):
     for i in range(1, hood_count+1):
         fumehood_selector_options.append({'label': f"Fumehood {i}", 'value': f"{i}"})
     
-    sash_height_label = f"←{sash_height} inches opened"
+    sash_height_label = f"←{round(sash_height,2)} inches opened"
 
     
     return sash_height_pixel, last_update_string, fumehood_selector_options, sash_height_label, sash_height_pixel+10
