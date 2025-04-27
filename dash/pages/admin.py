@@ -394,30 +394,52 @@ def test_all_points(arr_points):
    Output({'type': 'download-csv', 'index': MATCH}, 'data'),
    Input({'type': 'test-points-button', 'index': MATCH}, 'n_clicks'),
    State({'type': 'db-grid', 'index': MATCH}, 'rowData'),
+   State({'type': 'db-grid', 'index': MATCH}, 'selectedRows'),
    prevent_initial_call=True
 )
-def get_points(n_clicks, data):
+def get_points(n_clicks, data, selected_rows):
     if n_clicks > 0:
        print("button clicked")
        points_to_test = []
-       for obj in data:
-           base_id = obj["id"]
-           building = obj["building"]
+       selected_points = []
+       if selected_rows:
+           for obj in selected_rows:
+               base_id = obj["id"]
+               building = obj["building"]
+                # Synthetic version
+               selected_points.append({
+                    "id": base_id + ".sashOpenTime.unocc",
+                    "building": building,
+                    "is_synthetic": True
+                })
 
-           # Synthetic version
-           points_to_test.append({
-               "id": base_id + ".sashOpenTime.unocc",
-               "building": building,
-               "is_synthetic": True
-           })
+                # Raw version
+               selected_points.append({
+                    "id": base_id,
+                    "building": building,
+                    "is_synthetic": False
+               })
+       else:
+            for obj in data:
+               base_id = obj["id"]
+               building = obj["building"]
+                # Synthetic version
+               points_to_test.append({
+                    "id": base_id + ".sashOpenTime.unocc",
+                    "building": building,
+                    "is_synthetic": True
+                })
 
-           # Raw version
-           points_to_test.append({
-               "id": base_id,
-               "building": building,
-               "is_synthetic": False
-           })
-       results = test_all_points(points_to_test)
+                # Raw version
+               points_to_test.append({
+                    "id": base_id,
+                    "building": building,
+                    "is_synthetic": False
+               })
+       if selected_points == []:
+           results = test_all_points(points_to_test)
+       else:
+           results = test_all_points(selected_points)
        results_df = pd.DataFrame(results, columns=["id", "message"])
        return json.dumps(results), dcc.send_data_frame(results_df.to_csv, "test_results.csv")
 

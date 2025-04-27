@@ -17,58 +17,34 @@ console.log("Custom renderer registered:", dagcomponentfuncs.button);
 
 
 dagcomponentfuncs.button = function (props) {
+    console.log("Button props:", props);
     console.log("=== Button Component ===");
-    console.log("All props:", JSON.stringify(props, null, 2));
-    console.log("Data type:", typeof props.data);
-    console.log("Value type:", typeof props.value);
-    console.log("Raw data:", props.data);
-    console.log("Raw value:", props.value);
 
     const { data, setData, value, className } = props;
-    let buttonClass = "test-button"; // Default class
 
-    // Check for test results immediately when component renders
-    if (data && typeof data === 'string') {
-        try {
-            const results = JSON.parse(data);
-            console.log("Parsed results:", results);
-            console.log("Looking for match with row id:", value);
-            
-            // Try different ways to match the ID
-            const testResult = results.find(r => {
-                console.log("Comparing:", r.id, "with", value);
-                return r.id === value;
-            });
-            console.log("Found test result:", testResult);
-            
-            if (testResult) {
-                console.log("Test message:", testResult.message);
-                buttonClass = testResult.message === "success" ? 
-                    "test-button test-succeeds" : 
-                    "test-button test-fails";
-                console.log("Setting button class to:", buttonClass);
+    function onClick(event) {
+        if (data) {
+            setData(data);
+            console.log("Button clicked in row:", data);
+            if (data.message == "success") {
+                event.target.classList.add("test-succeeds");
             }
-        } catch (e) {
-            console.error("Error parsing test results:", e);
-            buttonClass = "test-button test-fails";
+            else {
+                event.target.classList.remove("test-fails");
+            }
+        } else {
+            console.log("No data returned.");
+            event.target.classList.add("test-fails");
+            event.target.classList.remove("test-succeeds");
         }
     }
 
     return React.createElement(
         "button",
         {
-            className: buttonClass,
-            style: { 
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                transform: 'translate(5px, 10px)',
-                border: 'none',
-                padding: '10px 10px',
-                borderRadius: '20px',
-                cursor: 'pointer'
-            }
+            onClick: onClick,
+            className: className || "test-button"
         },
-        "Test"
+        value
     );
 };
